@@ -7,12 +7,13 @@ export const Container = styled.div`
   align-items: center;
   flex-direction: column;
   box-sizing: border-box;
-  padding-left: 30rem;
+  padding-left: 32rem;
 `;
 
 export const Main = styled.div`
   width: 100%;
   height: 100%;
   overflow-y: scroll;
-
+  margin-bottom: 15rem;
+  box-sizing: content-box;
 `;

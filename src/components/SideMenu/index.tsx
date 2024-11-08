@@ -6,41 +6,42 @@ const SideMenu = () => {
 
   return (
     <S.Container>
+      <S.Logo src="/assets/musico_reversed.svg" />
       <S.SectionTitle>메뉴</S.SectionTitle>
-      <S.MenuItem to="/" isFocus={location.pathname == "/"}>
+      <S.MenuItem to="/" isFocused={location.pathname === "/"}>
         <S.MeunIcon
           src={
-            location.pathname == "/"
+            location.pathname === "/"
               ? "/assets/homeIconWhite.svg"
               : "/assets/homeIcon.svg"
           }
         />
         <S.MenuText>홈</S.MenuText>
       </S.MenuItem>
-      <S.MenuItem to="/search" isFocus={location.pathname == "/search"}>
+      <S.MenuItem to="/search" isFocused={location.pathname === "/search"}>
         <S.MeunIcon
           src={
-            location.pathname == "/search"
+            location.pathname === "/search"
               ? "/assets/searchIconWhite.svg"
               : "/assets/searchIcon.svg"
           }
         />
         <S.MenuText>검색</S.MenuText>
       </S.MenuItem>
-      <S.MenuItem to="/newest" isFocus={location.pathname == "/newest"}>
+      <S.MenuItem to="/newest" isFocused={location.pathname === "/newest"}>
         <S.MeunIcon
           src={
-            location.pathname == "/newest"
+            location.pathname === "/newest"
               ? "/assets/musicIconWhite.svg"
               : "/assets/musicIcon.svg"
           }
         />
         <S.MenuText>최신음악</S.MenuText>
       </S.MenuItem>
-      <S.MenuItem to="/chart" isFocus={location.pathname == "/chart"}>
+      <S.MenuItem to="/chart" isFocused={location.pathname === "/chart"}>
         <S.MeunIcon
           src={
-            location.pathname == "/chart"
+            location.pathname === "/chart"
               ? "/assets/chartIconWhite.svg"
               : "/assets/chartIcon.svg"
           }

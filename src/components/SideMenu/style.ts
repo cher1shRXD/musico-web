@@ -1,6 +1,19 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { POINT } from "../../constants/colors";
+import { keyframes } from "@emotion/react";
+
+const FadeIn = keyframes`
+  0%{
+    left: -32rem;
+  }
+  70%{
+    left: 1rem;
+  }
+  100%{
+    left: 0rem;
+  }
+`
 
 export const Container = styled.div`
   width: 32rem;
@@ -12,6 +25,14 @@ export const Container = styled.div`
   display: flex;
   padding: 1.2rem;
   flex-direction: column;
+  animation: ${FadeIn} 0.5s forwards;
+`;
+
+export const Logo = styled.img`
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  margin: 2rem 0;
 `;
 
 export const SectionTitle = styled.p`
@@ -20,7 +41,7 @@ export const SectionTitle = styled.p`
   margin-bottom: 1.2rem;
 `;
 
-export const MenuItem = styled(Link)<{ isFocus: boolean }>`
+export const MenuItem = styled(Link)<{ isFocused: boolean }>`
   width: 100%;
   height: 5rem;
   display: flex;
@@ -29,11 +50,12 @@ export const MenuItem = styled(Link)<{ isFocus: boolean }>`
   text-decoration: none;
   color: black;
   padding: 1rem;
-  color: ${(props) => (props.isFocus ? "white" : "black")};
-  background-color: ${(props) =>
-    props.isFocus ? POINT.secondary : "transparent"};
+  color: ${(props) => (props.isFocused ? "white" : "black")};
+  background: ${(props) =>
+    props.isFocused
+      ? `linear-gradient(79deg, ${POINT.secondary} 0%, ${POINT.thirdary} 100%)`
+      : "transparent"};
   border-radius: 1rem;
-  transition: all 0.3s;
   cursor: pointer;
   margin: 0.4rem 0 0.4rem 0;
 `;
@@ -57,12 +79,11 @@ export const LibraryItem = styled.div`
   width: 100%;
   height: 7rem;
   border-radius: 1rem;
-  box-shadow: 0.01rem 0.01rem 0.5rem 0.01rem #DDDDDD;
   display: grid;
   margin: 0.6rem 0;
-  transition: all 0.2s;
+  transition: all 0.5s;
   cursor: pointer;
   &:hover {
-    margin: 2rem 0;
+    box-shadow: 0.01rem 0.01rem 0.5rem 0.01rem #dddddd;
   }
 `;
