@@ -15,7 +15,7 @@ const PlayBar = () => {
     coverUrl: "https://img.youtube.com/vi/image/mqdefault.jpg",
   });
   const playerRef = useRef<ReactPlayer | null>(null);
-  const VIDEO_ID = "Q0sZX07H2Ew";
+  const VIDEO_ID = "4_yWMOPfSNo";
 
   const handlePlay = () => {
     setIsPlaying((prev) => !prev);
@@ -25,23 +25,41 @@ const PlayBar = () => {
     setIsReady(true);
 
     setMusicData({
-      title: '',
-      artist: '',
-      coverUrl: `https://img.youtube.com/vi/${VIDEO_ID}/mqdefault.jpg`
+      title: "",
+      artist: "",
+      coverUrl: `https://img.youtube.com/vi/${VIDEO_ID}/mqdefault.jpg`,
     });
-  }
+  };
 
   const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    seconds = Math.floor(seconds % 60);
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+
+    if (hours > 0) {
+      return `${hours}:${minutes < 10 ? "0" : ""}${minutes}:${
+        remainingSeconds < 10 ? "0" : ""
+      }${remainingSeconds.toFixed(0)}`;
+    } else if (minutes > 0) {
+      return `${minutes}:${
+        remainingSeconds < 10 ? "0" : ""
+      }${remainingSeconds.toFixed(0)}`;
+    } else {
+      return `${remainingSeconds < 10 ? "0" : ""}${remainingSeconds.toFixed(
+        0
+      )}`;
+    }
   };
 
   return (
     <S.Container>
       <S.Playbar>
         <S.InfoWrap>
-          <S.Cover src={musicData.coverUrl} alt="" isPlaying={isPlaying} />
+          <S.Cover
+            src={!isReady ? "/assets/loading.gif" : musicData.coverUrl}
+            alt=""
+            isPlaying={isPlaying}
+          />
           <p>{musicData.title}</p>
           <p>{musicData.artist}</p>
         </S.InfoWrap>
@@ -49,13 +67,7 @@ const PlayBar = () => {
           <S.ButtonsWrap>
             <S.ControlButton src="/assets/previous.svg" onClick={handlePlay} />
             <S.ControlButton
-              src={
-                !isReady
-                  ? "/assets/loading.gif"
-                  : isPlaying
-                  ? "/assets/pause.svg"
-                  : "/assets/play.svg"
-              }
+              src={isPlaying ? "/assets/pause.svg" : "/assets/play.svg"}
               onClick={handlePlay}
             />
             <S.ControlButton src="/assets/next.svg" onClick={handlePlay} />
@@ -68,8 +80,8 @@ const PlayBar = () => {
             }}
           />
           <S.TimeWrap>
-            <time dateTime="P1S">{formatTime(duration * progress)}</time>
-            <time dateTime="P1S">{formatTime(duration)}</time>
+            <p>{formatTime(duration * progress)}</p>
+            <p>{formatTime(duration)}</p>
           </S.TimeWrap>
         </S.PlayControlWrap>
         <S.OtherControlWrap>gdgd</S.OtherControlWrap>
