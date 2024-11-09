@@ -97,7 +97,13 @@ const PlayBar = () => {
             isPlaying={isPlaying}
           />
           <p>{nowPlaying.title}</p>
-          <p>{nowPlaying.artist}</p>
+          <div>
+            {
+              nowPlaying.artist.map((data, idx)=>(
+                <p key={idx}>{data.name}{idx !== nowPlaying.artist.length - 1 && ' & '}</p>
+              ))
+            }
+          </div>
         </S.InfoWrap>
         <S.PlayControlWrap>
           <S.ButtonsWrap>
@@ -128,7 +134,7 @@ const PlayBar = () => {
         width={0}
         height={0}
         ref={playerRef}
-        volume={0.01}
+        volume={0.5}
         onProgress={({ played }) => setProgress(played)}
         onDuration={(e: number) => setDuration(e)}
         onPause={() => setIsPlaying(false)}
@@ -137,6 +143,7 @@ const PlayBar = () => {
         onReady={handleLoad}
         onBufferEnd={() => setIsReady(true)}
         onBuffer={() => setIsReady(false)}
+        onError={(e)=>{console.log(e)}}
       />
     </S.Container>
   );

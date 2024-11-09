@@ -4,7 +4,7 @@ import { MusicData } from "../../types/music/musicData";
 
 export const useNowPlayingStore = create<NowPlaying>((set) => ({
   nowPlaying: {
-    artist: "",
+    artist: [],
     title: "",
     coverUrl: "",
     videoId: "",

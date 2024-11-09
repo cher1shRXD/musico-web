@@ -1,12 +1,10 @@
 import { useEffect } from "react";
 import * as S from './style';
 import useGetRank from "../../hooks/music/useGetRank";
-import useSearchMusic from "../../hooks/music/useSearchMusic";
 import MusicItem from "../../components/MusicItem";
 
 const Home = () => {
   const { getRank, rankData } = useGetRank();
-  const { searchResult, searchMusic } = useSearchMusic();
 
   useEffect(()=>{
     getRank(10);
@@ -24,7 +22,7 @@ const Home = () => {
       </S.SearchWrap>
       <S.ContentWrap>
         {rankData.map((data) => (
-          <MusicItem data={data}/>
+          <MusicItem data={data} key={data.id}/>
         ))}
       </S.ContentWrap>
     </S.Container>

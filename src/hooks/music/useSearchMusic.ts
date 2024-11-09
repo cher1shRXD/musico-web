@@ -18,10 +18,7 @@ const useSearchMusic = () => {
         }
       );
       if (data) {
-        console.log(
-          data.filter((data: YoutubeResponse) => data.resultType === "song")
-        );
-        setSearchResult(data.filter((data:YoutubeResponse)=>(data.resultType === 'song')));
+        setSearchResult(data);
       }
     } catch {
       notification.error({message: '검색결과 가져오기 실패', description: '네트워크 에러'});

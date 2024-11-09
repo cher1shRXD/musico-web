@@ -1,5 +1,5 @@
 export interface MusicData {
-  artist: string;
+  artist: {id:string, name:string}[];
   title: string;
   coverUrl: string;
   videoId: string;
