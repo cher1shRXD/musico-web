@@ -36,9 +36,10 @@ export const Logo = styled.img`
 `;
 
 export const SectionTitle = styled.p`
-  font-size: 2.4rem;
+  font-size: 1.6rem;
   font-weight: 500;
   margin-bottom: 1.2rem;
+  color: gray;
 `;
 
 export const MenuItem = styled(Link)<{ isFocused: boolean }>`
@@ -81,7 +82,7 @@ export const LibraryItem = styled.div`
   border-radius: 1rem;
   display: grid;
   margin: 0.6rem 0;
-  transition: all 0.5s;
+  transition: all 0.2s;
   cursor: pointer;
   &:hover {
     box-shadow: 0.01rem 0.01rem 0.5rem 0.01rem #dddddd;

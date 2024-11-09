@@ -13,18 +13,6 @@ const FadeIn = keyframes`
   }
 `;
 
-const Spin = keyframes`
-  0%{
-    transform: rotate(45deg);
-  }
-  50%{
-    transform: rotate(180deg);
-  }
-  100%{
-    transform: rotate(360deg);
-  }
-`;
-
 export const Container = styled.div`
   width: calc(100vw - 32rem);
   height: 15rem;
@@ -34,6 +22,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 999;
 `;
 
 export const Playbar = styled.div`
@@ -47,6 +36,7 @@ export const Playbar = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  z-index: 999;
 `;
 
 export const InfoWrap = styled.div`

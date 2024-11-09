@@ -15,5 +15,4 @@ export const Main = styled.div`
   height: 100%;
   overflow-y: scroll;
   margin-bottom: 15rem;
-  box-sizing: content-box;
 `;

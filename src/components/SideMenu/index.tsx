@@ -7,7 +7,6 @@ const SideMenu = () => {
   return (
     <S.Container>
       <S.Logo src="/assets/musico_reversed.svg" />
-      <S.SectionTitle>메뉴</S.SectionTitle>
       <S.MenuItem to="/" isFocused={location.pathname === "/"}>
         <S.MeunIcon
           src={

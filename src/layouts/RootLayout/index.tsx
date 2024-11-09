@@ -1,16 +1,18 @@
-import { Outlet } from "react-router-dom"
-import { Container } from "./style"
-import SideMenu from "../../components/SideMenu"
-import PlayBar from "../../components/PlayBar"
+import { Outlet } from "react-router-dom";
+import { Container, Main } from "./style";
+import SideMenu from "../../components/SideMenu";
+import PlayBar from "../../components/PlayBar";
 
 const RootLayout = () => {
   return (
     <Container>
-      <Outlet />
+      <Main>
+        <Outlet />
+      </Main>
       <SideMenu />
       <PlayBar />
     </Container>
-  )
-}
+  );
+};
 
-export default RootLayout
+export default RootLayout;
