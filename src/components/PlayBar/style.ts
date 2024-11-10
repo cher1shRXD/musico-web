@@ -15,7 +15,7 @@ const FadeIn = keyframes`
 
 export const Container = styled.div`
   width: calc(100vw - 32rem);
-  height: 15rem;
+  height: 12rem;
   position: fixed;
   right: 0;
   bottom: 0;

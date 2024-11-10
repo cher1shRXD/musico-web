@@ -5,8 +5,7 @@ import { POINT } from "../../constants/colors";
 export const Container = styled.div`
   width: 100%;
   height: 100%;
-  padding: 1rem;
-  overflow-y: scroll;
+  padding: 0 1rem;
 `;
 
 export const SearchWrap = styled.div`
@@ -48,9 +47,11 @@ export const SearchPlaceholder = styled.p`
 `;
 export const ContentWrap = styled.div`
   width: 100%;
+  height: calc(100% - 8rem);
   display: flex;
   justify-content: start;
   align-items: start;
   flex-wrap: wrap;
-  padding: 2rem;
+  padding: 0 2rem;
+  overflow-y: scroll;
 `;

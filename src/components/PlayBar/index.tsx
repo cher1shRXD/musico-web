@@ -4,6 +4,7 @@ import ReactPlayer from "react-player";
 import ProgressBar from "../ProgressBar";
 import { useNowPlayingStore } from "../../store/music/useNowPlayingStore";
 import { usePlayerErrorStore } from "../../store/player/usePlayerErrorStore";
+import { YoutubeResponse } from "../../types/music/youtubeResponse";
 
 const songs = ["Q0sZX07H2Ew", "wtUaW2HEsCY", "lA76F5OZbiM", "8EfV1RhgQaI"];
 
@@ -29,6 +30,7 @@ const PlayBar = () => {
   };
 
   const handleLoad = () => {
+    setError(null);
     setIsReady(true);
   };
 
@@ -93,6 +95,7 @@ const PlayBar = () => {
       }${remainingSeconds.toFixed(0)}`;
     }
   };
+
 
   return (
     <S.Container>
