@@ -9,13 +9,10 @@ const useSearchMusic = () => {
 
   const searchMusic = async (keyword: string) => {
     try {
-      const { data } = await axios.get(
-        `https://youtube-music6.p.rapidapi.com/ytmusic/?query=${keyword}`,
+      const { data } = await axios.post(
+        `http://127.0.0.1:8000/search`,
         {
-          headers: {
-            "x-rapidapi-host": "youtube-music6.p.rapidapi.com",
-            "x-rapidapi-key": process.env.REACT_APP_RAPID_KEY,
-          },
+          query:keyword
         }
       );
       if (data) {

@@ -40,6 +40,7 @@ const Home = () => {
       musicTitle
     );
     setSortedData(sorted);
+    console.log(sorted);
 
     const selected = sorted[0];
     if (selected) {

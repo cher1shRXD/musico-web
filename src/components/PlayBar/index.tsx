@@ -106,18 +106,24 @@ const PlayBar = () => {
             alt=""
             isPlaying={isPlaying}
           />
-          <p>{nowPlaying.title}</p>
-          <div>
-            {
-              nowPlaying.artist.map((data, idx)=>(
-                <p key={idx}>{data.name}{idx !== nowPlaying.artist.length - 1 && ' & '}</p>
-              ))
-            }
-          </div>
+          <S.MusicInfo>
+            <S.MusicTitle>{nowPlaying.title}</S.MusicTitle>
+            <S.MusicArtistWrap>
+              {nowPlaying.artist.map((data, idx) => (
+                <S.MusicArtist key={idx}>
+                  {data.name}{" "}
+                  {idx !== nowPlaying.artist.length - 1 && "&\u00A0"}
+                </S.MusicArtist>
+              ))}
+            </S.MusicArtistWrap>
+          </S.MusicInfo>
         </S.InfoWrap>
         <S.PlayControlWrap>
           <S.ButtonsWrap>
-            <S.ControlButton src="/assets/previous.svg" onClick={handlePrevious} />
+            <S.ControlButton
+              src="/assets/previous.svg"
+              onClick={handlePrevious}
+            />
             <S.ControlButton
               src={isPlaying ? "/assets/pause.svg" : "/assets/play.svg"}
               onClick={handlePlay}
@@ -136,7 +142,11 @@ const PlayBar = () => {
             <p>{formatTime(duration)}</p>
           </S.TimeWrap>
         </S.PlayControlWrap>
-        <S.OtherControlWrap><button onClick={() => setIsLoop(prev=>!prev)}>{isLoop ? '반복 중' : '반복'}</button></S.OtherControlWrap>
+        <S.OtherControlWrap>
+          <button onClick={() => setIsLoop((prev) => !prev)}>
+            {isLoop ? "반복 중" : "반복"}
+          </button>
+        </S.OtherControlWrap>
       </S.Playbar>
       <ReactPlayer
         url={`https://www.youtube.com/watch?v=${nowPlaying.videoId}`}
@@ -153,7 +163,9 @@ const PlayBar = () => {
         onReady={handleLoad}
         onBufferEnd={() => setIsReady(true)}
         onBuffer={() => setIsReady(false)}
-        onError={(e)=>{setError(e)}}
+        onError={(e) => {
+          setError(e);
+        }}
       />
     </S.Container>
   );

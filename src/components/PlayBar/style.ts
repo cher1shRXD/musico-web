@@ -15,7 +15,7 @@ const FadeIn = keyframes`
 
 export const Container = styled.div`
   width: calc(100vw - 32rem);
-  height: 12rem;
+  height: 14rem;
   position: fixed;
   right: 0;
   bottom: 0;
@@ -43,6 +43,7 @@ export const InfoWrap = styled.div`
   width: 30rem;
   height: 100%;
   display: flex;
+  gap: 1rem;
 `;
 
 export const Cover = styled.img<{ isPlaying: boolean }>`
@@ -89,3 +90,25 @@ export const TimeWrap = styled.div`
 export const OtherControlWrap = styled.div`
   width: 30rem;
 `;
+
+export const MusicInfo = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.8rem;
+`
+
+
+export const MusicTitle = styled.p`
+  font-size: 1.6rem;
+`
+
+export const MusicArtistWrap = styled.div`
+  display: flex;
+`
+
+export const MusicArtist = styled.p`
+  font-size: 1.2rem;
+  color: gray;
+`
