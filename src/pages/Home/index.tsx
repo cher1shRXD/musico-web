@@ -7,7 +7,7 @@ const Home = () => {
   const { getRank, rankData } = useGetRank();
 
   useEffect(()=>{
-    getRank(10);
+    getRank();
   },[]);
 
   return (
@@ -22,7 +22,7 @@ const Home = () => {
       </S.SearchWrap>
       <S.ContentWrap>
         {rankData.map((data) => (
-          <MusicItem data={data} key={data.id}/>
+          <MusicItem data={data} key={data.ranking}/>
         ))}
       </S.ContentWrap>
     </S.Container>

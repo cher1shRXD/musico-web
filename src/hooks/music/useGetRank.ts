@@ -1,25 +1,26 @@
 import { useState } from "react";
-import { ShazamResponse } from "../../types/music/shazamResponse";
+import { SpotifyResponse } from "../../types/music/spotifyResponse";
 import axios from "axios";
 import { notification } from "antd";
+import { YoutubeResponse } from "../../types/music/youtubeResponse";
 
 const useGetRank = () => {
-  const [rankData, setRankData] = useState<ShazamResponse[]>([]);
+  const [rankData, setRankData] = useState<SpotifyResponse[]>([]);
 
-  const getRank = async (limit: number) => {
+  const getRank = async () => {
     try {
       const { data } = await axios.get(
-        `https://shazam-api6.p.rapidapi.com/shazam/top_tracks_country?country_code=KR&limit=${limit}`,
+        `https://musicdata-api.p.rapidapi.com/spotify/chart/kr/weekly`,
         {
           headers: {
-            "x-rapidapi-host": "shazam-api6.p.rapidapi.com",
+            "x-rapidapi-host": "musicdata-api.p.rapidapi.com",
             "x-rapidapi-key": process.env.REACT_APP_RAPID_KEY,
           },
         }
       );
 
       if (data) {
-        setRankData(data.result.data);
+        setRankData(data);
       }
     } catch {
       notification.error({message: '랭킹 가져오기 실패', description: '네트워크 에러'});

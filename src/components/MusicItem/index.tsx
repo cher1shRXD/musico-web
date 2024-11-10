@@ -1,17 +1,83 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useSearchMusic from "../../hooks/music/useSearchMusic";
-import { ShazamResponse } from "../../types/music/shazamResponse";
+import { SpotifyResponse } from "../../types/music/spotifyResponse";
 import * as S from "./style";
 import { useNowPlayingStore } from "../../store/music/useNowPlayingStore";
+import { usePlayerErrorStore } from "../../store/player/usePlayerErrorStore";
+import { YoutubeResponse } from "../../types/music/youtubeResponse";
 
-const MusicItem = ({ data }: { data: ShazamResponse }) => {
+const MusicItem = ({ data }: { data: SpotifyResponse }) => {
   const { searchMusic, searchResult } = useSearchMusic();
   const setNowPlaying = useNowPlayingStore((state) => state.setNowPlaying);
+  const nowPlaying = useNowPlayingStore((state) => state.nowPlaying);
+  const error = usePlayerErrorStore((state) => state.error);
+  const degradeKeyword = data.artist_and_title.split(" - ");
+  const [sortedData, setSortedData] = useState<YoutubeResponse[]>([]); 
+
+  const sortResults = (
+    data: YoutubeResponse[],
+    artistName: string,
+    songTitle: string
+  ) => {
+    const sortedData = data.sort((a, b) => {
+      const titleSimilarityA =
+        a.title.localeCompare(songTitle, undefined, { sensitivity: "base" }) ===
+        0
+          ? 1
+          : 0;
+      const titleSimilarityB =
+        b.title.localeCompare(songTitle, undefined, { sensitivity: "base" }) ===
+        0
+          ? 1
+          : 0;
+
+      const artistSimilarityA =
+        a.artists[0].name.localeCompare(artistName, undefined, {
+          sensitivity: "base",
+        }) === 0
+          ? 1
+          : 0;
+      const artistSimilarityB =
+        b.artists[0].name.localeCompare(artistName, undefined, {
+          sensitivity: "base",
+        }) === 0
+          ? 1
+          : 0;
+
+      const scoreA = titleSimilarityA * 2 + artistSimilarityA;
+      const scoreB = titleSimilarityB * 2 + artistSimilarityB;
+
+      return scoreB - scoreA;
+    });
+
+    let songMatch: YoutubeResponse | null = null;
+    let videoMatch: YoutubeResponse | null = null;
+
+    for (const item of sortedData) {
+      if (item.resultType === "song" && !songMatch) {
+        songMatch = item;
+      } else if (item.resultType === "video" && !videoMatch) {
+        videoMatch = item;
+      }
+      if (songMatch && videoMatch) break;
+    }
+
+    return [songMatch, videoMatch].filter(
+      (item): item is YoutubeResponse => item !== null
+    );
+  };
 
   useEffect(() => {
-    const selected = searchResult[0];
-    //TODO: 노래 우선, 노래가 임베드 에러뜨면 영상 포함 맨위 영상 ( 초기 필터: 제목 & 아티스트 일치 )
-    if(selected){
+    const sorted = sortResults(
+      searchResult,
+      degradeKeyword[0],
+      degradeKeyword[1]
+    );
+    setSortedData(sorted);
+    console.log(sorted);
+
+    const selected = sorted[0];
+    if (selected) {
       setNowPlaying({
         title: selected.title,
         artist: selected.artists,
@@ -19,16 +85,15 @@ const MusicItem = ({ data }: { data: ShazamResponse }) => {
         videoId: selected.videoId,
       });
     }
-    console.log(selected);
   }, [searchResult]);
 
   return (
     <S.Container
       onClick={() =>
-        searchMusic(`${data.attributes.name}`)
+        searchMusic(`${data.artist_and_title}`)
       }
     >
-      {data.attributes.name} - {data.attributes.artistName}
+      {data.artist_and_title}
     </S.Container>
   );
 };

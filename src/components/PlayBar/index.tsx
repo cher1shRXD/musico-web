@@ -1,8 +1,9 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as S from "./style";
 import ReactPlayer from "react-player";
 import ProgressBar from "../ProgressBar";
 import { useNowPlayingStore } from "../../store/music/useNowPlayingStore";
+import { usePlayerErrorStore } from "../../store/player/usePlayerErrorStore";
 
 const songs = ["Q0sZX07H2Ew", "wtUaW2HEsCY", "lA76F5OZbiM", "8EfV1RhgQaI"];
 
@@ -14,8 +15,14 @@ const PlayBar = () => {
   const [queueIdx, setQueueIdx] = useState(0);
   const [isLoop, setIsLoop] = useState(false);
   const nowPlaying = useNowPlayingStore(state=>state.nowPlaying);
-  const setNowPlaying = useNowPlayingStore(state=>state.setNowPlaying);
   const playerRef = useRef<ReactPlayer | null>(null);
+  const setError = usePlayerErrorStore(state=>state.setError);
+
+  useEffect(()=>{
+    if(nowPlaying.videoId.length > 0) {
+      setIsPlaying(true);
+    }
+  },[nowPlaying.videoId]);
 
   const handlePlay = () => {
     setIsPlaying((prev) => !prev);
@@ -143,7 +150,7 @@ const PlayBar = () => {
         onReady={handleLoad}
         onBufferEnd={() => setIsReady(true)}
         onBuffer={() => setIsReady(false)}
-        onError={(e)=>{console.log(e)}}
+        onError={(e)=>{setError(e)}}
       />
     </S.Container>
   );
