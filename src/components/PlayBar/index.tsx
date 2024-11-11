@@ -15,15 +15,15 @@ const PlayBar = () => {
   const [isReady, setIsReady] = useState(false);
   const [queueIdx, setQueueIdx] = useState(0);
   const [isLoop, setIsLoop] = useState(false);
-  const nowPlaying = useNowPlayingStore(state=>state.nowPlaying);
+  const nowPlaying = useNowPlayingStore((state) => state.nowPlaying);
   const playerRef = useRef<ReactPlayer | null>(null);
-  const setError = usePlayerErrorStore(state=>state.setError);
+  const setError = usePlayerErrorStore((state) => state.setError);
 
-  useEffect(()=>{
-    if(nowPlaying.videoId.length > 0) {
+  useEffect(() => {
+    if (nowPlaying.videoId.length > 0) {
       setIsPlaying(true);
     }
-  },[nowPlaying.videoId]);
+  }, [nowPlaying.videoId]);
 
   const handlePlay = () => {
     setIsPlaying((prev) => !prev);
@@ -35,16 +35,16 @@ const PlayBar = () => {
   };
 
   const handleEnd = () => {
-    if(queueIdx === songs.length - 1) {
-      if(isLoop){
+    if (queueIdx === songs.length - 1) {
+      if (isLoop) {
         setQueueIdx(0);
-      }else{
+      } else {
         setIsPlaying(false);
       }
-    }else{
+    } else {
       setQueueIdx((prev) => prev + 1);
     }
-  }
+  };
 
   const handleNext = () => {
     if (queueIdx === songs.length - 1) {
@@ -58,10 +58,10 @@ const PlayBar = () => {
       setQueueIdx((prev) => prev + 1);
       setIsPlaying(true);
     }
-  }
+  };
 
   const handlePrevious = () => {
-    if(progress >= 0.2) {
+    if (progress >= 0.2) {
       setProgress(0);
       playerRef.current?.seekTo(0);
       return;
@@ -77,8 +77,7 @@ const PlayBar = () => {
       setQueueIdx((prev) => prev - 1);
       setIsPlaying(true);
     }
-  }
-
+  };
 
   const formatTime = (seconds: number) => {
     const hours = Math.floor(seconds / 3600);
@@ -96,7 +95,6 @@ const PlayBar = () => {
     }
   };
 
-
   return (
     <S.Container>
       <S.Playbar>
@@ -108,14 +106,7 @@ const PlayBar = () => {
           />
           <S.MusicInfo>
             <S.MusicTitle>{nowPlaying.title}</S.MusicTitle>
-            <S.MusicArtistWrap>
-              {nowPlaying.artist.map((data, idx) => (
-                <S.MusicArtist key={idx}>
-                  {data.name}{" "}
-                  {idx !== nowPlaying.artist.length - 1 && "&\u00A0"}
-                </S.MusicArtist>
-              ))}
-            </S.MusicArtistWrap>
+            <S.MusicArtist>{nowPlaying.artist}</S.MusicArtist>
           </S.MusicInfo>
         </S.InfoWrap>
         <S.PlayControlWrap>

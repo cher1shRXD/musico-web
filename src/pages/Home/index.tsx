@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import * as S from "./style";
 import useGetRank from "../../hooks/music/useGetRank";
 import MusicItem from "../../components/MusicItem";
-import useSortSearchResult from "../../hooks/utils/useSortSearchResult";
 import useSearchMusic from "../../hooks/music/useSearchMusic";
 import { useNowPlayingStore } from "../../store/music/useNowPlayingStore";
 import { usePlayerErrorStore } from "../../store/player/usePlayerErrorStore";
@@ -11,11 +10,9 @@ import { SpotifyResponse } from "../../types/music/spotifyResponse";
 
 const Home = () => {
   const { getRank, rankData } = useGetRank();
-  const sortSearchResult = useSortSearchResult();
   const { searchResult, searchMusic } = useSearchMusic();
   const setNowPlaying = useNowPlayingStore((state) => state.setNowPlaying);
   const error = usePlayerErrorStore((state) => state.error);
-  const [sortedData, setSortedData] = useState<YoutubeResponse[]>([]);
   const [musicTitle, setMusicTitle] = useState("");
   const [musicArtist, setMusicArtist] = useState("");
 
@@ -34,19 +31,12 @@ const Home = () => {
     if(musicArtist.length === 0 || musicTitle.length === 0) {
       return;
     }
-    const sorted = sortSearchResult(
-      searchResult,
-      musicArtist,
-      musicTitle
-    );
-    setSortedData(sorted);
-    console.log(sorted);
 
-    const selected = sorted[0];
+    const selected = searchResult[0];
     if (selected) {
       setNowPlaying({
         title: selected.title,
-        artist: selected.artists,
+        artist: selected.author,
         coverUrl: `https://img.youtube.com/vi/${selected.videoId}/mqdefault.jpg`,
         videoId: selected.videoId,
       });
@@ -57,11 +47,11 @@ const Home = () => {
     if(error !== 150){
       return;
     }
-    const selected = sortedData[1];
+    const selected = searchResult[1];
     if (selected) {
       setNowPlaying({
         title: selected.title,
-        artist: selected.artists,
+        artist: selected.author,
         coverUrl: `https://img.youtube.com/vi/${selected.videoId}/mqdefault.jpg`,
         videoId: selected.videoId,
       });
