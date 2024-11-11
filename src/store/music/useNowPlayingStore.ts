@@ -8,6 +8,7 @@ export const useNowPlayingStore = create<NowPlaying>((set) => ({
     title: "",
     coverUrl: "",
     videoId: "",
+    trackId: ''
   },
   setNowPlaying: (musicData: MusicData) => set({ nowPlaying: musicData }),
 }));

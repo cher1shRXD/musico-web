@@ -1,36 +1,32 @@
 import { useState } from "react";
-import { SpotifyResponse } from "../../types/music/spotifyResponse";
+import { VibeResponse } from "../../types/music/vibeResponse";
 import axios from "axios";
 import { notification } from "antd";
-import { YoutubeResponse } from "../../types/music/youtubeResponse";
 
 const useGetRank = () => {
-  const [rankData, setRankData] = useState<SpotifyResponse[]>([]);
+  const [rankData, setRankData] = useState<VibeResponse[]>([]);
 
   const getRank = async () => {
     try {
       const { data } = await axios.get(
-        `https://musicdata-api.p.rapidapi.com/spotify/chart/kr/weekly`,
-        {
-          headers: {
-            "x-rapidapi-host": "musicdata-api.p.rapidapi.com",
-            "x-rapidapi-key": process.env.REACT_APP_RAPID_KEY,
-          },
-        }
+        `http://localhost:4000/vibe-chart-top100`
       );
 
       if (data) {
         setRankData(data);
       }
     } catch {
-      notification.error({message: '랭킹 가져오기 실패', description: '네트워크 에러'});
+      notification.error({
+        message: "랭킹 가져오기 실패",
+        description: "네트워크 에러",
+      });
     }
-  }
+  };
 
   return {
     rankData,
-    getRank
-  }
+    getRank,
+  };
 };
 
 export default useGetRank;

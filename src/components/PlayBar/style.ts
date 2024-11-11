@@ -13,6 +13,15 @@ const FadeIn = keyframes`
   }
 `;
 
+const Spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
 export const Container = styled.div`
   width: calc(100vw - 32rem);
   height: 14rem;
@@ -52,6 +61,7 @@ export const Cover = styled.img<{ isPlaying: boolean }>`
   border-radius: 100rem;
   object-fit: cover;
   object-position: center;
+  animation: ${Spin} 4s linear infinite;
 `;
 
 export const PlayControlWrap = styled.div`

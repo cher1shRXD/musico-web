@@ -4,7 +4,6 @@ import ReactPlayer from "react-player";
 import ProgressBar from "../ProgressBar";
 import { useNowPlayingStore } from "../../store/music/useNowPlayingStore";
 import { usePlayerErrorStore } from "../../store/player/usePlayerErrorStore";
-import { YoutubeResponse } from "../../types/music/youtubeResponse";
 
 const songs = ["Q0sZX07H2Ew", "wtUaW2HEsCY", "lA76F5OZbiM", "8EfV1RhgQaI"];
 
@@ -38,6 +37,9 @@ const PlayBar = () => {
     if (queueIdx === songs.length - 1) {
       if (isLoop) {
         setQueueIdx(0);
+        console.log('루프 온, 송 엔드');
+        playerRef.current?.seekTo(0);
+        setIsPlaying(true);
       } else {
         setIsPlaying(false);
       }

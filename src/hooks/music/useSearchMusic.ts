@@ -1,46 +1,29 @@
-import { useState } from "react";
-import { YoutubeResponse } from "../../types/music/youtubeResponse";
+import { useState } from "react"
+import { VibeResponse } from "../../types/music/vibeResponse";
 import axios from "axios";
 import { notification } from "antd";
 
 const useSearchMusic = () => {
-  const [searchResult, setSearchResult] = useState<YoutubeResponse[]>([]);
+  const [searchResult, setSearchMusic] = useState<VibeResponse[]>([]);
 
-  const searchMusic = async (keyword: string) => {
-    try {
-      const songResult = await axios.get(
-        `https://youtube-music-api3.p.rapidapi.com/search?q=${keyword}&type=song`,
-        {
-          headers: {
-            "x-rapidapi-host": "youtube-music-api3.p.rapidapi.com",
-            "x-rapidapi-key": process.env.REACT_APP_RAPID_KEY,
-          },
-        }
-      );
-      const videoResult = await axios.get(
-        `https://youtube-music-api3.p.rapidapi.com/search?q=${keyword}&type=videos`,
-        {
-          headers: {
-            "x-rapidapi-host": "youtube-music-api3.p.rapidapi.com",
-            "x-rapidapi-key": process.env.REACT_APP_RAPID_KEY,
-          },
-        }
-      );
-      if (songResult && videoResult) {
-        setSearchResult([songResult.data.result[0], videoResult.data.result[0]]);
+  const searchMusic = async (query: string) => {
+    try{
+      const { data } = await axios.get(`http://localhost:4000/search?q=${query}`);
+      if(data) {
+        setSearchMusic(data);
       }
-    } catch {
+    }catch{
       notification.error({
         message: "검색결과 가져오기 실패",
         description: "네트워크 에러",
       });
     }
-  };
-
+  }
+  
   return {
     searchMusic,
-    searchResult,
-  };
-};
+    searchResult
+  }
+}
 
-export default useSearchMusic;
+export default useSearchMusic

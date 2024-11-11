@@ -2,61 +2,64 @@ import { useEffect, useState } from "react";
 import * as S from "./style";
 import useGetRank from "../../hooks/music/useGetRank";
 import MusicItem from "../../components/MusicItem";
-import useSearchMusic from "../../hooks/music/useSearchMusic";
+import useGetYoutube from "../../hooks/music/useGetYoutube";
 import { useNowPlayingStore } from "../../store/music/useNowPlayingStore";
 import { usePlayerErrorStore } from "../../store/player/usePlayerErrorStore";
-import { YoutubeResponse } from "../../types/music/youtubeResponse";
-import { SpotifyResponse } from "../../types/music/spotifyResponse";
+import { VibeResponse } from "../../types/music/vibeResponse";
+import { Artist } from "../../types/music/artist";
 
 const Home = () => {
   const { getRank, rankData } = useGetRank();
-  const { searchResult, searchMusic } = useSearchMusic();
+  const { getYoutubeMusic, youtubeResult } = useGetYoutube();
   const setNowPlaying = useNowPlayingStore((state) => state.setNowPlaying);
   const error = usePlayerErrorStore((state) => state.error);
   const [musicTitle, setMusicTitle] = useState("");
-  const [musicArtist, setMusicArtist] = useState("");
+  const [musicArtist, setMusicArtist] = useState<Artist[]>([]);
+  const [trackId, setTrackId] = useState("");
 
   useEffect(() => {
     getRank();
   }, []);
 
-  const handleClickMusic = (data: SpotifyResponse) => {
-    const degradeKeyword = data.artist_and_title.split(' - ');
-    setMusicArtist(degradeKeyword[0]);
-    setMusicTitle(degradeKeyword[1]);
-    searchMusic(data.artist_and_title);
-  }
+  const handleClickMusic = (data: VibeResponse) => {
+    setMusicArtist(data.artists);
+    setMusicTitle(data.title);
+    setTrackId(data.trackId);
+    getYoutubeMusic(`${data.title} - ${data.artists[0].artistName}`);
+  };
 
   useEffect(() => {
-    if(musicArtist.length === 0 || musicTitle.length === 0) {
+    if (musicArtist.length === 0 || musicTitle.length === 0) {
       return;
     }
 
-    const selected = searchResult[0];
+    const selected = youtubeResult[0];
     if (selected) {
       setNowPlaying({
         title: selected.title,
         artist: selected.author,
         coverUrl: `https://img.youtube.com/vi/${selected.videoId}/mqdefault.jpg`,
         videoId: selected.videoId,
+        trackId,
       });
     }
-  }, [searchResult]);
+  }, [getYoutubeMusic]);
 
-  useEffect(()=>{
-    if(error !== 150){
+  useEffect(() => {
+    if (error !== 150) {
       return;
     }
-    const selected = searchResult[1];
+    const selected = youtubeResult[1];
     if (selected) {
       setNowPlaying({
         title: selected.title,
         artist: selected.author,
         coverUrl: `https://img.youtube.com/vi/${selected.videoId}/mqdefault.jpg`,
         videoId: selected.videoId,
+        trackId,
       });
     }
-  },[error]);
+  }, [error]);
 
   return (
     <S.Container>
@@ -70,7 +73,11 @@ const Home = () => {
       </S.SearchWrap>
       <S.ContentWrap>
         {rankData.map((data) => (
-          <MusicItem data={data} key={data.ranking} onClick={() => handleClickMusic(data)} />
+          <MusicItem
+            data={data}
+            key={data.trackId}
+            onClick={() => handleClickMusic(data)}
+          />
         ))}
       </S.ContentWrap>
     </S.Container>

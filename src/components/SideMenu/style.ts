@@ -7,9 +7,6 @@ const FadeIn = keyframes`
   0%{
     left: -32rem;
   }
-  70%{
-    left: 1rem;
-  }
   100%{
     left: 0rem;
   }
@@ -26,6 +23,7 @@ export const Container = styled.div`
   padding: 1.2rem;
   flex-direction: column;
   animation: ${FadeIn} 0.5s forwards;
+  background-color: white;
 `;
 
 export const Logo = styled.img`
