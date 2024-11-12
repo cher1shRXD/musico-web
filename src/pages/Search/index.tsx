@@ -1,84 +1,83 @@
-import { useEffect, useState } from "react"
+import { useState } from "react";
 import useSearchMusic from "../../hooks/music/useSearchMusic";
-import { VibeResponse } from "../../types/music/vibeResponse";
-import useGetYoutube from "../../hooks/music/useGetYoutube";
-import { useNowPlayingStore } from "../../store/music/useNowPlayingStore";
-import { usePlayerErrorStore } from "../../store/player/usePlayerErrorStore";
-import { Artist } from "../../types/music/artist";
 import MusicItem from "../../components/MusicItem";
+import * as S from "./style";
+import { notification } from "antd";
 
 const Search = () => {
-  const [query, setQuery] = useState('');
-  const { searchResult, searchMusic } = useSearchMusic(); 
-  const { youtubeResult, getYoutubeMusic } = useGetYoutube();
-  const setNowPlaying = useNowPlayingStore((state) => state.setNowPlaying);
-  const error = usePlayerErrorStore((state) => state.error);
-  const [musicTitle, setMusicTitle] = useState("");
-  const [musicArtist, setMusicArtist] = useState<Artist[]>([]);
-  const [trackId, setTrackId] = useState("");
+  const [query, setQuery] = useState("");
+  const [requestedQuery, setRequestedQuery] = useState("");
+  const { searchResult, searchMusic } = useSearchMusic();
+  const [isRequested, setIsRequested] = useState(false);
 
   const handleQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
-  }
-
-  const searchRequest = () => {
-    searchMusic(query);
-  }
-
-  const handleClickMusic = (data: VibeResponse) => {
-    setMusicArtist(data.artists);
-    setMusicTitle(data.title);
-    setTrackId(data.trackId);
-    getYoutubeMusic(`${data.title} - ${data.artists[0].artistName}`);
   };
 
-  useEffect(() => {
-    if (musicArtist.length === 0 || musicTitle.length === 0) {
+  const searchRequest = () => {
+    if (query.trim().length === 0) {
+      notification.info({
+        message: "검색어를 최소 한 글자 이상 입력해주세요.",
+      });
       return;
     }
-
-    const selected = youtubeResult[0];
-    if (selected) {
-      setNowPlaying({
-        title: selected.title,
-        artist: selected.author,
-        coverUrl: `https://img.youtube.com/vi/${selected.videoId}/mqdefault.jpg`,
-        videoId: selected.videoId,
-        trackId,
-      });
-    }
-  }, [youtubeResult]);
-
-  useEffect(() => {
-    if (error !== 150) {
-      return;
-    }
-    const selected = youtubeResult[1];
-    if (selected) {
-      setNowPlaying({
-        title: selected.title,
-        artist: selected.author,
-        coverUrl: `https://img.youtube.com/vi/${selected.videoId}/mqdefault.jpg`,
-        videoId: selected.videoId,
-        trackId,
-      });
-    }
-  }, [error]);
+    searchMusic(query);
+    setRequestedQuery(query);
+    setIsRequested(true);
+  };
 
   return (
-    <div>
-      <input type="text" onChange={handleQuery} value={query}/>
-      <button onClick={searchRequest}>검색</button>
+    <S.Container>
+      <S.SearchWrap>
+        <S.Search>
+          <S.SearchInput
+            type="search"
+            onChange={handleQuery}
+            value={query}
+            placeholder="검색어를 입력해주세요."
+            autoFocus
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && e.nativeEvent.isComposing === false) {
+                searchRequest();
+              }
+            }}
+          />
+          <S.SearchIcon src="/assets/searchIcon.svg" onClick={searchRequest} />
+        </S.Search>
+      </S.SearchWrap>
+      {!isRequested ? (
+        <S.NoResultWrap>
+          <S.NoResult>검색어를 입력해주세요.</S.NoResult>
+        </S.NoResultWrap>
+      ) : searchResult.length === 0 ? (
+        <S.NoResultWrap>
+          <S.NoResult>검색결과가 없습니다.</S.NoResult>
+        </S.NoResultWrap>
+      ) : (
+        <>
+          <S.SearchTextWrap>
+            <S.SearchText>
+              "{requestedQuery}"의 검색결과
+              <S.SearchTextAccent> {searchResult.length}건</S.SearchTextAccent>
+            </S.SearchText>
+            <S.InfoIcon src="/assets/infoGray.svg" alt=""/>
+          </S.SearchTextWrap>
+          <S.ContentWrap>
+            <S.ResultWrap>
+              {searchResult.map((data) => (
+                <MusicItem data={data} key={data.trackId} />
+              ))}
+            </S.ResultWrap>
+            <S.RecommendWrap>
+              <S.Recommend>
+                <S.RecommendTitle>이런 곡은 어때요?</S.RecommendTitle>
+              </S.Recommend>
+            </S.RecommendWrap>
+          </S.ContentWrap>
+        </>
+      )}
+    </S.Container>
+  );
+};
 
-      <div>
-        {
-          searchResult.map((data)=>(
-            <MusicItem onClick={()=>handleClickMusic(data)} data={data} key={data.trackId}/>
-          ))
-        }
-      </div>
-    </div>
-  )
-}
-
-export default Search
+export default Search;

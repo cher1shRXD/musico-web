@@ -2,8 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import RootLayout from "../../layouts/RootLayout";
 import Home from "../../pages/Home";
 import Search from "../../pages/Search";
-import Newest from "../../pages/Newest";
 import Chart from "../../pages/Chart";
+import Newest from "../../pages/Newest";
 
 const Router = () => {
   return (

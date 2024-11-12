@@ -1,21 +1,37 @@
 import { useNowPlayingStore } from "../../store/music/useNowPlayingStore";
+import { usePlayerReadyStore } from "../../store/player/usePlayerReadyStore";
+import { usePlayerStateStore } from "../../store/player/usePlayerStateStore";
 import { VibeResponse } from "../../types/music/vibeResponse";
 import * as S from "./style";
 
 const MusicItem = ({
   data,
-  onClick,
   type,
   rank,
 }: {
   data: VibeResponse;
-  onClick: () => void;
   type?: string;
   rank?: number;
 }) => {
   const nowPlaying = useNowPlayingStore((state) => state.nowPlaying);
+  const setNowPlaying = useNowPlayingStore((state) => state.setNowPlaying);
+  const setIsReady = usePlayerReadyStore((state) => state.setIsReady);
+  const setIsPlaying = usePlayerStateStore((state) => state.setIsPlaying);
+
+  const handleClickMusic = () => {
+    setIsReady(false);
+    setIsPlaying(false);
+    setNowPlaying({
+      ...nowPlaying,
+      artist: data.artists,
+      title: data.title,
+      trackId: data.trackId,
+      coverUrl: data.albumArt,
+    });
+  };
+
   return (
-    <S.Container onClick={onClick}>
+    <S.Container onClick={handleClickMusic}>
       {type && type == "rank" && (
         <S.RankNumber
           isTop={rank ? rank <= 5 : undefined}

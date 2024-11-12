@@ -5,7 +5,7 @@ export const Container = styled.div`
   width: 100%;
   min-width: 32rem;
   height: 12rem;
-  padding: 1rem 2rem;
+  padding: 1rem 3rem 1rem 1rem;
   cursor: pointer;
   transition: all 0.5s;
   cursor: pointer;

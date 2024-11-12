@@ -24,7 +24,7 @@ const Spin = keyframes`
 
 export const Container = styled.div`
   width: calc(100vw - 32rem);
-  height: 14rem;
+  height: 12rem;
   position: fixed;
   right: 0;
   bottom: 0;
@@ -32,10 +32,11 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 999;
+  overflow: visible;
 `;
 
 export const Playbar = styled.div`
-  width: 95%;
+  width: 98%;
   height: 10rem;
   border-radius: 100rem;
   box-shadow: 0.1rem 0.1rem 1rem 0.1rem #ccc;
@@ -46,6 +47,7 @@ export const Playbar = styled.div`
   align-items: center;
   justify-content: space-between;
   z-index: 999;
+  background-color: white;
 `;
 
 export const InfoWrap = styled.div`
@@ -55,7 +57,7 @@ export const InfoWrap = styled.div`
   gap: 1rem;
 `;
 
-export const Cover = styled.img<{ isPlaying: boolean }>`
+export const Cover = styled.img`
   width: 8rem;
   height: 8rem;
   border-radius: 100rem;

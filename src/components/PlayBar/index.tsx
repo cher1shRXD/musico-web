@@ -1,31 +1,31 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as S from "./style";
 import ReactPlayer from "react-player";
 import ProgressBar from "../ProgressBar";
 import { useNowPlayingStore } from "../../store/music/useNowPlayingStore";
 import { usePlayerErrorStore } from "../../store/player/usePlayerErrorStore";
+import { usePlayerReadyStore } from "../../store/player/usePlayerReadyStore";
+import { usePlayerStateStore } from "../../store/player/usePlayerStateStore";
 
 const songs = ["Q0sZX07H2Ew", "wtUaW2HEsCY", "lA76F5OZbiM", "8EfV1RhgQaI"];
 
 const PlayBar = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  // const [isPlaying, setIsPlaying] = useState(false);
+  const isPlaying = usePlayerStateStore(state=>state.isPlaying);
+  const setIsPlaying = usePlayerStateStore((state) => state.setIsPlaying);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [isReady, setIsReady] = useState(false);
+  // const [isReady, setIsReady] = useState(false);
+  const isReady = usePlayerReadyStore(state=>state.isReady);
+  const setIsReady = usePlayerReadyStore(state=>state.setIsReady);
   const [queueIdx, setQueueIdx] = useState(0);
   const [isLoop, setIsLoop] = useState(false);
   const nowPlaying = useNowPlayingStore((state) => state.nowPlaying);
   const playerRef = useRef<ReactPlayer | null>(null);
   const setError = usePlayerErrorStore((state) => state.setError);
 
-  useEffect(() => {
-    if (nowPlaying.videoId.length > 0) {
-      setIsPlaying(true);
-    }
-  }, [nowPlaying.videoId]);
-
   const handlePlay = () => {
-    setIsPlaying((prev) => !prev);
+    setIsPlaying(!isPlaying);
   };
 
   const handleLoad = () => {
@@ -97,6 +97,29 @@ const PlayBar = () => {
     }
   };
 
+  const handleSpace = useCallback(
+    (e: KeyboardEvent) => {
+      if (
+        (e.target as HTMLElement).tagName === "INPUT" ||
+        (e.target as HTMLElement).tagName === "TEXTAREA"
+      ) {
+        return;
+      }
+      if (e.key === " ") {
+        e.preventDefault();
+        setIsPlaying(!isPlaying);
+      }
+    },
+    [isPlaying, setIsPlaying]
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleSpace);
+    return () => {
+      document.removeEventListener("keydown", handleSpace);
+    };
+  }, [handleSpace]);
+
   return (
     <S.Container>
       <S.Playbar>
@@ -104,11 +127,17 @@ const PlayBar = () => {
           <S.Cover
             src={!isReady ? "/assets/loading.gif" : nowPlaying.coverUrl}
             alt=""
-            isPlaying={isPlaying}
           />
           <S.MusicInfo>
             <S.MusicTitle>{nowPlaying.title}</S.MusicTitle>
-            <S.MusicArtist>{nowPlaying.artist}</S.MusicArtist>
+            <S.MusicArtistWrap>
+              {nowPlaying.artist.map((artist, idx) => (
+                <S.MusicArtist>
+                  {artist.artistName}
+                  {idx !== nowPlaying.artist.length - 1 && " &\u00A0"}
+                </S.MusicArtist>
+              ))}
+            </S.MusicArtistWrap>
           </S.MusicInfo>
         </S.InfoWrap>
         <S.PlayControlWrap>

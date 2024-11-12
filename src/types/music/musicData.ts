@@ -1,5 +1,7 @@
+import { Artist } from "./artist";
+
 export interface MusicData {
-  artist: string;
+  artist: Artist[];
   title: string;
   coverUrl: string;
   videoId: string;

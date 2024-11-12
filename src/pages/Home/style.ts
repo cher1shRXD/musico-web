@@ -1,10 +1,8 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-import { POINT } from "../../constants/colors";
 
 export const Container = styled.div`
   width: 100%;
-  height: 100%;
   padding: 0 1rem;
 `;
 
@@ -13,24 +11,21 @@ export const SearchWrap = styled.div`
   height: 8rem;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 0 2rem;
+  margin-top: 4rem;
 `;
 
 export const Search = styled(Link)`
   width: 100%;
   max-width: 52rem;
-  height: 4rem;
-  background: linear-gradient(
-    79deg,
-    ${POINT.thirdary} 0%,
-    ${POINT.secondary} 100%
-  );
-  border-radius: 10rem;
+  height: 5rem;
+  border: 0.1rem solid #f1f1f1;
+  border-radius: 1rem;
   padding: 0 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
   text-decoration: none;
 `;
 
@@ -42,16 +37,15 @@ export const SearchIcon = styled.img`
 `;
 
 export const SearchPlaceholder = styled.p`
-  font-size: 1.2rem;
-  color: white;
+  font-size: 1.6rem;
+  color: gray;
 `;
+
 export const ContentWrap = styled.div`
   width: 100%;
-  height: calc(100% - 8rem);
   display: flex;
   justify-content: start;
   align-items: start;
   flex-wrap: wrap;
   padding: 0 2rem;
-  overflow-y: scroll;
 `;

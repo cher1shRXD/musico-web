@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Outlet } from "react-router-dom";
 
 export const Container = styled.div`
   width: 100%;
@@ -12,7 +13,6 @@ export const Container = styled.div`
 
 export const Main = styled.div`
   width: 100%;
-  height: 100%;
   overflow-y: scroll;
-  margin-bottom: 14rem;
+  padding-bottom: 15rem;
 `;

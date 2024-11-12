@@ -26,8 +26,11 @@ const useGetYoutube = () => {
           },
         }
       );
-      if (songResult && videoResult) {
-        setYoutubeResult([songResult.data.result[0], videoResult.data.result[0]]);
+      if (songResult.data.result) {
+        setYoutubeResult([songResult.data.result[0]]);
+      }
+      if (videoResult.data.result) {
+        setYoutubeResult(prev=>[...prev, videoResult.data.result[0]]);
       }
     } catch {
       notification.error({

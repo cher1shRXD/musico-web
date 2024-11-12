@@ -12,8 +12,8 @@ export const Banner = styled.div`
   align-items: flex-end;
   background: linear-gradient(
     79deg,
-    ${POINT.primary} 0%,
-    ${POINT.thirdary} 100%
+    ${POINT.secondary} 0%,
+    ${POINT.primary} 100%
   );
   padding: 4rem;
 `;
@@ -65,8 +65,3 @@ export const TopVideo = styled.div`
   top: 0;
   background-color: white;
 `;
-
-export const Korea = styled.span`
-  font-weight: 300;
-  font-size: 2.4rem;
-`
