@@ -8,7 +8,9 @@ const useSearchMusic = () => {
 
   const searchMusic = async (query: string) => {
     try{
-      const { data } = await axios.get(`http://localhost:4000/search?q=${query}`);
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_EXPRESS_SERVER}/songs/search?q=${query}`
+      );
       if(data) {
         setSearchMusic(data);
       }

@@ -24,7 +24,7 @@ const Chart = () => {
 
   useEffect(()=>{
     if(youtubeResult.length > 0) {
-      setTopVideoId(youtubeResult[0].videoId);
+      setTopVideoId(youtubeResult);
     }
   }, [youtubeResult]);
 

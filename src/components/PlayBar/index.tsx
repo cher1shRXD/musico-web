@@ -3,7 +3,6 @@ import * as S from "./style";
 import ReactPlayer from "react-player";
 import ProgressBar from "../ProgressBar";
 import { useNowPlayingStore } from "../../store/music/useNowPlayingStore";
-import { usePlayerErrorStore } from "../../store/player/usePlayerErrorStore";
 import { usePlayerReadyStore } from "../../store/player/usePlayerReadyStore";
 import { usePlayerStateStore } from "../../store/player/usePlayerStateStore";
 
@@ -22,14 +21,12 @@ const PlayBar = () => {
   const [isLoop, setIsLoop] = useState(false);
   const nowPlaying = useNowPlayingStore((state) => state.nowPlaying);
   const playerRef = useRef<ReactPlayer | null>(null);
-  const setError = usePlayerErrorStore((state) => state.setError);
 
   const handlePlay = () => {
     setIsPlaying(!isPlaying);
   };
 
   const handleLoad = () => {
-    setError(null);
     setIsReady(true);
   };
 
@@ -185,9 +182,6 @@ const PlayBar = () => {
         onReady={handleLoad}
         onBufferEnd={() => setIsReady(true)}
         onBuffer={() => setIsReady(false)}
-        onError={(e) => {
-          setError(e);
-        }}
       />
     </S.Container>
   );

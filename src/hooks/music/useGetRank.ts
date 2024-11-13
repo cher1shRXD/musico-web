@@ -9,7 +9,7 @@ const useGetRank = () => {
   const getRank = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:4000/vibe-chart-top100`
+        `${process.env.REACT_APP_EXPRESS_SERVER}/songs/chart`
       );
 
       if (data) {

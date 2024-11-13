@@ -1,16 +1,7 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { POINT } from "../../constants/colors";
-import { keyframes } from "@emotion/react";
 
-const FadeIn = keyframes`
-  0%{
-    left: -32rem;
-  }
-  100%{
-    left: 0rem;
-  }
-`
 
 export const Container = styled.div`
   width: 32rem;
@@ -22,7 +13,6 @@ export const Container = styled.div`
   display: flex;
   padding: 1.2rem;
   flex-direction: column;
-  animation: ${FadeIn} 0.5s forwards;
   background-color: white;
 `;
 

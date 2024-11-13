@@ -9,7 +9,7 @@ const useGetNewSong = () => {
   const getNewSong = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:4000/new-songs`
+        `${process.env.REACT_APP_EXPRESS_SERVER}/songs/new-songs`
       );
 
       if (data) {
