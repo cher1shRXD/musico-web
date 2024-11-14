@@ -1,13 +1,21 @@
 import { useLocation } from "react-router-dom";
 import * as S from "./style";
+import useGetMe from "../../hooks/auth/useGetMe";
+import { useEffect } from "react";
 
 const SideMenu = () => {
   const location = useLocation();
 
+  const getMe = useGetMe();
+
+  useEffect(() => {
+    getMe();
+  }, []);
+
   return (
     <S.Container>
       <S.Logo src="/assets/musico_reversed.svg" />
-      <S.MenuItem to="/" isFocused={location.pathname === "/"}>
+      <S.MenuItem to="/" isfocused={`${location.pathname === "/"}`}>
         <S.MeunIcon
           src={
             location.pathname === "/"
@@ -17,7 +25,7 @@ const SideMenu = () => {
         />
         <S.MenuText>홈</S.MenuText>
       </S.MenuItem>
-      <S.MenuItem to="/search" isFocused={location.pathname === "/search"}>
+      <S.MenuItem to="/search" isfocused={`${location.pathname === "/search"}`}>
         <S.MeunIcon
           src={
             location.pathname === "/search"
@@ -27,7 +35,10 @@ const SideMenu = () => {
         />
         <S.MenuText>검색</S.MenuText>
       </S.MenuItem>
-      <S.MenuItem to="/newest" isFocused={location.pathname === "/newest"}>
+      <S.MenuItem
+        to="/newest"
+        isfocused={`${location.pathname === "/newest"}`}
+      >
         <S.MeunIcon
           src={
             location.pathname === "/newest"
@@ -37,7 +48,7 @@ const SideMenu = () => {
         />
         <S.MenuText>최신음악</S.MenuText>
       </S.MenuItem>
-      <S.MenuItem to="/chart" isFocused={location.pathname === "/chart"}>
+      <S.MenuItem to="/chart" isfocused={`${location.pathname === "/chart"}`}>
         <S.MeunIcon
           src={
             location.pathname === "/chart"

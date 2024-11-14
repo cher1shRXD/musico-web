@@ -20,5 +20,5 @@
 
 .ant-notification {
   z-index: 99999;
-  font-size: 16px;
+  overflow: visible;
 }

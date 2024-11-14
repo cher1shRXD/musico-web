@@ -7,39 +7,39 @@ import useGetNewSong from "../../hooks/music/useGetNewSong";
 
 const Newest = () => {
   const { getNewSong, newSongData } = useGetNewSong();
-  const { youtubeResult, getYoutubeMusic } = useGetYoutube();
+  const getYoutubeMusic = useGetYoutube();
   const [topVideoId, setTopVideoId] = useState("");
+
+  const getTopVideo = async () => {
+    if (newSongData.length > 0) {
+      const youtubeResult = await getYoutubeMusic(
+        `${newSongData[0].title} - ${newSongData[0].artists[0].artistName}`
+      );
+      if (youtubeResult.length > 0) {
+        setTopVideoId(youtubeResult);
+      }
+    }
+  };
 
   useEffect(() => {
     getNewSong();
   }, []);
 
   useEffect(() => {
-    if (newSongData.length > 0) {
-      getYoutubeMusic(
-        `${newSongData[0].title} - ${newSongData[0].artists[0].artistName}`
-      );
-    }
+    getTopVideo();
   }, [newSongData]);
-
-  useEffect(() => {
-    if (youtubeResult.length > 0) {
-      setTopVideoId(youtubeResult);
-    }
-  }, [youtubeResult]);
 
   return (
     <S.Container>
       <S.Banner>
-        <S.BannerText>당신에게 다가온 새로운 {newSongData.length}곡</S.BannerText>
+        <S.BannerText>
+          당신에게 다가온 새로운 {newSongData.length}곡
+        </S.BannerText>
       </S.Banner>
       <S.ContentWrap>
         <S.RankWrap>
           {newSongData.map((data) => (
-            <MusicItem
-              data={data}
-              key={data.trackId}
-            />
+            <MusicItem data={data} key={data.trackId} />
           ))}
         </S.RankWrap>
         <S.TopVideo>

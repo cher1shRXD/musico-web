@@ -93,6 +93,7 @@ export const ControlButton = styled.img`
   cursor: pointer;
 `;
 
+
 export const TimeWrap = styled.div`
   width: 100%;
   display: flex;
@@ -101,6 +102,9 @@ export const TimeWrap = styled.div`
 
 export const OtherControlWrap = styled.div`
   width: 30rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 `;
 
 export const MusicInfo = styled.div`
@@ -123,4 +127,20 @@ export const MusicArtistWrap = styled.div`
 export const MusicArtist = styled.p`
   font-size: 1.2rem;
   color: gray;
+`
+
+export const VolumeWrap = styled.div`
+  flex: 1;
+  padding: 0 4rem 0 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+`
+
+export const VolumeIcon = styled.img`
+  width: 2.4rem;
+  height: 2.4rem;
+  object-fit: contain;
+  object-position: center;
 `

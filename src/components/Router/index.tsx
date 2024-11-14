@@ -4,6 +4,8 @@ import Home from "../../pages/Home";
 import Search from "../../pages/Search";
 import Chart from "../../pages/Chart";
 import Newest from "../../pages/Newest";
+import Login from "../../pages/Login";
+import Signup from "../../pages/Signup";
 
 const Router = () => {
   return (
@@ -15,8 +17,8 @@ const Router = () => {
           <Route path="newest" element={<Newest />} />
           <Route path="chart" element={<Chart />} />
         </Route>
-        <Route path="/login" element />
-        <Route path="/signup" element />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </BrowserRouter>
   );

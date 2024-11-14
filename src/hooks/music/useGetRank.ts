@@ -16,7 +16,7 @@ const useGetRank = () => {
         setRankData(data);
       }
     } catch {
-      notification.error({
+      notification.open({
         message: "랭킹 가져오기 실패",
         description: "네트워크 에러",
       });

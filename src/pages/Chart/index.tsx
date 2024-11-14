@@ -7,26 +7,27 @@ import MusicItem from "../../components/MusicItem";
 
 const Chart = () => {
   const { getRank, rankData } = useGetRank();
-  const { youtubeResult, getYoutubeMusic } = useGetYoutube();
+  const getYoutubeMusic  = useGetYoutube();
   const [topVideoId, setTopVideoId] = useState("");
+
+  const getTopVideo = async () => {
+    if(rankData.length > 0) {
+      const youtubeResult = await getYoutubeMusic(
+        `${rankData[0].title} - ${rankData[0].artists[0].artistName}`
+      );
+      if (youtubeResult.length > 0) {
+        setTopVideoId(youtubeResult);
+      }
+    }
+  }
 
   useEffect(() => {
     getRank();
   }, []);
 
-  useEffect(() => {
-    if (rankData.length > 0) {
-      getYoutubeMusic(
-        `${rankData[0].title} - ${rankData[0].artists[0].artistName}`
-      );
-    }
-  }, [rankData]);
-
   useEffect(()=>{
-    if(youtubeResult.length > 0) {
-      setTopVideoId(youtubeResult);
-    }
-  }, [youtubeResult]);
+    getTopVideo();
+  }, [rankData]);
 
 
   return (

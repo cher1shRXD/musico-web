@@ -1,6 +1,7 @@
 import { useNowPlayingStore } from "../../store/music/useNowPlayingStore";
 import { usePlayerReadyStore } from "../../store/player/usePlayerReadyStore";
 import { usePlayerStateStore } from "../../store/player/usePlayerStateStore";
+import { useUserStore } from "../../store/user/useUserStore";
 import { VibeResponse } from "../../types/music/vibeResponse";
 import * as S from "./style";
 
@@ -13,25 +14,26 @@ const MusicItem = ({
   type?: string;
   rank?: number;
 }) => {
-  const nowPlaying = useNowPlayingStore((state) => state.nowPlaying);
-  const setNowPlaying = useNowPlayingStore((state) => state.setNowPlaying);
+  const user = useUserStore((state) => state.user);
   const setIsReady = usePlayerReadyStore((state) => state.setIsReady);
   const setIsPlaying = usePlayerStateStore((state) => state.setIsPlaying);
+  const setNowPlaying = useNowPlayingStore((state) => state.setNowPlaying);
 
-  const handleClickMusic = () => {
+  const handleClickMusic = async () => {
     setIsReady(false);
     setIsPlaying(false);
-    setNowPlaying({
-      ...nowPlaying,
+    const playData = {
+      videoId: "",
       artist: data.artists,
       title: data.title,
       trackId: data.trackId,
       coverUrl: data.albumArt,
-    });
+    };
+    setNowPlaying(playData);
   };
 
   return (
-    <S.Container onClick={handleClickMusic}>
+    <S.Container>
       {type && type == "rank" && (
         <S.RankNumber
           isTop={rank ? rank <= 5 : undefined}
@@ -45,7 +47,7 @@ const MusicItem = ({
         <S.MusicTitle>{data.title}</S.MusicTitle>
         <S.MusicArtistWrap>
           {data.artists.map((artist, idx) => (
-            <S.MusicArtist>
+            <S.MusicArtist key={idx}>
               {artist.artistName}
               {idx !== data.artists.length - 1 && " &\u00A0"}
             </S.MusicArtist>
@@ -53,8 +55,19 @@ const MusicItem = ({
         </S.MusicArtistWrap>
       </S.MusicInfo>
       <S.PlayButton
+        onClick={
+          !(
+            user &&
+            user.queue.length > 0 &&
+            user.queue[user.currentNowPlaying].trackId === `${data.trackId}`
+          )
+            ? handleClickMusic
+            : () => {}
+        }
         src={
-          nowPlaying.trackId === data.trackId
+          user &&
+          user.queue.length > 0 &&
+          user.queue[user.currentNowPlaying].trackId === `${data.trackId}`
             ? "/assets/songIsPlaying.gif"
             : "/assets/playSong.svg"
         }

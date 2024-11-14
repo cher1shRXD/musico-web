@@ -32,6 +32,7 @@ export const Search = styled.div`
   align-items: center;
   justify-content: space-between;
   text-decoration: none;
+  gap: 1rem;
 `;
 
 export const SearchIcon = styled.img`

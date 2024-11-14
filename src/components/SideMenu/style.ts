@@ -30,7 +30,7 @@ export const SectionTitle = styled.p`
   color: gray;
 `;
 
-export const MenuItem = styled(Link)<{ isFocused: boolean }>`
+export const MenuItem = styled(Link)<{ isfocused: string }>`
   width: 100%;
   height: 5rem;
   display: flex;
@@ -39,9 +39,9 @@ export const MenuItem = styled(Link)<{ isFocused: boolean }>`
   text-decoration: none;
   color: black;
   padding: 1rem;
-  color: ${(props) => (props.isFocused ? "white" : "black")};
+  color: ${(props) => (props.isfocused === 'true' ? "white" : "black")};
   background: ${(props) =>
-    props.isFocused
+    props.isfocused === 'true'
       ? `linear-gradient(79deg, ${POINT.secondary} 0%, ${POINT.thirdary} 100%)`
       : "transparent"};
   border-radius: 1rem;

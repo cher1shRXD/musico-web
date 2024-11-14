@@ -15,7 +15,7 @@ const useSearchMusic = () => {
         setSearchMusic(data);
       }
     }catch{
-      notification.error({
+      notification.open({
         message: "검색결과 가져오기 실패",
         description: "네트워크 에러",
       });

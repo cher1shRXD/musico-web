@@ -16,7 +16,7 @@ const Search = () => {
 
   const searchRequest = () => {
     if (query.trim().length === 0) {
-      notification.info({
+      notification.open({
         message: "검색어를 최소 한 글자 이상 입력해주세요.",
       });
       return;
@@ -65,7 +65,7 @@ const Search = () => {
           <S.ContentWrap>
             <S.ResultWrap>
               {searchResult.map((data) => (
-                <MusicItem data={data} key={data.trackId} />
+                <MusicItem data={data} key={data.trackId}/>
               ))}
             </S.ResultWrap>
             <S.RecommendWrap>

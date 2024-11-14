@@ -1,34 +1,33 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Router from "./components/Router";
 import { useNowPlayingStore } from "./store/music/useNowPlayingStore";
 import useGetYoutube from "./hooks/music/useGetYoutube";
-import { usePlayerReadyStore } from "./store/player/usePlayerReadyStore";
-import { usePlayerStateStore } from "./store/player/usePlayerStateStore";
+import useAddSong from "./hooks/queue/useAddSong";
 
 const App = () => {
-  const setNowPlaying = useNowPlayingStore((state) => state.setNowPlaying);
-  const nowPlaying = useNowPlayingStore((state) => state.nowPlaying);
-  const { youtubeResult, getYoutubeMusic } = useGetYoutube();
-  const setIsReady = usePlayerReadyStore((state) => state.setIsReady);
-  const setIsPlaying = usePlayerStateStore(state=>state.setIsPlaying);
+  const nowPlaying = useNowPlayingStore(state=>state.nowPlaying);
+  const getYoutubeMusic = useGetYoutube();
+  const addSong = useAddSong();
+  const [videoId, setVideoId] = useState('');
+
+  const getVideoId = async () => {
+    if (nowPlaying.trackId !== "" && nowPlaying.videoId === "") {
+      const youtubeResult = await getYoutubeMusic(
+        `${nowPlaying.title}${nowPlaying.artist[0].artistName}`
+      );
+      setVideoId(youtubeResult);
+    }
+  }
 
   useEffect(()=>{
-    if(nowPlaying.trackId) {
-      getYoutubeMusic(`${nowPlaying.title}${nowPlaying.artist[0].artistName}`);
-    }
+    getVideoId();
   },[nowPlaying.trackId]);
 
-  useEffect(() => {
-    if (youtubeResult) {
-      setNowPlaying({ ...nowPlaying, videoId: youtubeResult });
-      setIsReady(true);
-      setIsPlaying(true);
-    }
-  }, [youtubeResult]);
-
   useEffect(()=>{
-    console.log(nowPlaying);
-  },[nowPlaying]);
+    if(videoId && videoId !== '') {
+      addSong({ ...nowPlaying, videoId });
+    }
+  },[videoId]);
 
   return <Router />;
 };

@@ -6,13 +6,8 @@ export const Container = styled.div`
   min-width: 32rem;
   height: 12rem;
   padding: 1rem 3rem 1rem 1rem;
-  cursor: pointer;
   transition: all 0.5s;
-  cursor: pointer;
   border-radius: 1rem;
-  &:hover {
-    background-color: #f1f1f1;
-  }
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -63,4 +58,5 @@ export const PlayButton = styled.img`
   height: 3rem;
   object-fit: contain;
   object-position: center;
+  cursor: pointer;
 `
