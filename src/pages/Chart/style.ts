@@ -69,4 +69,5 @@ export const TopVideo = styled.div`
 export const Korea = styled.span`
   font-weight: 300;
   font-size: 2.4rem;
+  margin-left: 0.4rem;
 `
