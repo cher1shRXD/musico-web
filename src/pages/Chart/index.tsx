@@ -48,7 +48,7 @@ const Chart = () => {
         </S.RankWrap>
         <S.TopVideo>
           <S.TopText>
-            Weekly #1 {rankData.length > 0 && rankData[0].title}
+          Ranking #1 "{rankData.length > 0 && rankData[0].title}"
           </S.TopText>
           <ReactPlayer
             url={`https://www.youtube.com/watch?v=${topVideoId}`}

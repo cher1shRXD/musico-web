@@ -59,7 +59,7 @@ const MusicItem = ({
           !(
             user &&
             user.queue.length > 0 &&
-            user.queue[user.currentNowPlaying].trackId === `${data.trackId}`
+            user.queue[user.currentSong].trackId === `${data.trackId}`
           )
             ? handleClickMusic
             : () => {}
@@ -67,7 +67,7 @@ const MusicItem = ({
         src={
           user &&
           user.queue.length > 0 &&
-          user.queue[user.currentNowPlaying].trackId === `${data.trackId}`
+          user.queue[user.currentSong].trackId === `${data.trackId}`
             ? "/assets/songIsPlaying.gif"
             : "/assets/playSong.svg"
         }

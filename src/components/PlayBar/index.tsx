@@ -37,7 +37,7 @@ const PlayBar = () => {
       playerRef.current?.seekTo(0);
       setIsPlaying(true);
     }
-    if (user.currentNowPlaying === user.queue.length - 1) {
+    if (user.currentSong === user.queue.length - 1) {
       if (isLoop) {
         setIsPlaying(true);
       } else {
@@ -99,9 +99,9 @@ const PlayBar = () => {
 
   useEffect(() => {
     if (
-      user?.queue[user.currentNowPlaying].videoId &&
+      user?.queue[user.currentSong].videoId &&
       isReady &&
-      user.currentNowPlaying !== user.queue.length - 1
+      user.currentSong !== user.queue.length - 1
     ) {
       setIsPlaying(true);
       return;
@@ -110,7 +110,7 @@ const PlayBar = () => {
       return;
     }
     setIsPlaying(true);
-  }, [user?.queue[user.currentNowPlaying]]);
+  }, [user?.queue[user.currentSong]]);
 
   return (
     <S.Container>
@@ -121,7 +121,7 @@ const PlayBar = () => {
               !isReady
                 ? "/assets/loading.gif"
                 : user && user.queue.length > 0
-                ? user.queue[user.currentNowPlaying].coverUrl
+                ? user.queue[user.currentSong].coverUrl
                 : "/assets/loading.gif"
             }
             alt=""
@@ -129,18 +129,18 @@ const PlayBar = () => {
           <S.MusicInfo>
             <S.MusicTitle>
               {user && user.queue.length > 0
-                ? user.queue[user.currentNowPlaying].title
+                ? user.queue[user.currentSong].title
                 : "재생중인 곡이 없습니다."}
             </S.MusicTitle>
             <S.MusicArtistWrap>
               {user &&
                 user.queue.length > 0 &&
-                user.queue[user.currentNowPlaying].artist.map((artist, idx) => (
+                user.queue[user.currentSong].artist.map((artist, idx) => (
                   <S.MusicArtist key={idx}>
                     {`${artist.artistName}
                     ${
                       idx !==
-                      user.queue[user.currentNowPlaying].artist.length - 1
+                      user.queue[user.currentSong].artist.length - 1
                         ? " &\u00A0"
                         : ""
                     }`}
@@ -199,7 +199,7 @@ const PlayBar = () => {
       <ReactPlayer
         url={`https://www.youtube.com/watch?v=${
           user && user.queue.length > 0
-            ? user.queue[user.currentNowPlaying].videoId
+            ? user.queue[user.currentSong].videoId
             : ""
         }`}
         playing={isPlaying}

@@ -3,7 +3,7 @@ import { MusicData } from "../music/musicData";
 export interface User {
   _id: string;
   username: string;
-  currentNowPlaying: number;
+  currentSong: number;
   queue: MusicData[];
   createdAt: string;
   updatedAt: string;

@@ -44,7 +44,7 @@ const Newest = () => {
         </S.RankWrap>
         <S.TopVideo>
           <S.TopText>
-            집중 #1 {newSongData.length > 0 && newSongData[0].title}
+            Focus on "{newSongData.length > 0 && newSongData[0].title}"
           </S.TopText>
           <ReactPlayer
             url={`https://www.youtube.com/watch?v=${topVideoId}`}
