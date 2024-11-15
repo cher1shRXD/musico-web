@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { Outlet } from "react-router-dom";
 
 export const Container = styled.div`
   width: 100%;

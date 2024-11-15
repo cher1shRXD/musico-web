@@ -6,19 +6,26 @@ import { usePlayerStateStore } from "../../store/player/usePlayerStateStore";
 import { useUserStore } from "../../store/user/useUserStore";
 import usePlayNext from "../../hooks/play/usePlayNext";
 import usePlayPrevious from "../../hooks/play/usePlayPrevious";
+import { useVolumeStore } from "../../store/player/useVolumeStore";
+import { useLoopStateStore } from "../../store/player/useLoopStateStore";
+import useUpdateShuffle from "../../hooks/play/useUpdateShuffle";
 
 const PlayBar = () => {
   const isPlaying = usePlayerStateStore((state) => state.isPlaying);
   const setIsPlaying = usePlayerStateStore((state) => state.setIsPlaying);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(0.5);
+  const volume = useVolumeStore((state) => state.volume);
+  const setVolume = useVolumeStore((state) => state.setVolume);
   const [isReady, setIsReady] = useState(false);
-  const [isLoop, setIsLoop] = useState(false);
+  const isLoop = useLoopStateStore((state) => state.isLoop);
+  const setIsLoop = useLoopStateStore((state) => state.setIsLoop);
   const playerRef = useRef<ReactPlayer | null>(null);
   const user = useUserStore((state) => state.user);
   const playNext = usePlayNext();
   const playPrevious = usePlayPrevious();
+  const updateShuffle = useUpdateShuffle();
+  const [clickable, setClickable] = useState(true);
 
   const handlePlay = () => {
     setIsPlaying(!isPlaying);
@@ -29,6 +36,10 @@ const PlayBar = () => {
   };
 
   const handleNext = async () => {
+    if (!clickable) {
+      return;
+    }
+    setClickable(false);
     if (!user || user.queue.length === 0) {
       return;
     }
@@ -46,9 +57,14 @@ const PlayBar = () => {
     } else {
       setIsPlaying(true);
     }
+    setTimeout(() => setClickable(true), 1000);
   };
 
   const handlePrevious = async () => {
+    if (!clickable) {
+      return;
+    }
+    setClickable(false);
     if (progress >= 0.2) {
       setProgress(0);
       playerRef.current?.seekTo(0);
@@ -56,6 +72,7 @@ const PlayBar = () => {
     }
     await playPrevious();
     setIsPlaying(true);
+    setTimeout(() => setClickable(true), 1000);
   };
 
   const formatTime = (seconds: number) => {
@@ -98,9 +115,12 @@ const PlayBar = () => {
   }, [handleSpace]);
 
   useEffect(() => {
+    if (!isReady) {
+      setIsPlaying(false);
+      return;
+    }
     if (
       user?.queue[user.currentSong].videoId &&
-      isReady &&
       user.currentSong !== user.queue.length - 1
     ) {
       setIsPlaying(true);
@@ -139,8 +159,7 @@ const PlayBar = () => {
                   <S.MusicArtist key={idx}>
                     {`${artist.artistName}
                     ${
-                      idx !==
-                      user.queue[user.currentSong].artist.length - 1
+                      idx !== user.queue[user.currentSong].artist.length - 1
                         ? " &\u00A0"
                         : ""
                     }`}
@@ -175,10 +194,17 @@ const PlayBar = () => {
         </S.PlayControlWrap>
         <S.OtherControlWrap>
           <S.StatusIcon
-            onClick={() => setIsLoop((prev) => !prev)}
+            onClick={() => setIsLoop(!isLoop)}
             src={isLoop ? "/assets/loopOn.svg" : "/assets/loopOff.svg"}
           />
-          <S.StatusIcon onClick={() => {}} src={"/assets/shuffleOff.svg"} />
+          <S.StatusIcon
+            onClick={updateShuffle}
+            src={
+              user && user.isShuffle
+                ? "/assets/shuffleOn.svg"
+                : "/assets/shuffleOff.svg"
+            }
+          />
           <S.VolumeWrap>
             <S.StatusIcon
               src={

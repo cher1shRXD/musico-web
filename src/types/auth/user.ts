@@ -7,5 +7,6 @@ export interface User {
   queue: MusicData[];
   createdAt: string;
   updatedAt: string;
+  isShuffle: boolean;
   __v: number;
 }

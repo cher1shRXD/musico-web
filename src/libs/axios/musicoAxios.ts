@@ -82,12 +82,21 @@ musicoAxios.interceptors.response.use(
 
             const newAccessToken = response.data.accessToken;
             const newRefreshToken = response.data.refreshToken;
+            const AUTO_LOGIN = getCookie('AUTO_LOGIN');
+
 
             setCookie("ACCESS_TOKEN", newAccessToken, { path: "/" });
-            setCookie("REFRESH_TOKEN", newRefreshToken, {
-              path: "/",
-              maxAge: 2600000,
-            });
+            if(AUTO_LOGIN === 'true') {
+              setCookie("REFRESH_TOKEN", newRefreshToken, {
+                path: "/",
+                maxAge: 2600000,
+              });
+            }else{
+              setCookie("REFRESH_TOKEN", newRefreshToken, {
+                path: "/",
+              });
+            }
+            
 
             // 대기 중인 요청들을 처리
             onRefreshed(newAccessToken);

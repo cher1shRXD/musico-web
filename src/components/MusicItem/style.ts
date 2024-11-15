@@ -11,14 +11,31 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
+  &:hover .cover-overlay {
+    opacity: 1;
+  }
 `;
 
-export const Cover = styled.img`
+export const Cover = styled.div<{ src: string }>`
   width: 10rem;
   height: 10rem;
-  object-fit: cover;
-  object-position: center;
   border-radius: 0.5rem;
+  background: url(${(props) => props.src}) center no-repeat;
+  background-size: contain;
+`;
+
+export const CoverOverlay = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s;
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 export const MusicInfo = styled.div`
@@ -36,6 +53,7 @@ export const MusicTitle = styled.p`
 
 export const MusicArtistWrap = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `;
 
 export const MusicArtist = styled.p`
@@ -43,14 +61,20 @@ export const MusicArtist = styled.p`
   font-size: 1.6rem;
 `;
 
-export const RankNumber = styled.div<{isTop?:boolean, isUnderHalf?:boolean}>`
+export const RankNumber = styled.div<{
+  isTop?: boolean;
+  isUnderHalf?: boolean;
+}>`
   width: 4.4rem;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 2.4rem;
   font-weight: 700;
-  color: ${props=>props.isTop ? POINT.primary : props=>!props.isUnderHalf ? POINT.secondary : 'black'};
+  color: ${(props) =>
+    props.isTop
+      ? POINT.primary
+      : (props) => (!props.isUnderHalf ? POINT.secondary : "black")};
 `;
 
 export const PlayButton = styled.img`
@@ -59,4 +83,4 @@ export const PlayButton = styled.img`
   object-fit: contain;
   object-position: center;
   cursor: pointer;
-`
+`;

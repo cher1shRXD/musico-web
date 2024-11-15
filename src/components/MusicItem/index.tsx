@@ -1,9 +1,12 @@
+import { Button, Modal } from "antd";
 import useGetYoutube from "../../hooks/music/useGetYoutube";
 import useAddSong from "../../hooks/queue/useAddSong";
 import { usePlayerStateStore } from "../../store/player/usePlayerStateStore";
 import { useUserStore } from "../../store/user/useUserStore";
 import { VibeResponse } from "../../types/music/vibeResponse";
 import * as S from "./style";
+import { useState } from "react";
+import LibraryModal from "../LibraryModal";
 
 const MusicItem = ({
   data,
@@ -18,6 +21,7 @@ const MusicItem = ({
   const setIsPlaying = usePlayerStateStore((state) => state.setIsPlaying);
   const getYoutubeMusic = useGetYoutube();
   const addSong = useAddSong();
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleClickMusic = async () => {
     setIsPlaying(false);
@@ -31,7 +35,6 @@ const MusicItem = ({
     });
     setIsPlaying(true);
   };
-
   return (
     <S.Container>
       {type && type == "rank" && (
@@ -42,7 +45,28 @@ const MusicItem = ({
           {rank}
         </S.RankNumber>
       )}
-      <S.Cover src={data.albumArt} />
+      <S.Cover src={data.albumArt}>
+        <S.CoverOverlay className="cover-overlay">
+          <S.PlayButton
+            onClick={
+              !(
+                user &&
+                user.queue.length > 0 &&
+                user.queue[user.currentSong].trackId === `${data.trackId}`
+              )
+                ? handleClickMusic
+                : () => {}
+            }
+            src={
+              user &&
+              user.queue.length > 0 &&
+              user.queue[user.currentSong].trackId === `${data.trackId}`
+                ? "/assets/songIsPlaying.gif"
+                : "/assets/playSong.svg"
+            }
+          />
+        </S.CoverOverlay>
+      </S.Cover>
       <S.MusicInfo>
         <S.MusicTitle>{data.title}</S.MusicTitle>
         <S.MusicArtistWrap>
@@ -54,24 +78,8 @@ const MusicItem = ({
           ))}
         </S.MusicArtistWrap>
       </S.MusicInfo>
-      <S.PlayButton
-        onClick={
-          !(
-            user &&
-            user.queue.length > 0 &&
-            user.queue[user.currentSong].trackId === `${data.trackId}`
-          )
-            ? handleClickMusic
-            : () => {}
-        }
-        src={
-          user &&
-          user.queue.length > 0 &&
-          user.queue[user.currentSong].trackId === `${data.trackId}`
-            ? "/assets/songIsPlaying.gif"
-            : "/assets/playSong.svg"
-        }
-      />
+      <S.PlayButton src="/assets/plus.svg" onClick={() => setModalOpen(true)} />
+      <LibraryModal setModalOpen={setModalOpen} modalOpen={modalOpen}/>
     </S.Container>
   );
 };
