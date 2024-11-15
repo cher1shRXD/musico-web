@@ -60,9 +60,9 @@ const useLogin = () => {
       }
     } catch (err: any) {
       if (
-        err.response &&
-        (err.response.statusCode === 404 ||
-          err.response.statusCode === 401)
+        err &&
+        (err.status === 404 ||
+          err.status === 401)
       ) {
         notification.open({
           message: "로그인 실패",

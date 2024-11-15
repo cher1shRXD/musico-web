@@ -1,5 +1,5 @@
-import { useNowPlayingStore } from "../../store/music/useNowPlayingStore";
-import { usePlayerReadyStore } from "../../store/player/usePlayerReadyStore";
+import useGetYoutube from "../../hooks/music/useGetYoutube";
+import useAddSong from "../../hooks/queue/useAddSong";
 import { usePlayerStateStore } from "../../store/player/usePlayerStateStore";
 import { useUserStore } from "../../store/user/useUserStore";
 import { VibeResponse } from "../../types/music/vibeResponse";
@@ -15,21 +15,21 @@ const MusicItem = ({
   rank?: number;
 }) => {
   const user = useUserStore((state) => state.user);
-  const setIsReady = usePlayerReadyStore((state) => state.setIsReady);
   const setIsPlaying = usePlayerStateStore((state) => state.setIsPlaying);
-  const setNowPlaying = useNowPlayingStore((state) => state.setNowPlaying);
+  const getYoutubeMusic = useGetYoutube();
+  const addSong = useAddSong();
 
   const handleClickMusic = async () => {
-    setIsReady(false);
     setIsPlaying(false);
-    const playData = {
-      videoId: "",
+    const videoId = await getYoutubeMusic(`${data.title}${data.artists[0].artistName}`);
+    await addSong({
+      videoId,
       artist: data.artists,
       title: data.title,
       trackId: data.trackId,
       coverUrl: data.albumArt,
-    };
-    setNowPlaying(playData);
+    });
+    setIsPlaying(true);
   };
 
   return (

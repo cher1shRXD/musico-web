@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import * as S from "./style";
 import ReactPlayer from "react-player";
 import ProgressBar from "../ProgressBar";
-import { usePlayerReadyStore } from "../../store/player/usePlayerReadyStore";
 import { usePlayerStateStore } from "../../store/player/usePlayerStateStore";
 import { useUserStore } from "../../store/user/useUserStore";
 import usePlayNext from "../../hooks/play/usePlayNext";
@@ -14,8 +13,7 @@ const PlayBar = () => {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.5);
-  const isReady = usePlayerReadyStore((state) => state.isReady);
-  const setIsReady = usePlayerReadyStore((state) => state.setIsReady);
+  const [isReady, setIsReady] = useState(false);
   const [isLoop, setIsLoop] = useState(false);
   const playerRef = useRef<ReactPlayer | null>(null);
   const user = useUserStore((state) => state.user);
@@ -35,7 +33,7 @@ const PlayBar = () => {
       return;
     }
     await playNext();
-    if(user.queue.length === 1) {
+    if (user.queue.length === 1) {
       playerRef.current?.seekTo(0);
       setIsPlaying(true);
     }
@@ -98,10 +96,6 @@ const PlayBar = () => {
       document.removeEventListener("keydown", handleSpace);
     };
   }, [handleSpace]);
-
-  useEffect(() => {
-    console.log(volume);
-  }, [volume]);
 
   useEffect(() => {
     if (
@@ -180,13 +174,13 @@ const PlayBar = () => {
           </S.TimeWrap>
         </S.PlayControlWrap>
         <S.OtherControlWrap>
-          <S.ControlButton
+          <S.StatusIcon
             onClick={() => setIsLoop((prev) => !prev)}
             src={isLoop ? "/assets/loopOn.svg" : "/assets/loopOff.svg"}
           />
-          <S.ControlButton onClick={() => {}} src={"/assets/shuffleOff.svg"} />
+          <S.StatusIcon onClick={() => {}} src={"/assets/shuffleOff.svg"} />
           <S.VolumeWrap>
-            <S.VolumeIcon
+            <S.StatusIcon
               src={
                 volume >= 0.7
                   ? "/assets/volumeFull.svg"

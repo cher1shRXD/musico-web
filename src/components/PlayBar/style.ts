@@ -138,9 +138,8 @@ export const VolumeWrap = styled.div`
   gap: 1rem;
 `
 
-export const VolumeIcon = styled.img`
+export const StatusIcon = styled.img`
   width: 2.4rem;
   height: 2.4rem;
-  object-fit: contain;
-  object-position: center;
+  cursor: pointer;
 `

@@ -42,10 +42,10 @@ const useSignup = () => {
       }
     } catch (err: any) {
 
-      if (err.response && err.response.statusCode === 409) {
+      if (err && err.status === 409) {
         notification.open({
           message: "회원가입 실패",
-          description: "이미 사용 중인 이메일입니다.",
+          description: "이미 사용 중인 아이디입니다.",
         });
         return;
       }
