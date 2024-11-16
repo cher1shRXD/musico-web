@@ -1,4 +1,3 @@
-import { Button, Modal } from "antd";
 import useGetYoutube from "../../hooks/music/useGetYoutube";
 import useAddSong from "../../hooks/queue/useAddSong";
 import { usePlayerStateStore } from "../../store/player/usePlayerStateStore";
@@ -12,10 +11,12 @@ const MusicItem = ({
   data,
   type,
   rank,
+  hidePlus = false,
 }: {
   data: VibeResponse;
   type?: string;
   rank?: number;
+  hidePlus?: boolean;
 }) => {
   const user = useUserStore((state) => state.user);
   const setIsPlaying = usePlayerStateStore((state) => state.setIsPlaying);
@@ -25,7 +26,9 @@ const MusicItem = ({
 
   const handleClickMusic = async () => {
     setIsPlaying(false);
-    const videoId = await getYoutubeMusic(`${data.title}${data.artists[0].artistName}`);
+    const videoId = await getYoutubeMusic(
+      `${data.title}${data.artists[0].artistName}`
+    );
     await addSong({
       videoId,
       artist: data.artists,
@@ -35,6 +38,7 @@ const MusicItem = ({
     });
     setIsPlaying(true);
   };
+
   return (
     <S.Container>
       {type && type == "rank" && (
@@ -78,8 +82,17 @@ const MusicItem = ({
           ))}
         </S.MusicArtistWrap>
       </S.MusicInfo>
-      <S.PlayButton src="/assets/plus.svg" onClick={() => setModalOpen(true)} />
-      <LibraryModal setModalOpen={setModalOpen} modalOpen={modalOpen}/>
+      {!hidePlus && (
+        <S.PlayButton
+          src="/assets/plus.svg"
+          onClick={() => setModalOpen(true)}
+        />
+      )}
+      <LibraryModal
+        setModalOpen={setModalOpen}
+        modalOpen={modalOpen}
+        music={data}
+      />
     </S.Container>
   );
 };

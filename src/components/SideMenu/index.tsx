@@ -59,11 +59,10 @@ const SideMenu = () => {
         <S.MenuText>차트</S.MenuText>
       </S.MenuItem>
       <S.Spacer />
-      <S.SectionTitle>라이브러리</S.SectionTitle>
-      <S.LibraryItem />
-      <S.LibraryItem />
-      <S.LibraryItem />
-      <S.LibraryItem />
+      <S.LogoutWrap>
+        <S.LogoutIcon src="/assets/exit.svg"/>
+        <S.LogoutText>로그아웃</S.LogoutText>
+      </S.LogoutWrap>
     </S.Container>
   );
 };

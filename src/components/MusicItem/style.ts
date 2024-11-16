@@ -3,9 +3,8 @@ import { POINT } from "../../constants/colors";
 
 export const Container = styled.div`
   width: 100%;
-  min-width: 32rem;
   height: 12rem;
-  padding: 1rem 3rem 1rem 1rem;
+  padding: 1rem 3rem 1rem 0;
   transition: all 0.5s;
   border-radius: 1rem;
   display: flex;
@@ -49,6 +48,7 @@ export const MusicInfo = styled.div`
 export const MusicTitle = styled.p`
   font-size: 2rem;
   font-weight: 500;
+  color: #2b2b2b;
 `;
 
 export const MusicArtistWrap = styled.div`

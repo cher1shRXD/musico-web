@@ -122,6 +122,7 @@ export const MusicTitle = styled.p`
 
 export const MusicArtistWrap = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `
 
 export const MusicArtist = styled.p`

@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { POINT } from "../../constants/colors";
 
-
 export const Container = styled.div`
   width: 32rem;
   height: 100%;
@@ -39,9 +38,9 @@ export const MenuItem = styled(Link)<{ isfocused: string }>`
   text-decoration: none;
   color: black;
   padding: 1rem;
-  color: ${(props) => (props.isfocused === 'true' ? "white" : "black")};
+  color: ${(props) => (props.isfocused === "true" ? "white" : "black")};
   background: ${(props) =>
-    props.isfocused === 'true'
+    props.isfocused === "true"
       ? `linear-gradient(79deg, ${POINT.secondary} 0%, ${POINT.thirdary} 100%)`
       : "transparent"};
   border-radius: 1rem;
@@ -61,18 +60,26 @@ export const MeunIcon = styled.img`
 `;
 
 export const Spacer = styled.div`
-  height: 5rem;
+  flex: 1;
 `;
 
-export const LibraryItem = styled.div`
+export const LogoutWrap = styled.div`
   width: 100%;
-  height: 7rem;
-  border-radius: 1rem;
-  display: grid;
-  margin: 0.6rem 0;
-  transition: all 0.2s;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   cursor: pointer;
-  &:hover {
-    box-shadow: 0.01rem 0.01rem 0.5rem 0.01rem #dddddd;
-  }
 `;
+
+export const LogoutText = styled.p`
+  font-size: 2rem;
+  color: #FF2929;
+`;
+
+export const LogoutIcon = styled.img`
+  width: 1.6rem;
+  height: 1.6rem;
+  object-fit: cover;
+  object-position: center;
+`

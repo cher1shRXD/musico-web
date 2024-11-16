@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   width: 100%;
+  min-height: 100%;
   padding: 0 1rem;
 `;
 
@@ -41,11 +42,61 @@ export const SearchPlaceholder = styled.p`
   color: gray;
 `;
 
+export const MusicCell = styled.div`
+  width: 50%;
+`;
+
 export const ContentWrap = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: start;
-  align-items: start;
-  flex-wrap: wrap;
-  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(48, 1fr);
+  grid-template-rows: repeat(84, 1fr);
+  gap: 1rem;
+  padding: 2rem;
 `;
+
+export const SectionTitle = styled(Link)`
+  font-size: 2.4rem;
+  font-weight: 500;
+  color: #2b2b2b;
+  text-decoration: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`;
+
+export const GoToSection = styled.img`
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+  object-position: center;
+`
+
+export const Section = styled.div<{
+  rowstart: string;
+  rowend: string;
+  colstart: string;
+  colend: string;
+}>`
+  display: flex;
+  flex-direction: column;
+  grid-column: ${(props) => props.colstart} / ${(props) => props.colend};
+  grid-row: ${(props) => props.rowstart} / ${(props) => props.rowend};
+  background-color: #FAFAFA;
+  padding: 2rem;
+  border-radius: 2rem;
+  gap: 0.8rem;
+`;
+
+export const SectionContent = styled.div`
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+export const RankContent = styled.div`
+  width: 100%;
+  flex: 1;
+`
