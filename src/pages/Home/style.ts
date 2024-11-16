@@ -63,6 +63,7 @@ export const SectionTitle = styled(Link)`
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 
 export const GoToSection = styled.img`

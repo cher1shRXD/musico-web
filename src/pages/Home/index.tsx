@@ -5,13 +5,18 @@ import MusicItem from "../../components/MusicItem";
 import useGetNewSong from "../../hooks/music/useGetNewSong";
 import ReactPlayer from "react-player";
 import useGetYoutube from "../../hooks/music/useGetYoutube";
+import PlaylistModal from "../../components/PlaylistModal";
+import useGetMyPlaylist from "../../hooks/playlist/useGetMyPlaylist";
+import PlaylistItem from "../../components/PlaylistItem";
 
 const Home = () => {
   const { getRank, rankData } = useGetRank();
   const { getNewSong, newSongData } = useGetNewSong();
-  const [rankTopVideoId, setRankTopVideoId] = useState('');
-  const [newTopVideoId, setNewTopVideoId] = useState('');
+  const [rankTopVideoId, setRankTopVideoId] = useState("");
+  const [newTopVideoId, setNewTopVideoId] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
   const getYoutubeMusic = useGetYoutube();
+  const { playlist, getMyPlaylist } = useGetMyPlaylist();
 
   const getRankTopVideo = async () => {
     if (rankData.length > 0) {
@@ -38,16 +43,17 @@ const Home = () => {
   useEffect(() => {
     getRank();
     getNewSong();
+    getMyPlaylist();
   }, []);
 
-  useEffect(()=>{
-    if(rankData.length > 0 && rankTopVideoId === '') {
+  useEffect(() => {
+    if (rankData.length > 0 && rankTopVideoId === "") {
       getRankTopVideo();
     }
-    if(newSongData.length > 0 && newTopVideoId === '') {
+    if (newSongData.length > 0 && newTopVideoId === "") {
       getNewTopVideo();
     }
-  },[rankData, newSongData]);
+  }, [rankData, newSongData]);
 
   return (
     <S.Container>
@@ -75,7 +81,8 @@ const Home = () => {
         </S.Section>
         <S.Section colstart="1" colend="31" rowstart="32" rowend="61">
           <S.SectionTitle to="/newest">
-            New songs<S.GoToSection src="/assets/forward.svg" />
+            New songs
+            <S.GoToSection src="/assets/forward.svg" />
           </S.SectionTitle>
           <S.SectionContent>
             {newSongData.slice(0, 6).map((data) => (
@@ -87,7 +94,8 @@ const Home = () => {
         </S.Section>
         <S.Section colstart="32" colend="49" rowstart="1" rowend="47">
           <S.SectionTitle to="/chart">
-            Rank<S.GoToSection src="/assets/forward.svg" />
+            Rank
+            <S.GoToSection src="/assets/forward.svg" />
           </S.SectionTitle>
           <S.RankContent>
             {rankData.slice(0, 5).map((data, idx) => (
@@ -117,9 +125,18 @@ const Home = () => {
           </S.SectionContent>
         </S.Section>
         <S.Section colstart="32" colend="49" rowstart="48" rowend="85">
-          <S.SectionTitle to="/">Library</S.SectionTitle>
+          <S.SectionTitle to="/" onClick={() => setModalOpen(true)}>
+            Library
+            <S.GoToSection src="/assets/makePlaylist.svg" />
+          </S.SectionTitle>
+          {
+            playlist.map((data)=>(
+              <PlaylistItem data={data}/>
+            ))
+          }
         </S.Section>
       </S.ContentWrap>
+      <PlaylistModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
     </S.Container>
   );
 };
