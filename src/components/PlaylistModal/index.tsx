@@ -19,7 +19,7 @@ const PlaylistModal = ({
   };
 
   const handleSubmit = async () => {
-    if (!setLoading || title.trim().length === 0) {
+    if (!loading || title.trim().length === 0) {
       return;
     }
     setLoading(true);
@@ -27,7 +27,7 @@ const PlaylistModal = ({
       await createPlaylist(title);
     } finally {
       setLoading(false);
-      setModalOpen(false);
+      setTimeout(() => setModalOpen(false), 100);
     }
   };
 

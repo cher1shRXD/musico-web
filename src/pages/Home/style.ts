@@ -50,7 +50,7 @@ export const ContentWrap = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(48, 1fr);
-  grid-template-rows: repeat(84, 1fr);
+  grid-template-rows: repeat(68, 1rem);
   gap: 1rem;
   padding: 2rem;
 `;
@@ -100,4 +100,10 @@ export const SectionContent = styled.div`
 export const RankContent = styled.div`
   width: 100%;
   flex: 1;
+`
+
+export const LibraryContent = styled.div`
+  width: 100%;
+  height: 95%;
+  overflow-y: scroll;
 `

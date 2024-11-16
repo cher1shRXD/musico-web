@@ -49,6 +49,8 @@ export const MusicTitle = styled.p`
   font-size: 2rem;
   font-weight: 500;
   color: #2b2b2b;
+  text-overflow: ellipsis;
+   white-space: nowrap;
 `;
 
 export const MusicArtistWrap = styled.div`

@@ -3,7 +3,9 @@ import * as S from "./style";
 import useAddLast from "../../hooks/queue/useAddLast";
 import { VibeResponse } from "../../types/music/vibeResponse";
 import useGetYoutube from "../../hooks/music/useGetYoutube";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import useGetMyPlaylist from "../../hooks/playlist/useGetMyPlaylist";
+import useAddToPlaylist from "../../hooks/playlist/useAddToPlaylist";
 
 const LibraryModal = ({
   modalOpen,
@@ -18,9 +20,16 @@ const LibraryModal = ({
   const getYoutubeMusic = useGetYoutube();
   const [isQueueChecked, setIsQueueChecked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { playlist, getMyPlaylist } = useGetMyPlaylist();
+  const addToPlaylist = useAddToPlaylist();
+  const [selectedPlaylist, setSelectedPlaylist] = useState<string[]>([]);
+
+  useEffect(() => {
+    getMyPlaylist();
+  }, []);
 
   const handleSubmit = async () => {
-    if(!setLoading) {
+    if (loading) {
       return;
     }
     setLoading(true);
@@ -38,9 +47,27 @@ const LibraryModal = ({
       if (isQueueChecked) {
         await addLast(songData);
       }
+      if(selectedPlaylist.length > 0) {
+        if (selectedPlaylist.length > 0) {
+          await Promise.all(
+            selectedPlaylist.map((value) => addToPlaylist(songData, value))
+          );
+        }
+
+      }
     } finally {
       setLoading(false);
-      setModalOpen(false);
+      setTimeout(() => setModalOpen(false), 100);
+    }
+  };
+
+  const handlePlaylistCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    if (selectedPlaylist.includes(value)) {
+      const filtered = selectedPlaylist.filter((item) => item !== value);
+      setSelectedPlaylist(filtered);
+    } else {
+      setSelectedPlaylist((prev) => [...prev, value]);
     }
   };
 
@@ -71,18 +98,14 @@ const LibraryModal = ({
         <S.ItemTitle>재생목록</S.ItemTitle>
       </S.ItemContainer>
       <S.Hr />
-      <S.ItemContainer>
-        <S.ItemSelect type="checkbox" />
-        <S.ItemTitle>플리</S.ItemTitle>
-      </S.ItemContainer>
-      <S.ItemContainer>
-        <S.ItemSelect type="checkbox" />
-        <S.ItemTitle>플리</S.ItemTitle>
-      </S.ItemContainer>
-      <S.ItemContainer>
-        <S.ItemSelect type="checkbox" />
-        <S.ItemTitle>플리</S.ItemTitle>
-      </S.ItemContainer>
+      <S.ItemWrap>
+        {playlist.map((data) => (
+          <S.ItemContainer key={data.id}>
+            <S.ItemSelect type="checkbox" value={data.id} onChange={handlePlaylistCheck}/>
+            <S.ItemTitle>{data.title}</S.ItemTitle>
+          </S.ItemContainer>
+        ))}
+      </S.ItemWrap>
     </Modal>
   );
 };

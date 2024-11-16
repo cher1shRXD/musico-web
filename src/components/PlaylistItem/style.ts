@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 export const Container = styled.div`
   width: 100%;
-  height: 7rem;
+  height: 12rem;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -11,8 +11,8 @@ export const Container = styled.div`
 `
 
 export const Cover = styled.img`
-  width: 5rem;
-  height: 5rem;
+  width: 10rem;
+  height: 10rem;
   object-fit: cover;
   object-position: center;
   border-radius: 1rem;
@@ -33,12 +33,12 @@ export const Title = styled.p`
 
 export const SongCount = styled.p`
   color: gray;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
 `
 
 export const EnterDetail = styled.img`
-  width: 2rem;
-  height: 2rem;
+  width: 2.4rem;
+  height: 2.4rem;
   object-fit: contain;
   object-position: center;
 `

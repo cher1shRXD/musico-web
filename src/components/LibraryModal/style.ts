@@ -36,6 +36,12 @@ export const ModalCancelButton = styled.button`
   }
 `;
 
+export const ItemWrap = styled.div`
+  width: 100%;
+  height: 16rem;
+  overflow-y: scroll;
+`
+
 export const ItemContainer = styled.div`
   width: 100%;
   height: 3.2rem;

@@ -55,6 +55,10 @@ const Home = () => {
     }
   }, [rankData, newSongData]);
 
+  useEffect(() => {
+    getMyPlaylist();
+  }, [modalOpen]);
+
   return (
     <S.Container>
       <S.SearchWrap>
@@ -66,7 +70,7 @@ const Home = () => {
         </S.Search>
       </S.SearchWrap>
       <S.ContentWrap>
-        <S.Section colstart="1" colend="31" rowstart="1" rowend="30">
+        <S.Section colstart="1" colend="31" rowstart="1" rowend="24">
           <S.SectionTitle to="/">Today's recommendations</S.SectionTitle>
           <S.SectionContent>
             {[...rankData]
@@ -79,7 +83,7 @@ const Home = () => {
               ))}
           </S.SectionContent>
         </S.Section>
-        <S.Section colstart="1" colend="31" rowstart="32" rowend="61">
+        <S.Section colstart="1" colend="31" rowstart="25" rowend="48">
           <S.SectionTitle to="/newest">
             New songs
             <S.GoToSection src="/assets/forward.svg" />
@@ -92,7 +96,7 @@ const Home = () => {
             ))}
           </S.SectionContent>
         </S.Section>
-        <S.Section colstart="32" colend="49" rowstart="1" rowend="47">
+        <S.Section colstart="32" colend="49" rowstart="1" rowend="35">
           <S.SectionTitle to="/chart">
             Rank
             <S.GoToSection src="/assets/forward.svg" />
@@ -109,7 +113,7 @@ const Home = () => {
             ))}
           </S.RankContent>
         </S.Section>
-        <S.Section colstart="1" colend="31" rowstart="63" rowend="85">
+        <S.Section colstart="1" colend="31" rowstart="49" rowend="69">
           <S.SectionTitle to="/">Videos</S.SectionTitle>
           <S.SectionContent>
             <ReactPlayer
@@ -124,16 +128,16 @@ const Home = () => {
             />
           </S.SectionContent>
         </S.Section>
-        <S.Section colstart="32" colend="49" rowstart="48" rowend="85">
+        <S.Section colstart="32" colend="49" rowstart="36" rowend="69">
           <S.SectionTitle to="/" onClick={() => setModalOpen(true)}>
             Library
             <S.GoToSection src="/assets/makePlaylist.svg" />
           </S.SectionTitle>
-          {
-            playlist.map((data)=>(
-              <PlaylistItem data={data}/>
-            ))
-          }
+          <S.LibraryContent>
+            {playlist.map((data) => (
+              <PlaylistItem data={data} key={data.id} />
+            ))}
+          </S.LibraryContent>
         </S.Section>
       </S.ContentWrap>
       <PlaylistModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
