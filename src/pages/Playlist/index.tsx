@@ -4,11 +4,14 @@ import useGetMyPlaylistDetail from "../../hooks/playlist/useGetMyPlaylistDetail"
 import { useParams } from "react-router-dom";
 import StoredMusicItem from "../../components/StoredMusicItem";
 import { usePlaylistUpdateStore } from "../../store/update/usePlaylistUpdateStore";
+import useCopyPlaylist from "../../hooks/queue/useCopyPlaylist";
+import { notification } from "antd";
 
 const Playlist = () => {
   const { getMyPlaylistDetail, playlistDetail } = useGetMyPlaylistDetail();
   const setIsUpdated = usePlaylistUpdateStore((state) => state.setIsUpdated);
   const isUpdated = usePlaylistUpdateStore((state) => state.isUpdated);
+  const copyPlaylist = useCopyPlaylist();
   const params = useParams();
 
   useEffect(() => {
@@ -27,13 +30,30 @@ const Playlist = () => {
     }
   }, [isUpdated]);
 
+  const handlePlay = async () => {
+    if (!(params && params.playlistId)) {
+      return;
+    }
+    if (playlistDetail && playlistDetail.songs.length > 0) {
+      await copyPlaylist(params.playlistId);
+    } else {
+      notification.open({
+        message: "플레이리스트 재생 실패",
+        description: "플레이리스트에 곡이 없습니다.",
+      });
+    }
+  };
+
   return (
     <S.Container>
       <S.Banner>
         <S.BannerText>{playlistDetail?.title}</S.BannerText>
+        <S.PlayPlaylist onClick={handlePlay}>
+          <S.PlayButton src="/assets/playSong.svg" />
+        </S.PlayPlaylist>
       </S.Banner>
       <S.ContentWrap>
-        {playlistDetail && playlistDetail?.songs.length > 0 ? (
+        {playlistDetail && playlistDetail.songs.length > 0 ? (
           <S.ItemWrap>
             {playlistDetail?.songs.map((data) => (
               <StoredMusicItem

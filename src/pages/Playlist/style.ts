@@ -10,6 +10,7 @@ export const Banner = styled.div`
   height: 30rem;
   display: flex;
   align-items: flex-end;
+  justify-content: space-between;
   background: linear-gradient(
     79deg,
     ${POINT.secondary} 0%,
@@ -74,4 +75,23 @@ export const NoSong = styled.div`
   justify-content: center;
   font-size: 2rem;
   color: gray;
+`
+
+export const PlayPlaylist = styled.div`
+  width: 8rem;
+  height: 8rem;
+  border-radius: 4rem;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`
+
+export const PlayButton = styled.img`
+  width: 4rem;
+  height: 4rem;
+  object-fit: contain;
+  object-position: center;
+  margin-left: 0.6rem;
 `
