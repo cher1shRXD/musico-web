@@ -98,7 +98,7 @@ const Home = () => {
         </S.Section>
         <S.Section colstart="32" colend="49" rowstart="1" rowend="35">
           <S.SectionTitle to="/chart">
-            Rank
+            Chart
             <S.GoToSection src="/assets/forward.svg" />
           </S.SectionTitle>
           <S.RankContent>

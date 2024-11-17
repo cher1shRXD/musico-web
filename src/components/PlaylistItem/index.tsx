@@ -1,9 +1,9 @@
 import { Playlist } from "../../types/playlist/playlist";
 import * as S from "./style";
 
-const PlaylistItem = ({ data }: { data: Playlist }) => {
+const PlaylistItem = ({ data }: { data: Playlist }) => {  
   return (
-    <S.Container>
+    <S.Container to={`/playlist/${data.id}`}>
       <S.Cover src={data.songs.length > 0 ? data.songs[0].coverUrl : '/assets/musico.svg'} />
       <S.InfoWrap>
         <S.Title>{data.title}</S.Title>

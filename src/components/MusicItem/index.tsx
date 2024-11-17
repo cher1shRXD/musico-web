@@ -6,6 +6,7 @@ import { VibeResponse } from "../../types/music/vibeResponse";
 import * as S from "./style";
 import { useState } from "react";
 import LibraryModal from "../LibraryModal";
+import { MusicData } from "../../types/music/musicData";
 
 const MusicItem = ({
   data,

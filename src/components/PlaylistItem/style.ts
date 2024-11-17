@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
-export const Container = styled.div`
+export const Container = styled(Link)`
   width: 100%;
   height: 12rem;
   display: flex;
@@ -8,6 +9,8 @@ export const Container = styled.div`
   gap: 1rem;
   padding: 1rem 0;
   cursor: pointer;
+  text-decoration: none;
+  color: black;
 `
 
 export const Cover = styled.img`

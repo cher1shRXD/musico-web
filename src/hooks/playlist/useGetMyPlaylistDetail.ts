@@ -7,7 +7,7 @@ const useGetMyPlaylistDetail = () => {
   const [playlistDetail, setPlaylistDetail] = useState<Playlist>();
   const getMyPlaylistDetail = async (playlistId: string) => {
     try {
-      const { data } = await musicoAxios.get(`/my?playlistId=${playlistId}`);
+      const { data } = await musicoAxios.get(`/playlist/my?playlistId=${playlistId}`);
       if (data) {
         setPlaylistDetail(data);
       }

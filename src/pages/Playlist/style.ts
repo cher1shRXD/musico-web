@@ -65,3 +65,13 @@ export const TopVideo = styled.div`
   top: 0;
   background-color: white;
 `;
+
+export const NoSong = styled.div`
+  width: 100%;
+  height: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: gray;
+`

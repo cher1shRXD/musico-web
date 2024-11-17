@@ -37,11 +37,11 @@ const Newest = () => {
         </S.BannerText>
       </S.Banner>
       <S.ContentWrap>
-        <S.RankWrap>
+        <S.ItemWrap>
           {newSongData.map((data) => (
             <MusicItem data={data} key={data.trackId} />
           ))}
-        </S.RankWrap>
+        </S.ItemWrap>
         <S.TopVideo>
           <S.TopText>
             Focus on "{newSongData.length > 0 && newSongData[0].title}"
