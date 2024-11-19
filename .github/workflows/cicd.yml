@@ -1,0 +1,23 @@
+name: musico web build
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH-deploy
+        uses: appleboy/ssh-action@master 
+        with: 
+          host: ${{ secrets.REMOTE_IP }} # ssh 접속용 ip
+          username: ${{ secrets.REMOTE_SSH_ID }} # root
+          password: ${{ secrets.REMOTE_SSH_KEY }} # ssh 접속용 password
+          port: ${{ secrets.REMOTE_SSH_PORT }} # ssh 접속용 port
+          script: |
+            cd /var/musico-web
+            git pull
+            npm install
+            npm run build
+            sudo systemctl restart nginx
