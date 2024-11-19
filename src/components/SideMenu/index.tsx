@@ -1,16 +1,23 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as S from "./style";
 import useGetMe from "../../hooks/auth/useGetMe";
 import { useEffect } from "react";
+import { removeCookie } from "../../libs/react-cookie/cookie";
 
 const SideMenu = () => {
   const location = useLocation();
-
+  const navigate = useNavigate();
   const getMe = useGetMe();
 
   useEffect(() => {
     getMe();
   }, []);
+
+  const logout = () => {
+    removeCookie('ACCESS_TOKEN');
+    removeCookie('REFRESH_TOKEN');
+    navigate('/intro');
+  }
 
   return (
     <S.Container>
@@ -59,7 +66,7 @@ const SideMenu = () => {
         <S.MenuText>차트</S.MenuText>
       </S.MenuItem>
       <S.Spacer />
-      <S.LogoutWrap>
+      <S.LogoutWrap onClick={logout}>
         <S.LogoutIcon src="/assets/exit.svg"/>
         <S.LogoutText>로그아웃</S.LogoutText>
       </S.LogoutWrap>
