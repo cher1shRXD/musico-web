@@ -40,7 +40,6 @@ export const Title = styled.p`
   font-size: 4rem;
   font-weight: 500;
   margin-top: 3rem;
-  text-align: center;
 `
 
 export const MusicArtistWrap = styled.div`

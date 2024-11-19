@@ -269,6 +269,7 @@ const PlayBar = () => {
             setVideoIdIdx((prev) => prev + 1);
           }
         }}
+        pip={false}
       />
     </S.Container>
   );
