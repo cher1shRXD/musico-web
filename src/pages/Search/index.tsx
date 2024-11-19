@@ -60,7 +60,7 @@ const Search = () => {
               "{requestedQuery}"의 검색결과
               <S.SearchTextAccent> {searchResult.length}건</S.SearchTextAccent>
             </S.SearchText>
-            <S.InfoIcon src="/assets/infoGray.svg" alt=""/>
+            <S.SearchResultInfo>MUSICO에서는 최대 200건의 검색결과를 지원합니다.</S.SearchResultInfo>
           </S.SearchTextWrap>
           <S.ContentWrap>
             <S.ResultWrap>
@@ -68,11 +68,11 @@ const Search = () => {
                 <MusicItem data={data} key={data.trackId}/>
               ))}
             </S.ResultWrap>
-            <S.RecommendWrap>
+            <S.ChartWrap>
               <S.Recommend>
                 <S.RecommendTitle>이런 곡은 어때요?</S.RecommendTitle>
               </S.Recommend>
-            </S.RecommendWrap>
+            </S.ChartWrap>
           </S.ContentWrap>
         </>
       )}

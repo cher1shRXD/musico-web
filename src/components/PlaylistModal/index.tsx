@@ -19,7 +19,7 @@ const PlaylistModal = ({
   };
 
   const handleSubmit = async () => {
-    if (!loading || title.trim().length === 0) {
+    if (loading || title.trim().length === 0) {
       return;
     }
     setLoading(true);

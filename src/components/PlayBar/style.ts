@@ -35,11 +35,10 @@ export const Container = styled.div`
   overflow: visible;
 `;
 
-export const Playbar = styled.div`
+export const Playbar = styled.div<{ $opacity: boolean }>`
   width: 98%;
   height: 10rem;
   border-radius: 100rem;
-  box-shadow: 0.1rem 0.1rem 1rem 0.1rem #ccc;
   transform: translateY(12rem);
   animation: ${FadeIn} 0.5s forwards;
   padding: 1rem;
@@ -47,14 +46,20 @@ export const Playbar = styled.div`
   align-items: center;
   justify-content: space-between;
   z-index: 999;
-  background-color: white;
+  background-color: ${(props) =>
+    props.$opacity ? "transparent" : "white"};
+  box-shadow: ${(props) =>
+    props.$opacity ? "" : "0.1rem 0.1rem 1rem 0.1rem #ccc"};
+  transition: all 0.2s;
 `;
 
-export const InfoWrap = styled.div`
+export const InfoWrap = styled.div<{ $opacity: boolean }>`
   width: 30rem;
   height: 100%;
   display: flex;
   gap: 1rem;
+  opacity: ${(props) => (props.$opacity ? 0 : 1)};
+  transition: all 0.4s;
 `;
 
 export const Cover = styled.img`
@@ -76,6 +81,7 @@ export const PlayControlWrap = styled.div`
   flex-direction: column;
   padding: 0 1rem;
 `;
+
 export const ButtonsWrap = styled.div`
   width: 100%;
   flex: 1;
@@ -105,6 +111,7 @@ export const OtherControlWrap = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
+  padding-right: 3rem;
 `;
 
 export const MusicInfo = styled.div`
@@ -132,7 +139,7 @@ export const MusicArtist = styled.p`
 
 export const VolumeWrap = styled.div`
   flex: 1;
-  padding: 0 4rem 0 1rem;
+  padding: 0 1rem;
   display: flex;
   justify-content: center;
   align-items: center;

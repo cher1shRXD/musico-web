@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+import { POINT } from "../../constants/colors";
 
 export const Container = styled.div`
   width: 100%;
@@ -28,6 +29,7 @@ export const Search = styled(Link)`
   align-items: center;
   justify-content: space-between;
   text-decoration: none;
+  background-color: white;
 `;
 
 export const SearchIcon = styled.img`
@@ -83,10 +85,12 @@ export const Section = styled.div<{
   flex-direction: column;
   grid-column: ${(props) => props.colstart} / ${(props) => props.colend};
   grid-row: ${(props) => props.rowstart} / ${(props) => props.rowend};
-  background-color: #FAFAFA;
+  box-shadow: 0.1rem 0.1rem 1rem 0.1rem #f1f1f1;
+  border: 0.1rem solid #f1f1f1;
   padding: 2rem;
   border-radius: 2rem;
   gap: 0.8rem;
+  background-color: white;
 `;
 
 export const SectionContent = styled.div`

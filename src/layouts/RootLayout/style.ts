@@ -12,6 +12,8 @@ export const Container = styled.div`
 
 export const Main = styled.div`
   width: 100%;
+  height: 100%;
   overflow-y: scroll;
   padding-bottom: 15rem;
+  box-sizing: content-box;
 `;

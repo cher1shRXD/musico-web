@@ -7,6 +7,8 @@ import Newest from "../../pages/Newest";
 import Login from "../../pages/Login";
 import Signup from "../../pages/Signup";
 import Playlist from "../../pages/Playlist";
+import Queue from "../../pages/Queue";
+import Intro from "../../pages/Intro";
 
 const Router = () => {
   return (
@@ -18,9 +20,11 @@ const Router = () => {
           <Route path="newest" element={<Newest />} />
           <Route path="chart" element={<Chart />} />
           <Route path="playlist/:playlistId" element={<Playlist />} />
+          <Route path="queue" element={<Queue />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/intro" element={<Intro /> }/>
       </Routes>
     </BrowserRouter>
   );

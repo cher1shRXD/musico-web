@@ -19,6 +19,10 @@ const useSignup = () => {
     setData((prev) => ({ ...prev, [name]: value.trim() }));
   };
 
+  const setUsernameQuery = (username: string) => {
+    setData(prev=>({...prev, username}))
+  }
+
   const handlePasswordCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordCheck(e.target.value);
   };
@@ -65,6 +69,7 @@ const useSignup = () => {
     handlePasswordCheck,
     passwordCheck,
     submit,
+    setUsernameQuery
   };
 };
 

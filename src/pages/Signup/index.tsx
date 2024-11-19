@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import useSignup from "../../hooks/auth/useSignup";
 import * as S from "./style";
 import { PASSWORD_REGEX } from "../../constants/regex";
+import { useSearchParams } from "react-router-dom";
 
 const Signup = () => {
   const { ...signup } = useSignup();
   const [valid, setValid] = useState<boolean>(false);
+ const [searchParams] = useSearchParams();
+  const query = searchParams.get('id');
 
   useEffect(() => {
     setValid(
@@ -14,6 +17,12 @@ const Signup = () => {
         signup.data.password === signup.passwordCheck
     );
   }, [signup.data, signup.passwordCheck]);
+
+  useEffect(()=>{
+    if(query && query.length > 0) {
+      signup.setUsernameQuery(query);
+    }
+  },[]);
 
   return (
     <S.Container>

@@ -73,6 +73,12 @@ export const SearchTextAccent = styled.span`
   color: ${POINT.primary};
 `
 
+export const SearchResultInfo = styled.p`
+  font-size: 1.2rem;
+  color: gray;
+  font-weight: 300;
+`
+
 export const ContentWrap = styled.div`
   width: 100%;
   min-height: calc(100% - 20rem);
@@ -88,7 +94,7 @@ export const ResultWrap = styled.div`
   flex: 1;
 `;
 
-export const RecommendWrap = styled.div`
+export const ChartWrap = styled.div`
   width: 50rem;
   padding: 2rem;
   display: flex;

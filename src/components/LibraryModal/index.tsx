@@ -13,7 +13,7 @@ const LibraryModal = ({
   music,
 }: {
   modalOpen: boolean;
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalOpen: (modalOpen: boolean) => void;
   music: VibeResponse;
 }) => {
   const addLast = useAddLast();
@@ -47,13 +47,12 @@ const LibraryModal = ({
       if (isQueueChecked) {
         await addLast(songData);
       }
-      if(selectedPlaylist.length > 0) {
+      if (selectedPlaylist.length > 0) {
         if (selectedPlaylist.length > 0) {
           await Promise.all(
             selectedPlaylist.map((value) => addToPlaylist(songData, value))
           );
         }
-
       }
     } finally {
       setLoading(false);
@@ -101,7 +100,11 @@ const LibraryModal = ({
       <S.ItemWrap>
         {playlist.map((data) => (
           <S.ItemContainer key={data.id}>
-            <S.ItemSelect type="checkbox" value={data.id} onChange={handlePlaylistCheck}/>
+            <S.ItemSelect
+              type="checkbox"
+              value={data.id}
+              onChange={handlePlaylistCheck}
+            />
             <S.ItemTitle>{data.title}</S.ItemTitle>
           </S.ItemContainer>
         ))}

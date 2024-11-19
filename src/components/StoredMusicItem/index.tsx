@@ -13,7 +13,7 @@ const StoredMusicItem = ({
   type,
 }: {
   data: MusicData;
-  playlistId: string;
+  playlistId?: string;
   type: string;
 }) => {
   const user = useUserStore((state) => state.user);
@@ -30,7 +30,7 @@ const StoredMusicItem = ({
   };
 
   const handleDeleteMusic = async () => {
-    if(type === 'playlist') {
+    if(type === 'playlist' && playlistId) {
       await deleteFromPlaylist(data.trackId, playlistId);
       setIsUpdated(true);
       return;
@@ -39,6 +39,47 @@ const StoredMusicItem = ({
       await deleteFromQueue(data.trackId);
     }
   };
+
+  if(type === 'queue') {
+    return (
+      <S.QueueContainer>
+        <S.QueueCover src={data.coverUrl}>
+          <S.CoverOverlay className="cover-overlay">
+            <S.Button
+              onClick={
+                !(
+                  user &&
+                  user.queue.length > 0 &&
+                  user.queue[user.currentSong].trackId === `${data.trackId}`
+                )
+                  ? handleClickMusic
+                  : () => {}
+              }
+              src={
+                user &&
+                user.queue.length > 0 &&
+                user.queue[user.currentSong].trackId === `${data.trackId}`
+                  ? "/assets/songIsPlaying.gif"
+                  : "/assets/playSong.svg"
+              }
+            />
+          </S.CoverOverlay>
+        </S.QueueCover>
+        <S.QueueMusicInfo>
+          <S.MusicTitle>{data.title}</S.MusicTitle>
+          <S.MusicArtistWrap>
+            {data.artist.map((artist, idx) => (
+              <S.MusicArtist key={idx}>
+                {artist.artistName}
+                {idx !== data.artist.length - 1 && " &\u00A0"}
+              </S.MusicArtist>
+            ))}
+          </S.MusicArtistWrap>
+        </S.QueueMusicInfo>
+        <S.QueueButton onClick={handleDeleteMusic} src="/assets/trash.svg" />
+      </S.QueueContainer>
+    );
+  }
 
   return (
     <S.Container>

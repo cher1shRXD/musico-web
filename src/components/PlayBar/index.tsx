@@ -9,6 +9,7 @@ import usePlayPrevious from "../../hooks/play/usePlayPrevious";
 import { useVolumeStore } from "../../store/player/useVolumeStore";
 import { useLoopStateStore } from "../../store/player/useLoopStateStore";
 import useUpdateShuffle from "../../hooks/play/useUpdateShuffle";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const PlayBar = () => {
   const isPlaying = usePlayerStateStore((state) => state.isPlaying);
@@ -26,6 +27,9 @@ const PlayBar = () => {
   const playPrevious = usePlayPrevious();
   const updateShuffle = useUpdateShuffle();
   const [clickable, setClickable] = useState(true);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [videoIdIdx, setVideoIdIdx] = useState(0);
 
   const handlePlay = () => {
     setIsPlaying(!isPlaying);
@@ -119,8 +123,15 @@ const PlayBar = () => {
       setIsPlaying(false);
       return;
     }
+    if(!user) {
+      return;
+    }
+    if(!user.queue[user.currentSong]) {
+      setIsPlaying(false);
+      return;
+    }
     if (
-      user?.queue[user.currentSong].videoId &&
+      user.queue[user.currentSong].videoId &&
       user.currentSong !== user.queue.length - 1
     ) {
       setIsPlaying(true);
@@ -134,8 +145,8 @@ const PlayBar = () => {
 
   return (
     <S.Container>
-      <S.Playbar>
-        <S.InfoWrap>
+      <S.Playbar $opacity={location.pathname === "/queue"}>
+        <S.InfoWrap $opacity={location.pathname === "/queue"}>
           <S.Cover
             src={
               !isReady
@@ -220,12 +231,24 @@ const PlayBar = () => {
               onProgressChange={(newVolume) => setVolume(newVolume)}
             />
           </S.VolumeWrap>
+          <S.StatusIcon
+            onClick={
+              location.pathname === "/queue"
+                ? () => navigate(-1)
+                : () => navigate("/queue")
+            }
+            src={
+              location.pathname === "/queue"
+                ? "/assets/queueOn.svg"
+                : "/assets/queueOff.svg"
+            }
+          />
         </S.OtherControlWrap>
       </S.Playbar>
       <ReactPlayer
         url={`https://www.youtube.com/watch?v=${
           user && user.queue.length > 0
-            ? user.queue[user.currentSong].videoId
+            ? user.queue[user.currentSong].videoId[videoIdIdx]
             : ""
         }`}
         playing={isPlaying}
@@ -241,6 +264,11 @@ const PlayBar = () => {
         onReady={handleLoad}
         onBufferEnd={() => setIsReady(true)}
         onBuffer={() => setIsReady(false)}
+        onError={(e) => {
+          if (e === 150) {
+            setVideoIdIdx((prev) => prev + 1);
+          }
+        }}
       />
     </S.Container>
   );

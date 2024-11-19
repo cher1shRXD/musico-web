@@ -8,6 +8,7 @@ import useGetYoutube from "../../hooks/music/useGetYoutube";
 import PlaylistModal from "../../components/PlaylistModal";
 import useGetMyPlaylist from "../../hooks/playlist/useGetMyPlaylist";
 import PlaylistItem from "../../components/PlaylistItem";
+import { VibeResponse } from "../../types/music/vibeResponse";
 
 const Home = () => {
   const { getRank, rankData } = useGetRank();
@@ -17,6 +18,16 @@ const Home = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const getYoutubeMusic = useGetYoutube();
   const { playlist, getMyPlaylist } = useGetMyPlaylist();
+  const [shuffledRankData, setShuffledRankData] = useState<VibeResponse[]>([]);
+
+  useEffect(() => {
+    if (rankData.length > 0) {
+      const shuffled = [...rankData]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 6);
+      setShuffledRankData(shuffled);
+    }
+  }, [rankData]);
 
   const getRankTopVideo = async () => {
     if (rankData.length > 0) {
@@ -24,7 +35,7 @@ const Home = () => {
         `${rankData[0].title} - ${rankData[0].artists[0].artistName}`
       );
       if (youtubeResult.length > 0) {
-        setRankTopVideoId(youtubeResult);
+        setRankTopVideoId(youtubeResult[0]);
       }
     }
   };
@@ -35,7 +46,7 @@ const Home = () => {
         `${newSongData[0].title} - ${newSongData[0].artists[0].artistName}`
       );
       if (youtubeResult.length > 0) {
-        setNewTopVideoId(youtubeResult);
+        setNewTopVideoId(youtubeResult[0]);
       }
     }
   };
@@ -73,14 +84,11 @@ const Home = () => {
         <S.Section colstart="1" colend="31" rowstart="1" rowend="24">
           <S.SectionTitle to="/">Today's recommendations</S.SectionTitle>
           <S.SectionContent>
-            {[...rankData]
-              .sort(() => Math.random() - 0.5)
-              .slice(0, 6)
-              .map((data) => (
-                <S.MusicCell>
-                  <MusicItem data={data} key={data.trackId} />
-                </S.MusicCell>
-              ))}
+            {shuffledRankData.map((data) => (
+              <S.MusicCell key={data.trackId}>
+                <MusicItem data={data} />
+              </S.MusicCell>
+            ))}
           </S.SectionContent>
         </S.Section>
         <S.Section colstart="1" colend="31" rowstart="25" rowend="48">
@@ -90,8 +98,8 @@ const Home = () => {
           </S.SectionTitle>
           <S.SectionContent>
             {newSongData.slice(0, 6).map((data) => (
-              <S.MusicCell>
-                <MusicItem data={data} key={data.trackId} />
+              <S.MusicCell key={data.trackId}>
+                <MusicItem data={data} />
               </S.MusicCell>
             ))}
           </S.SectionContent>

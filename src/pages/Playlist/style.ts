@@ -95,3 +95,11 @@ export const PlayButton = styled.img`
   object-position: center;
   margin-left: 0.6rem;
 `
+
+export const EditButton = styled.img`
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+  object-position: center;
+  cursor: pointer;
+`

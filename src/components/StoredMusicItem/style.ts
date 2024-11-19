@@ -70,3 +70,41 @@ export const Button = styled.img`
   object-position: center;
   cursor: pointer;
 `;
+
+export const QueueContainer = styled.div`
+  width: 100%;
+  height: 8rem;
+  padding: 1rem 3rem 1rem 0;
+  transition: all 0.5s;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  &:hover .cover-overlay {
+    opacity: 1;
+  }
+`;
+
+export const QueueCover = styled.div<{ src: string }>`
+  width: 6rem;
+  height: 6rem;
+  border-radius: 0.5rem;
+  background: url(${(props) => props.src}) center no-repeat;
+  background-size: contain;
+`;
+
+export const QueueButton = styled.img`
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+  object-position: center;
+  cursor: pointer;
+`;
+
+export const QueueMusicInfo = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+`;

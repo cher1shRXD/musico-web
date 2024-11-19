@@ -4,6 +4,6 @@ export interface MusicData {
   artist: Artist[];
   title: string;
   coverUrl: string;
-  videoId: string;
+  videoId: string[];
   trackId: string;
 }

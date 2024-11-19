@@ -1,12 +1,11 @@
 import useGetYoutube from "../../hooks/music/useGetYoutube";
 import useAddSong from "../../hooks/queue/useAddSong";
+import { useModalStateStore } from "../../store/modal/useModalStateStore";
 import { usePlayerStateStore } from "../../store/player/usePlayerStateStore";
 import { useUserStore } from "../../store/user/useUserStore";
 import { VibeResponse } from "../../types/music/vibeResponse";
 import * as S from "./style";
 import { useState } from "react";
-import LibraryModal from "../LibraryModal";
-import { MusicData } from "../../types/music/musicData";
 
 const MusicItem = ({
   data,
@@ -23,12 +22,13 @@ const MusicItem = ({
   const setIsPlaying = usePlayerStateStore((state) => state.setIsPlaying);
   const getYoutubeMusic = useGetYoutube();
   const addSong = useAddSong();
-  const [modalOpen, setModalOpen] = useState(false);
+  const setMusicData = useModalStateStore(state=>state.setMusicData);
+  const setModalOpen = useModalStateStore(state=>state.setModalOpen);
 
   const handleClickMusic = async () => {
     setIsPlaying(false);
     const videoId = await getYoutubeMusic(
-      `${data.title}${data.artists[0].artistName}`
+      `${data.title} - ${data.artists[0].artistName}`
     );
     await addSong({
       videoId,
@@ -39,6 +39,11 @@ const MusicItem = ({
     });
     setIsPlaying(true);
   };
+
+  const openModal = () => {
+    setMusicData(data);
+    setModalOpen(true);
+  }
 
   return (
     <S.Container>
@@ -86,14 +91,9 @@ const MusicItem = ({
       {!hidePlus && (
         <S.PlayButton
           src="/assets/plus.svg"
-          onClick={() => setModalOpen(true)}
+          onClick={openModal}
         />
       )}
-      <LibraryModal
-        setModalOpen={setModalOpen}
-        modalOpen={modalOpen}
-        music={data}
-      />
     </S.Container>
   );
 };

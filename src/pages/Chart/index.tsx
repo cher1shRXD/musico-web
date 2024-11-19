@@ -16,7 +16,7 @@ const Chart = () => {
         `${rankData[0].title} - ${rankData[0].artists[0].artistName}`
       );
       if (youtubeResult.length > 0) {
-        setTopVideoId(youtubeResult);
+        setTopVideoId(youtubeResult[0]);
       }
     }
   }

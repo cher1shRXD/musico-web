@@ -67,7 +67,7 @@ export const RankNumber = styled.div<{
   isTop?: boolean;
   isUnderHalf?: boolean;
 }>`
-  width: 4.4rem;
+  width: 3.6rem;
   display: flex;
   align-items: center;
   justify-content: center;

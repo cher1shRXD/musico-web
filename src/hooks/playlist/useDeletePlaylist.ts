@@ -4,15 +4,11 @@ import musicoAxios from "../../libs/axios/musicoAxios";
 const useDeletePlaylist = () => {
   const deletePlaylist = async (playlistId: string) => {
     try {
-      const { data } = await musicoAxios.delete(
-        `/playlist?playlistId=${playlistId}`
-      );
-      if (data) {
-        notification.open({
-          message: "플레이리스트 삭제 성공",
-          description: "플레이리스트가 삭제되었습니다.",
-        });
-      }
+      await musicoAxios.delete(`/playlist?playlistId=${playlistId}`);
+      notification.open({
+        message: "플레이리스트 삭제 성공",
+        description: "플레이리스트가 삭제되었습니다.",
+      });
     } catch {
       notification.open({
         message: "플레이리스트 삭제 실패",
