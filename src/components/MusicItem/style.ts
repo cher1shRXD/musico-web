@@ -3,7 +3,7 @@ import { POINT } from "../../constants/colors";
 
 export const Container = styled.div`
   width: 100%;
-  height: 12rem;
+  height: 10rem;
   padding: 1rem 3rem 1rem 0;
   transition: all 0.5s;
   border-radius: 1rem;
@@ -16,8 +16,8 @@ export const Container = styled.div`
 `;
 
 export const Cover = styled.div<{ src: string }>`
-  width: 10rem;
-  height: 10rem;
+  width: 8rem;
+  height: 8rem;
   border-radius: 0.5rem;
   background: url(${(props) => props.src}) center no-repeat;
   background-size: contain;
@@ -67,7 +67,7 @@ export const RankNumber = styled.div<{
   isTop?: boolean;
   isUnderHalf?: boolean;
 }>`
-  width: 3.6rem;
+  width: 4.4rem;
   display: flex;
   align-items: center;
   justify-content: center;

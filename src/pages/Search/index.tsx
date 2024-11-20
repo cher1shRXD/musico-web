@@ -34,7 +34,7 @@ const Search = () => {
             type="search"
             onChange={handleQuery}
             value={query}
-            placeholder="검색어를 입력해주세요."
+            placeholder="오늘은 어떤 노래가 듣고 싶나요?"
             autoFocus
             onKeyDown={(e) => {
               if (e.key === "Enter" && e.nativeEvent.isComposing === false) {
@@ -60,12 +60,14 @@ const Search = () => {
               "{requestedQuery}"의 검색결과
               <S.SearchTextAccent> {searchResult.length}건</S.SearchTextAccent>
             </S.SearchText>
-            <S.SearchResultInfo>MUSICO에서는 최대 200건의 검색결과를 지원합니다.</S.SearchResultInfo>
+            <S.SearchResultInfo>
+              MUSICO에서는 최대 200건의 검색결과를 지원합니다.
+            </S.SearchResultInfo>
           </S.SearchTextWrap>
           <S.ContentWrap>
             <S.ResultWrap>
               {searchResult.map((data) => (
-                <MusicItem data={data} key={data.trackId}/>
+                <MusicItem data={data} key={data.trackId} />
               ))}
             </S.ResultWrap>
             <S.ChartWrap>

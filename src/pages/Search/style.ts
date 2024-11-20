@@ -3,7 +3,6 @@ import { POINT } from "../../constants/colors";
 
 export const Container = styled.div`
   width: 100%;
-  padding: 0 3rem;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;

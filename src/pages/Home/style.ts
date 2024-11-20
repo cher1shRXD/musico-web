@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 export const Container = styled.div`
   width: 100%;
   min-height: 100%;
-  padding: 0 1rem;
   padding-bottom: 15rem;
   box-sizing: content-box;
 `;
@@ -53,7 +52,7 @@ export const ContentWrap = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(48, 1fr);
-  grid-template-rows: repeat(68, 1rem);
+  grid-template-rows: repeat(60, 1rem);
   gap: 1rem;
   padding: 2rem;
 `;

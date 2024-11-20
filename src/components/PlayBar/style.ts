@@ -125,6 +125,7 @@ export const MusicInfo = styled.div`
 
 export const MusicTitle = styled.p`
   font-size: 1.6rem;
+  text-overflow: ellipsis;
 `
 
 export const MusicArtistWrap = styled.div`
