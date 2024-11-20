@@ -46,8 +46,7 @@ export const Playbar = styled.div<{ $opacity: boolean }>`
   align-items: center;
   justify-content: space-between;
   z-index: 999;
-  background-color: ${(props) =>
-    props.$opacity ? "transparent" : "white"};
+  background-color: white;
   box-shadow: ${(props) =>
     props.$opacity ? "" : "0.1rem 0.1rem 1rem 0.1rem #ccc"};
   transition: all 0.2s;
@@ -99,12 +98,11 @@ export const ControlButton = styled.img`
   cursor: pointer;
 `;
 
-
 export const TimeWrap = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-`
+`;
 
 export const OtherControlWrap = styled.div`
   width: 30rem;
@@ -120,23 +118,22 @@ export const MusicInfo = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 0.8rem;
-`
-
+`;
 
 export const MusicTitle = styled.p`
   font-size: 1.6rem;
   text-overflow: ellipsis;
-`
+`;
 
 export const MusicArtistWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
-`
+`;
 
 export const MusicArtist = styled.p`
   font-size: 1.2rem;
   color: gray;
-`
+`;
 
 export const VolumeWrap = styled.div`
   flex: 1;
@@ -145,10 +142,10 @@ export const VolumeWrap = styled.div`
   justify-content: center;
   align-items: center;
   gap: 1rem;
-`
+`;
 
 export const StatusIcon = styled.img`
   width: 2.4rem;
   height: 2.4rem;
   cursor: pointer;
-`
+`;

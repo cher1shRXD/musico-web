@@ -24,7 +24,7 @@ export const MusicInfoWrap = styled.div`
 export const CoverWrap = styled.div`
   width: 100%;
   max-width: 44rem;
-  height: 52rem;
+  min-height: 52rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,6 +40,9 @@ export const Title = styled.p`
   font-size: 4rem;
   font-weight: 500;
   margin-top: 3rem;
+  padding: 2rem;
+  text-align: center;
+  word-break: keep-all;
 `
 
 export const MusicArtistWrap = styled.div`
