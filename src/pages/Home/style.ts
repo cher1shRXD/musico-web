@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-import { POINT } from "../../constants/colors";
 
 export const Container = styled.div`
   width: 100%;
   min-height: 100%;
   padding: 0 1rem;
+  padding-bottom: 15rem;
+  box-sizing: content-box;
 `;
 
 export const SearchWrap = styled.div`

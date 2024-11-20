@@ -8,7 +8,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-`
+`;
 
 export const Banner = styled.div`
   width: 100%;

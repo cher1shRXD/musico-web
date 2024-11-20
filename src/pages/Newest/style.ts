@@ -3,6 +3,8 @@ import { POINT } from "../../constants/colors";
 
 export const Container = styled.div`
   width: 100%;
+  padding-bottom: 15rem;
+  box-sizing: content-box;
 `;
 
 export const Banner = styled.div`

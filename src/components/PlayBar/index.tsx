@@ -85,12 +85,12 @@ const PlayBar = () => {
     const remainingSeconds = seconds % 60;
 
     if (hours > 0) {
-      return `${hours}:${minutes < 10 ? "0" : ""}${minutes}:${
+      return `${hours}:${minutes <= 10 ? "0" : ""}${minutes}:${
         remainingSeconds < 10 ? "0" : ""
       }${remainingSeconds.toFixed(0)}`;
     } else {
       return `${minutes}:${
-        remainingSeconds < 10 ? "0" : ""
+        remainingSeconds <= 10 ? "0" : ""
       }${remainingSeconds.toFixed(0)}`;
     }
   };
