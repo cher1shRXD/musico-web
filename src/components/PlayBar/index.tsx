@@ -12,6 +12,7 @@ import useUpdateShuffle from "../../hooks/play/useUpdateShuffle";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const PlayBar = () => {
+  const user = useUserStore((state) => state.user);
   const isPlaying = usePlayerStateStore((state) => state.isPlaying);
   const setIsPlaying = usePlayerStateStore((state) => state.setIsPlaying);
   const [progress, setProgress] = useState(0);
@@ -22,7 +23,6 @@ const PlayBar = () => {
   const isLoop = useLoopStateStore((state) => state.isLoop);
   const setIsLoop = useLoopStateStore((state) => state.setIsLoop);
   const playerRef = useRef<ReactPlayer | null>(null);
-  const user = useUserStore((state) => state.user);
   const playNext = usePlayNext();
   const playPrevious = usePlayPrevious();
   const updateShuffle = useUpdateShuffle();
@@ -30,10 +30,6 @@ const PlayBar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [videoIdIdx, setVideoIdIdx] = useState(0);
-
-  if(!user || !user.queue[user.currentSong] || !user?.queue[user.currentSong].videoId) {
-    return <></>
-  }
 
   const handlePlay = () => {
     setIsPlaying(!isPlaying);
@@ -145,7 +141,7 @@ const PlayBar = () => {
       return;
     }
     setIsPlaying(true);
-  }, [user.currentSong]);
+  }, [user?.currentSong]);
 
   return (
     <S.Container>
