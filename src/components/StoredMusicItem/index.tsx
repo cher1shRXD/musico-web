@@ -50,7 +50,7 @@ const StoredMusicItem = ({
                 !(
                   user &&
                   user.queue.length > 0 &&
-                  user.queue[user.currentSong].trackId === `${data.trackId}`
+                  user.queue[user.currentSong].trackId === data.trackId
                 )
                   ? handleClickMusic
                   : () => {}
@@ -58,7 +58,7 @@ const StoredMusicItem = ({
               src={
                 user &&
                 user.queue.length > 0 &&
-                user.queue[user.currentSong].trackId === `${data.trackId}`
+                user.queue[user.currentSong].trackId === data.trackId
                   ? "/assets/songIsPlaying.gif"
                   : "/assets/playSong.svg"
               }
@@ -90,7 +90,7 @@ const StoredMusicItem = ({
               !(
                 user &&
                 user.queue.length > 0 &&
-                user.queue[user.currentSong].trackId === `${data.trackId}`
+                user.queue[user.currentSong].trackId === data.trackId
               )
                 ? handleClickMusic
                 : () => {}
@@ -98,7 +98,7 @@ const StoredMusicItem = ({
             src={
               user &&
               user.queue.length > 0 &&
-              user.queue[user.currentSong].trackId === `${data.trackId}`
+              user.queue[user.currentSong].trackId === data.trackId
                 ? "/assets/songIsPlaying.gif"
                 : "/assets/playSong.svg"
             }

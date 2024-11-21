@@ -5,7 +5,6 @@ import { usePlayerStateStore } from "../../store/player/usePlayerStateStore";
 import { useUserStore } from "../../store/user/useUserStore";
 import { VibeResponse } from "../../types/music/vibeResponse";
 import * as S from "./style";
-import { useState } from "react";
 
 const MusicItem = ({
   data,
@@ -47,7 +46,7 @@ const MusicItem = ({
 
   return (
     <S.Container>
-      {type && type == "rank" && (
+      {type && type === "rank" && (
         <S.RankNumber
           isTop={rank ? rank <= 5 : undefined}
           isUnderHalf={rank ? rank >= 50 : undefined}
@@ -62,7 +61,7 @@ const MusicItem = ({
               !(
                 user &&
                 user.queue.length > 0 &&
-                user.queue[user.currentSong].trackId === `${data.trackId}`
+                user.queue[user.currentSong].trackId === data.trackId
               )
                 ? handleClickMusic
                 : () => {}
@@ -70,7 +69,7 @@ const MusicItem = ({
             src={
               user &&
               user.queue.length > 0 &&
-              user.queue[user.currentSong].trackId === `${data.trackId}`
+              user.queue[user.currentSong].trackId === data.trackId
                 ? "/assets/songIsPlaying.gif"
                 : "/assets/playSong.svg"
             }

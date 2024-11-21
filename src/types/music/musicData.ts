@@ -5,5 +5,5 @@ export interface MusicData {
   title: string;
   coverUrl: string;
   videoId: string[];
-  trackId: string;
+  trackId: number;
 }

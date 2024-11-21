@@ -4,7 +4,7 @@ import { useUserStore } from "../../store/user/useUserStore";
 
 const useDeleteSong = () => {
   const setUser = useUserStore((state) => state.setUser);
-  const deleteSong = async (trackId: string) => {
+  const deleteSong = async (trackId: number) => {
     try {
       const { data } = await musicoAxios.delete(`/queue?trackId=${trackId}`);
       if (data) {

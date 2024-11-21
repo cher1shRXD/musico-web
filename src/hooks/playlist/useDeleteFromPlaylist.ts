@@ -2,7 +2,7 @@ import { notification } from "antd";
 import musicoAxios from "../../libs/axios/musicoAxios";
 
 const useDeleteFromPlaylist = () => {
-  const deleteFromPlaylist = async (trackId: string, playlistId: string) => {
+  const deleteFromPlaylist = async (trackId: number, playlistId: string) => {
     try {
       await musicoAxios.delete(
         `/playlist/song?trackId=${trackId}&playlistId=${playlistId}`
