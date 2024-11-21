@@ -5,7 +5,7 @@ const useGetYoutube = () => {
   const getYoutubeMusic = async (keyword: string): Promise<string[]> => {
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_APP_FASTAPI_SERVER}`,
+        `${import.meta.env.VITE_FASTAPI_SERVER}`,
         {
           query: keyword,
         }

@@ -29,7 +29,7 @@ const useLogin = () => {
       setLoading(true);
 
       const res = await axios.post(
-        `${process.env.REACT_APP_EXPRESS_SERVER}/auth/login`,
+        `${import.meta.env.VITE_EXPRESS_SERVER}/auth/login`,
         data
       );
 

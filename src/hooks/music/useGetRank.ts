@@ -9,7 +9,7 @@ const useGetRank = () => {
   const getRank = async () => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_EXPRESS_SERVER}/songs/chart`
+        `${import.meta.env.VITE_EXPRESS_SERVER}/songs/chart`
       );
 
       if (data) {

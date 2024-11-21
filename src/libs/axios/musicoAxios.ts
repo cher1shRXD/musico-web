@@ -6,7 +6,7 @@ interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
 }
 
 const musicoAxios = axios.create({
-  baseURL: process.env.REACT_APP_EXPRESS_SERVER,
+  baseURL: import.meta.env.VITE_EXPRESS_SERVER,
   headers: {
     Accept: "application/json, text/plain, */*, multipart/form-data",
   },
@@ -74,7 +74,7 @@ musicoAxios.interceptors.response.use(
 
           try {
             const response = await axios.post(
-              `${process.env.REACT_APP_EXPRESS_SERVER}/auth/refresh`,
+              `${import.meta.env.VITE_EXPRESS_SERVER}/auth/refresh`,
               {
                 refreshToken,
               }
