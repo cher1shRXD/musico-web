@@ -31,6 +31,10 @@ const PlayBar = () => {
   const navigate = useNavigate();
   const [videoIdIdx, setVideoIdIdx] = useState(0);
 
+  if(!user || !user.queue[user.currentSong] || !user?.queue[user.currentSong].videoId) {
+    return <></>
+  }
+
   const handlePlay = () => {
     setIsPlaying(!isPlaying);
   };
@@ -141,7 +145,7 @@ const PlayBar = () => {
       return;
     }
     setIsPlaying(true);
-  }, [user?.queue[user.currentSong]]);
+  }, [user.currentSong]);
 
   return (
     <S.Container>

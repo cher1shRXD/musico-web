@@ -1,3 +1,4 @@
+import { useState } from "react";
 import useGetYoutube from "../../hooks/music/useGetYoutube";
 import useAddSong from "../../hooks/queue/useAddSong";
 import { useModalStateStore } from "../../store/modal/useModalStateStore";
@@ -23,8 +24,10 @@ const MusicItem = ({
   const addSong = useAddSong();
   const setMusicData = useModalStateStore(state=>state.setMusicData);
   const setModalOpen = useModalStateStore(state=>state.setModalOpen);
+  const [clickable, setClickable] = useState(true);
 
   const handleClickMusic = async () => {
+    setClickable(false);
     setIsPlaying(false);
     const videoId = await getYoutubeMusic(
       `${data.title} - ${data.artists[0].artistName}`
@@ -37,6 +40,7 @@ const MusicItem = ({
       coverUrl: data.albumArt,
     });
     setIsPlaying(true);
+    setClickable(true);
   };
 
   const openModal = () => {
@@ -63,7 +67,7 @@ const MusicItem = ({
                 user.queue.length > 0 &&
                 user.queue[user.currentSong].trackId === data.trackId
               )
-                ? handleClickMusic
+                ? clickable ? handleClickMusic : () => {}
                 : () => {}
             }
             src={
