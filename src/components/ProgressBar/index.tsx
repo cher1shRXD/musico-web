@@ -32,7 +32,6 @@ const ProgressBar = ({ progress, onProgressChange }: ProgressBarProps) => {
   const handlePointerMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     setIsDragging(true);
-    // 드래그 시작 시에도 현재 위치의 progress 값을 바로 적용
     const newProgress = getProgressFromEvent(e);
     onProgressChange(newProgress);
   };
@@ -44,7 +43,7 @@ const ProgressBar = ({ progress, onProgressChange }: ProgressBarProps) => {
 
     const handleMouseMove = (e: MouseEvent) => {
       if (isDragging && progressBarRef.current) {
-        e.preventDefault(); // 텍스트 선택 방지
+        e.preventDefault();
         const newProgress = getProgressFromEvent(e);
         onProgressChange(newProgress);
       }

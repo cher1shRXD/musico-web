@@ -62,6 +62,7 @@ export const Queue = styled.div`
   overflow-y: scroll;
   border-left: 0.1rem solid #f1f1f1;
   padding-left: 2rem;
+  padding-bottom: 13rem;
 `;
 
 export const QueueWrap = styled.div`
