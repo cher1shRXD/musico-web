@@ -11,11 +11,7 @@ const useGetYoutube = () => {
         }
       );
       if (data) {
-        return [
-          data[0].videoRenderer.videoId,
-          data[1].videoRenderer.videoId,
-          data[2].videoRenderer.videoId,
-        ];
+        return data
       }
       
     } catch {
