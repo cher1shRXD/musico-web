@@ -79,7 +79,7 @@ const Signup = () => {
         <S.NavWrap>
           <S.Nav to="/login">회원이신가요?</S.Nav>
           <S.Nav
-            to="https://bolder-lemon-5f0.notion.site/SOLVE-11ba370ebfe9804985cadfa8645d7bd9"
+            to="https://bolder-lemon-5f0.notion.site/MUSICO-145a370ebfe98041ab8cdfa7c435380f"
             target="_blank"
           >
             개인정보 처리방침
