@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { POINT } from "../../constants/colors";
+import { MOBILE } from "../../constants/mediaQuery";
 
 export const Container = styled.div`
   width: 100%;
@@ -13,6 +14,10 @@ export const Container = styled.div`
   &:hover .cover-overlay {
     opacity: 1;
   }
+  @media (max-width: ${MOBILE}) {
+    padding: 1rem;
+    height: 6rem;
+  }
 `;
 
 export const Cover = styled.div<{ src: string }>`
@@ -21,6 +26,10 @@ export const Cover = styled.div<{ src: string }>`
   border-radius: 0.5rem;
   background: url(${(props) => props.src}) center no-repeat;
   background-size: contain;
+  @media (max-width: ${MOBILE}) {
+    height: 4rem;
+    width: 4rem;
+  }
 `;
 
 export const CoverOverlay = styled.div`
@@ -43,6 +52,9 @@ export const MusicInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 2rem;
+  @media (max-width: ${MOBILE}) {
+    gap: 0.4rem;
+  }
 `;
 
 export const MusicTitle = styled.p`
@@ -50,7 +62,10 @@ export const MusicTitle = styled.p`
   font-weight: 500;
   color: #2b2b2b;
   text-overflow: ellipsis;
-   white-space: nowrap;
+  white-space: nowrap;
+  @media (max-width: ${MOBILE}) {
+    font-size: 1.6rem;
+  }
 `;
 
 export const MusicArtistWrap = styled.div`
@@ -61,6 +76,9 @@ export const MusicArtistWrap = styled.div`
 export const MusicArtist = styled.p`
   color: gray;
   font-size: 1.6rem;
+  @media (max-width: ${MOBILE}) {
+    font-size: 1rem;
+  }
 `;
 
 export const RankNumber = styled.div<{
@@ -77,6 +95,11 @@ export const RankNumber = styled.div<{
     props.isTop
       ? POINT.primary
       : (props) => (!props.isUnderHalf ? POINT.secondary : "black")};
+  @media (max-width: ${MOBILE}) {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.2rem;
+  }
 `;
 
 export const PlayButton = styled.img`
@@ -85,4 +108,8 @@ export const PlayButton = styled.img`
   object-fit: contain;
   object-position: center;
   cursor: pointer;
+  @media (max-width: ${MOBILE}) {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
 `;

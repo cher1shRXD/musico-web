@@ -27,13 +27,6 @@ export const Logo = styled.img`
   margin: 2rem 0;
 `;
 
-export const SectionTitle = styled.p`
-  font-size: 1.6rem;
-  font-weight: 500;
-  margin-bottom: 1.2rem;
-  color: gray;
-`;
-
 export const MenuItem = styled(Link)<{ isfocused: string }>`
   width: 100%;
   height: 5rem;

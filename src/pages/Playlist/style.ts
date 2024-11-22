@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { POINT } from "../../constants/colors";
+import { MOBILE } from "../../constants/mediaQuery";
 
 export const Container = styled.div`
   width: 100%;
@@ -19,12 +20,21 @@ export const Banner = styled.div`
     ${POINT.primary} 100%
   );
   padding: 4rem;
+  @media (max-width: ${MOBILE}) {
+    padding: 2rem;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 20rem;
+  }
 `;
 
 export const BannerText = styled.div`
   font-size: 5rem;
   color: white;
   font-weight: 700;
+  @media (max-width: ${MOBILE}) {
+    font-size: 3rem;
+  }
 `;
 
 export const ContentWrap = styled.div`
@@ -35,6 +45,9 @@ export const ContentWrap = styled.div`
   top: 4rem;
   display: flex;
   gap: 4rem;
+  @media (max-width: ${MOBILE}) {
+    padding: 1rem 0;
+  }
 `;
 
 export const ItemWrap = styled.div`
@@ -88,7 +101,11 @@ export const PlayPlaylist = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-`
+  @media (max-width: ${MOBILE}) {
+    width: 6rem;
+    height: 6rem;
+  }
+`;
 
 export const PlayButton = styled.img`
   width: 4rem;
@@ -96,7 +113,11 @@ export const PlayButton = styled.img`
   object-fit: contain;
   object-position: center;
   margin-left: 0.6rem;
-`
+  @media (max-width: ${MOBILE}) {
+    width: 3rem;
+    height: 3rem;
+  }
+`;
 
 export const EditButton = styled.img`
   width: 3rem;
@@ -104,4 +125,8 @@ export const EditButton = styled.img`
   object-fit: cover;
   object-position: center;
   cursor: pointer;
-`
+  @media (max-width: ${MOBILE}) {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+`;

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-import { HALFMOBILE, MOBILE } from "../../constants/mediaQuery";
+import { HALFMOBILE, MOBILE, TABLET } from "../../constants/mediaQuery";
 
 export const Container = styled.div`
   width: 100%;
@@ -17,6 +17,9 @@ export const SearchWrap = styled.div`
   justify-content: center;
   padding: 0 2rem;
   margin-top: 4rem;
+  @media (max-width: ${TABLET}) {
+    margin-top: 0;
+  }
   @media (max-width: ${MOBILE}) {
     padding: 0 1rem;
   }
@@ -34,7 +37,6 @@ export const Search = styled(Link)`
   justify-content: space-between;
   text-decoration: none;
   background-color: white;
-  
 `;
 
 export const SearchIcon = styled.img`
@@ -87,7 +89,7 @@ export const GoToSection = styled.img`
   height: 2rem;
   object-fit: contain;
   object-position: center;
-`
+`;
 
 export const Section = styled.div<{
   rowstart: string;
@@ -110,9 +112,12 @@ export const Section = styled.div<{
     grid-column: auto / auto;
     grid-row: auto / auto;
     width: 100%;
-    padding: 1rem;
+    min-height: 24rem;
+  }
+  @media (max-width: ${HALFMOBILE}) {
     box-shadow: none;
     border: none;
+    padding: 1rem;
   }
 `;
 
@@ -127,10 +132,10 @@ export const SectionContent = styled.div`
 export const RankContent = styled.div`
   width: 100%;
   flex: 1;
-`
+`;
 
 export const LibraryContent = styled.div`
   width: 100%;
   height: 95%;
   overflow-y: scroll;
-`
+`;

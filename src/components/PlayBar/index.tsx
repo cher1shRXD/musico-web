@@ -9,6 +9,7 @@ import usePlayPrevious from "../../hooks/play/usePlayPrevious";
 import { useVolumeStore } from "../../store/player/useVolumeStore";
 import { useLoopStateStore } from "../../store/player/useLoopStateStore";
 import useUpdateShuffle from "../../hooks/play/useUpdateShuffle";
+import StoredMusicItem from "../StoredMusicItem";
 
 const PlayBar = () => {
   const user = useUserStore((state) => state.user);
@@ -28,6 +29,7 @@ const PlayBar = () => {
   const [clickable, setClickable] = useState(true);
   const [videoIdIdx, setVideoIdIdx] = useState(0);
   const [detailView, setDetailView] = useState(false);
+  const [queueView, setQueueView] = useState(false);
 
   const handlePlay = () => {
     setIsPlaying(!isPlaying);
@@ -117,14 +119,15 @@ const PlayBar = () => {
   }, [handleSpace]);
 
   useEffect(() => {
+    setVideoIdIdx(0);
     if (!isReady) {
       setIsPlaying(false);
       return;
     }
-    if(!user) {
+    if (!user) {
       return;
     }
-    if(!user.queue[user.currentSong]) {
+    if (!user.queue[user.currentSong]) {
       setIsPlaying(false);
       return;
     }
@@ -143,98 +146,127 @@ const PlayBar = () => {
 
   return (
     <S.Container>
-      <S.Playbar $detailView={detailView}>
-        <S.InfoWrap $detailView={detailView}>
-          <S.Cover
-            $detailView={detailView}
-            src={
-              !isReady
-                ? "/assets/loading.gif"
-                : user && user.queue.length > 0
-                ? user.queue[user.currentSong].coverUrl
-                : "/assets/loading.gif"
-            }
-            alt=""
+      <S.Playbar $detailView={detailView} $queueView={queueView}>
+        <S.QueueHeader $detailView={detailView}>
+          <S.DropDown
+            src="/assets/down.svg"
+            $queueView={queueView}
+            onClick={() => setQueueView((prev) => !prev)}
           />
-          <S.MusicInfo $detailView={detailView}>
-            <S.MusicTitle $detailView={detailView}>
-              {user && user.queue.length > 0
-                ? user.queue[user.currentSong].title
-                : "재생중인 곡이 없습니다."}
-            </S.MusicTitle>
-            <S.MusicArtistWrap>
-              {user &&
-                user.queue.length > 0 &&
-                user.queue[user.currentSong].artist.map((artist, idx) => (
-                  <S.MusicArtist key={idx} $detailView={detailView}>
-                    {`${artist.artistName}
+        </S.QueueHeader>
+        {queueView ? (
+          <S.QueueWrap $detailView={detailView}>
+            {user?.queue.map((data, idx) => (
+              <StoredMusicItem data={data} key={idx} type="queue" />
+            ))}
+          </S.QueueWrap>
+        ) : (
+          <>
+            <S.InfoWrap $detailView={detailView}>
+              <S.Cover
+                $detailView={detailView}
+                src={
+                  !isReady
+                    ? "/assets/loading.gif"
+                    : user && user.queue.length > 0
+                    ? user.queue[user.currentSong].coverUrl
+                    : "/assets/loading.gif"
+                }
+                alt=""
+              />
+              <S.MusicInfo $detailView={detailView}>
+                <S.MusicTitle $detailView={detailView}>
+                  {user && user.queue.length > 0
+                    ? user.queue[user.currentSong].title
+                    : "재생중인 곡이 없습니다."}
+                </S.MusicTitle>
+                <S.MusicArtistWrap>
+                  {user &&
+                    user.queue.length > 0 &&
+                    user.queue[user.currentSong].artist.map((artist, idx) => (
+                      <S.MusicArtist key={idx} $detailView={detailView}>
+                        {`${artist.artistName}
                     ${
                       idx !== user.queue[user.currentSong].artist.length - 1
                         ? " &\u00A0"
                         : ""
                     }`}
-                  </S.MusicArtist>
-                ))}
-            </S.MusicArtistWrap>
-          </S.MusicInfo>
-        </S.InfoWrap>
-        <S.PlayControlWrap $detailView={detailView}>
-          <S.ButtonsWrap>
-            <S.ControlButton
-              src="/assets/previous.svg"
-              onClick={handlePrevious}
-            />
-            <S.ControlButton
-              src={isPlaying ? "/assets/pause.svg" : "/assets/play.svg"}
-              onClick={handlePlay}
-            />
-            <S.ControlButton src="/assets/next.svg" onClick={handleNext} />
-          </S.ButtonsWrap>
-          <ProgressBar
-            progress={progress}
-            onProgressChange={(newProgress) => {
-              setProgress(newProgress);
-              playerRef.current?.seekTo(newProgress);
-            }}
+                      </S.MusicArtist>
+                    ))}
+                </S.MusicArtistWrap>
+              </S.MusicInfo>
+            </S.InfoWrap>
+            <S.PlayControlWrap $detailView={detailView}>
+              <S.ButtonsWrap>
+                <S.ControlButton
+                  src="/assets/previous.svg"
+                  onClick={handlePrevious}
+                />
+                <S.ControlButton
+                  src={isPlaying ? "/assets/pause.svg" : "/assets/play.svg"}
+                  onClick={handlePlay}
+                />
+                <S.ControlButton src="/assets/next.svg" onClick={handleNext} />
+              </S.ButtonsWrap>
+              <ProgressBar
+                progress={progress}
+                onProgressChange={(newProgress) => {
+                  setProgress(newProgress);
+                  playerRef.current?.seekTo(newProgress);
+                }}
+              />
+              <S.TimeWrap>
+                <p>{formatTime(duration * progress)}</p>
+                <p>{formatTime(duration)}</p>
+              </S.TimeWrap>
+            </S.PlayControlWrap>
+            <S.OtherControlWrap $detailView={detailView}>
+              <S.StatusIcon
+                onClick={() => setIsLoop(!isLoop)}
+                src={isLoop ? "/assets/loopOn.svg" : "/assets/loopOff.svg"}
+              />
+              <S.StatusIcon
+                onClick={updateShuffle}
+                src={
+                  user && user.isShuffle
+                    ? "/assets/shuffleOn.svg"
+                    : "/assets/shuffleOff.svg"
+                }
+              />
+              <S.VolumeWrap>
+                <S.StatusIcon
+                  src={
+                    volume >= 0.7
+                      ? "/assets/volumeFull.svg"
+                      : volume >= 0.4
+                      ? "/assets/volumeMid.svg"
+                      : "/assets/muted.svg"
+                  }
+                />
+                <ProgressBar
+                  progress={volume}
+                  onProgressChange={(newVolume) => setVolume(newVolume)}
+                />
+              </S.VolumeWrap>
+              <S.StatusIcon
+                onClick={() => setDetailView((prev) => !prev)}
+                src={
+                  detailView ? "/assets/queueOn.svg" : "/assets/queueOff.svg"
+                }
+              />
+            </S.OtherControlWrap>
+          </>
+        )}
+        <S.MobileButtonWrap $detailView={detailView}>
+          <S.MobileButton
+            src={isPlaying ? "/assets/pause.svg" : "/assets/play.svg"}
+            onClick={handlePlay}
           />
-          <S.TimeWrap>
-            <p>{formatTime(duration * progress)}</p>
-            <p>{formatTime(duration)}</p>
-          </S.TimeWrap>
-        </S.PlayControlWrap>
-        <S.OtherControlWrap $detailView={detailView}>
-          <S.StatusIcon
-            onClick={() => setIsLoop(!isLoop)}
-            src={isLoop ? "/assets/loopOn.svg" : "/assets/loopOff.svg"}
-          />
-          <S.StatusIcon
-            onClick={updateShuffle}
-            src={
-              user && user.isShuffle
-                ? "/assets/shuffleOn.svg"
-                : "/assets/shuffleOff.svg"
-            }
-          />
-          <S.VolumeWrap>
-            <S.StatusIcon
-              src={
-                volume >= 0.7
-                  ? "/assets/volumeFull.svg"
-                  : volume >= 0.4
-                  ? "/assets/volumeMid.svg"
-                  : "/assets/muted.svg"
-              }
-            />
-            <ProgressBar
-              progress={volume}
-              onProgressChange={(newVolume) => setVolume(newVolume)}
-            />
-          </S.VolumeWrap>
-          <S.StatusIcon
+          <S.MobileButton
             onClick={() => setDetailView((prev) => !prev)}
             src={detailView ? "/assets/queueOn.svg" : "/assets/queueOff.svg"}
           />
-        </S.OtherControlWrap>
+        </S.MobileButtonWrap>
       </S.Playbar>
       <ReactPlayer
         url={`https://www.youtube.com/watch?v=${

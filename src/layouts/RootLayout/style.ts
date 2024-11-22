@@ -3,7 +3,7 @@ import { TABLET } from "../../constants/mediaQuery";
 
 export const Container = styled.div`
   width: 100%;
-  height: 100svh;
+  height: 100dvh;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -11,6 +11,7 @@ export const Container = styled.div`
   padding-left: 32rem;
   @media (max-width:${TABLET}) {
     padding-left: 0;
+    padding-top: 5rem;
   }
 `;
 

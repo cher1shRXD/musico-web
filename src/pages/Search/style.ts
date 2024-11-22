@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { POINT } from "../../constants/colors";
+import { MOBILE, TABLET } from "../../constants/mediaQuery";
 
 export const Container = styled.div`
   width: 100%;
@@ -19,6 +20,9 @@ export const SearchWrap = styled.div`
   justify-content: center;
   padding: 0 2rem;
   margin-top: 4rem;
+  @media (max-width: ${TABLET}) {
+    margin-top: 0;
+  }
 `;
 
 export const Search = styled.div`
@@ -62,23 +66,35 @@ export const SearchTextWrap = styled.div`
   display: flex;
   align-items: flex-end;
   gap: 1rem;
+  @media (max-width: ${MOBILE}) {
+    flex-direction: column;
+  }
 `;
 
 export const SearchText = styled.p`
   font-size: 2.4rem;
-`
+  @media (max-width: ${MOBILE}) {
+    font-size: 1.6rem;
+  }
+`;
 
 export const SearchTextAccent = styled.span`
   font-size: 2.4rem;
   font-weight: 700;
   color: ${POINT.primary};
-`
+  @media (max-width: ${MOBILE}) {
+    font-size: 1.6rem;
+  }
+`;
 
 export const SearchResultInfo = styled.p`
   font-size: 1.2rem;
   color: gray;
   font-weight: 300;
-`
+  @media (max-width: ${MOBILE}) {
+    font-size: 1rem;
+  }
+`;
 
 export const ContentWrap = styled.div`
   width: 100%;
@@ -95,11 +111,14 @@ export const ResultWrap = styled.div`
   flex: 1;
 `;
 
-export const ChartWrap = styled.div`
+export const RecommendWrap = styled.div`
   width: 50rem;
   padding: 2rem;
   display: flex;
   justify-content: flex-end;
+  @media (max-width: ${MOBILE}) {
+    display: none;
+  }
 `
 
 export const Recommend = styled.div`

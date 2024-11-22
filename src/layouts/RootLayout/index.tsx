@@ -4,6 +4,7 @@ import PlayBar from "../../components/PlayBar";
 import { Outlet } from "react-router-dom";
 import LibraryModal from "../../components/LibraryModal";
 import { useModalStateStore } from "../../store/modal/useModalStateStore";
+import MobileSideMenu from "../../components/MobileSideMenu";
 
 const RootLayout = () => {
   const modalOpen = useModalStateStore((state) => state.modalOpen);
@@ -12,6 +13,7 @@ const RootLayout = () => {
 
   return (
     <Container>
+      <MobileSideMenu />
       <Main>
         <Outlet />
       </Main>

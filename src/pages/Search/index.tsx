@@ -70,11 +70,11 @@ const Search = () => {
                 <MusicItem data={data} key={data.trackId} />
               ))}
             </S.ResultWrap>
-            <S.ChartWrap>
+            <S.RecommendWrap>
               <S.Recommend>
                 <S.RecommendTitle>이런 곡은 어때요?</S.RecommendTitle>
               </S.Recommend>
-            </S.ChartWrap>
+            </S.RecommendWrap>
           </S.ContentWrap>
         </>
       )}
