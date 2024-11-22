@@ -146,10 +146,10 @@ const PlayBar = () => {
                 $detailView={detailView}
                 src={
                   !isReady
-                    ? "/assets/loading.gif"
+                    ? "/assets/loading.svg"
                     : user && user.queue.length > 0
                     ? user.queue[user.currentSong].coverUrl
-                    : "/assets/loading.gif"
+                    : "/assets/loading.svg"
                 }
                 alt=""
               />
