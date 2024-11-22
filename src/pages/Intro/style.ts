@@ -1,12 +1,11 @@
 import styled from "@emotion/styled";
 import { POINT } from "../../constants/colors";
 import { Link } from "react-router-dom";
+import { MOBILE } from "../../constants/mediaQuery";
 
 export const Container = styled.div`
   width: 100%;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+  height: 100vh;
   overflow-y: scroll;
 `;
 
@@ -28,6 +27,10 @@ export const Title = styled.p`
   font-weight: 500;
   color: white;
   margin-bottom: 3rem;
+  word-break: keep-all;
+  @media (max-width: ${MOBILE}) {
+    font-size: 3rem;
+  }
 `
 
 export const Or = styled.p`
@@ -51,6 +54,7 @@ export const Input = styled.input`
   font-size: 1.6rem;
   padding: 1rem;
   background-color: white;
+  border-radius: 0%;
 `
 
 export const Button = styled(Link)`
@@ -91,6 +95,7 @@ export const IntroduceBox = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 2rem;
+  margin-top: 2rem;
 `
 
 export const LoginButton = styled(Link)`
@@ -99,7 +104,7 @@ export const LoginButton = styled(Link)`
   padding: 1rem 2rem;
   outline: none;
   border: 0.1rem solid ${POINT.secondary};
-  background-color: transparent;
+  background-color: rgba(200,200,200,0.4);
   text-align: center;
   cursor: pointer;
   transition: all 0.4s;
