@@ -1,5 +1,6 @@
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
+import { HALFMOBILE, MOBILE, TABLET } from "../../constants/mediaQuery";
 
 const FadeIn = keyframes`
   0%{
@@ -23,62 +24,84 @@ const Spin = keyframes`
 `;
 
 export const Container = styled.div`
-  width: calc(100vw - 32rem);
-  height: 12rem;
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   z-index: 999;
-  overflow: visible;
 `;
 
-export const Playbar = styled.div<{ $opacity: boolean }>`
-  width: 98%;
-  height: 10rem;
-  border-radius: 100rem;
+export const Playbar = styled.div<{ $detailView: boolean }>`
+  width: ${(props) => (props.$detailView ? "52rem" : "calc(100vw - 34rem)")};
+  height: ${(props) => (props.$detailView ? "calc(100vh - 6rem)" : "10rem")};
+  right: ${(props) => (props.$detailView ? "3rem" : "1rem")};
+  bottom: ${(props) => (props.$detailView ? "3rem" : "1rem")};
+  border-radius: ${(props) => (props.$detailView ? "2rem" : "5rem")};
   transform: translateY(12rem);
+  position: fixed;
   animation: ${FadeIn} 0.5s forwards;
-  padding: 1rem;
+  padding: ${(props) => (props.$detailView ? "3rem" : "1rem")};
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-direction: ${(props) => (props.$detailView ? "column" : "row")};
   z-index: 999;
   background-color: white;
-  box-shadow: ${(props) =>
-    props.$opacity ? "" : "0.1rem 0.1rem 1rem 0.1rem #ccc"};
+  box-shadow: 0.1rem 0.1rem 1rem 0.1rem #ccc;
   transition: all 0.2s;
+  @media (max-width: ${TABLET}) {
+    height: ${(props) => (props.$detailView ? "calc(100vh - 2rem)" : "10rem")};
+    bottom: 1rem;
+    right: 1rem;
+  }
+  @media (max-width: ${MOBILE}) {
+    width: ${(props) => (props.$detailView ? "52rem" : "calc(100vw - 2rem)")};
+  }
+  @media (max-width: ${HALFMOBILE}) {
+    width: calc(100vw - 2rem);
+    height: ${(props) => (props.$detailView ? "calc(100vh - 2rem)" : "6rem")};
+    border-radius: 1rem;
+    padding: ${(props) => (props.$detailView ? "3rem" : "0.5rem")};
+    justify-content: ${(props) =>
+      props.$detailView ? "flex-start" : "space-between"};
+    gap: ${(props) => (props.$detailView ? "3rem" : "0")};
+  }
 `;
 
-export const InfoWrap = styled.div<{ $opacity: boolean }>`
-  width: 30rem;
-  height: 100%;
+export const InfoWrap = styled.div<{ $detailView: boolean }>`
+  width: ${(props) => (props.$detailView ? "100%" : "30rem")};
   display: flex;
-  gap: 1rem;
-  opacity: ${(props) => (props.$opacity ? 0 : 1)};
+  align-items: center;
+  flex-direction: ${(props) => (props.$detailView ? "column" : "row")};
+  gap: ${(props) => (props.$detailView ? "2rem" : "1rem")};
   transition: all 0.4s;
 `;
 
-export const Cover = styled.img`
-  width: 8rem;
-  height: 8rem;
-  border-radius: 100rem;
+export const Cover = styled.img<{ $detailView: boolean }>`
+  width: ${(props) => (props.$detailView ? "100%" : "8rem")};
+  aspect-ratio: 1 / 1;
+  border-radius: ${(props) => (props.$detailView ? "1rem" : "8rem")};
   object-fit: cover;
   object-position: center;
-  animation: ${Spin} 4s linear infinite;
+  animation: ${(props) => (props.$detailView ? "" : Spin)} 4s linear infinite;
+  @media (max-width: ${TABLET}) {
+    max-width: 40rem;
+  }
+  @media (max-width: ${HALFMOBILE}) {
+    width: ${(props) => (props.$detailView ? "100%" : "5rem")};
+    border-radius: 0.8rem;
+    animation: none;
+  }
 `;
 
-export const PlayControlWrap = styled.div`
-  width: 35%;
-  height: 100%;
+export const PlayControlWrap = styled.div<{ $detailView: boolean }>`
+  width: ${(props) => (props.$detailView ? "90%" : "35%")};
+  height: 8rem;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.4rem;
   flex-direction: column;
   padding: 0 1rem;
+  @media (max-width: ${HALFMOBILE}) {
+    height: 6rem;
+  }
 `;
 
 export const ButtonsWrap = styled.div`
@@ -104,25 +127,33 @@ export const TimeWrap = styled.div`
   justify-content: space-between;
 `;
 
-export const OtherControlWrap = styled.div`
+export const OtherControlWrap = styled.div<{ $detailView: boolean }>`
   width: 30rem;
+  height: 8rem;
   display: flex;
   align-items: center;
   gap: 2rem;
-  padding-right: 3rem;
+  padding-right: ${(props) => (props.$detailView ? "0" : "3rem")};
+  @media (max-width: ${HALFMOBILE}) {
+    display: ${(props) => (props.$detailView ? "flex" : "none")};
+    height: 6rem;
+  }
 `;
 
-export const MusicInfo = styled.div`
+export const MusicInfo = styled.div<{ $detailView: boolean }>`
   flex: 1;
   display: flex;
+  align-items: ${(props) => (props.$detailView ? "center" : "flex-start")};
   justify-content: center;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: ${(props) => (props.$detailView ? "1.6rem" : "0.8rem")};
 `;
 
-export const MusicTitle = styled.p`
-  font-size: 1.6rem;
+export const MusicTitle = styled.p<{ $detailView: boolean }>`
+  font-size: ${(props) => (props.$detailView ? "2.8rem" : "1.6rem")};
+  text-align: ${(props) => (props.$detailView ? "center" : "start")};
   text-overflow: ellipsis;
+  word-break: keep-all;
 `;
 
 export const MusicArtistWrap = styled.div`
@@ -130,8 +161,8 @@ export const MusicArtistWrap = styled.div`
   flex-wrap: wrap;
 `;
 
-export const MusicArtist = styled.p`
-  font-size: 1.2rem;
+export const MusicArtist = styled.p<{ $detailView: boolean }>`
+  font-size: ${(props) => (props.$detailView ? "1.6rem" : "1.2rem")};
   color: gray;
 `;
 

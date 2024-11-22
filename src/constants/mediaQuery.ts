@@ -1,3 +1,5 @@
-export const TABLET = "1570px";
+export const TABLET = "1280px";
 
-export const MOBILE = "768px";
+export const MOBILE = "1024px";
+
+export const HALFMOBILE = "768px"

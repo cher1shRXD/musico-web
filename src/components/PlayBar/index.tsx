@@ -9,7 +9,6 @@ import usePlayPrevious from "../../hooks/play/usePlayPrevious";
 import { useVolumeStore } from "../../store/player/useVolumeStore";
 import { useLoopStateStore } from "../../store/player/useLoopStateStore";
 import useUpdateShuffle from "../../hooks/play/useUpdateShuffle";
-import { useLocation, useNavigate } from "react-router-dom";
 
 const PlayBar = () => {
   const user = useUserStore((state) => state.user);
@@ -27,9 +26,8 @@ const PlayBar = () => {
   const playPrevious = usePlayPrevious();
   const updateShuffle = useUpdateShuffle();
   const [clickable, setClickable] = useState(true);
-  const location = useLocation();
-  const navigate = useNavigate();
   const [videoIdIdx, setVideoIdIdx] = useState(0);
+  const [detailView, setDetailView] = useState(false);
 
   const handlePlay = () => {
     setIsPlaying(!isPlaying);
@@ -85,12 +83,12 @@ const PlayBar = () => {
     const remainingSeconds = seconds % 60;
 
     if (hours > 0) {
-      return `${hours}:${minutes <= 10 ? "0" : ""}${minutes}:${
+      return `${hours}:${minutes < 10 ? "0" : ""}${minutes}:${
         remainingSeconds < 10 ? "0" : ""
       }${remainingSeconds.toFixed(0)}`;
     } else {
       return `${minutes}:${
-        remainingSeconds <= 10 ? "0" : ""
+        remainingSeconds < 10 ? "0" : ""
       }${remainingSeconds.toFixed(0)}`;
     }
   };
@@ -145,9 +143,10 @@ const PlayBar = () => {
 
   return (
     <S.Container>
-      <S.Playbar $opacity={location.pathname === "/queue"}>
-        <S.InfoWrap $opacity={location.pathname === "/queue"}>
+      <S.Playbar $detailView={detailView}>
+        <S.InfoWrap $detailView={detailView}>
           <S.Cover
+            $detailView={detailView}
             src={
               !isReady
                 ? "/assets/loading.gif"
@@ -157,8 +156,8 @@ const PlayBar = () => {
             }
             alt=""
           />
-          <S.MusicInfo>
-            <S.MusicTitle>
+          <S.MusicInfo $detailView={detailView}>
+            <S.MusicTitle $detailView={detailView}>
               {user && user.queue.length > 0
                 ? user.queue[user.currentSong].title
                 : "재생중인 곡이 없습니다."}
@@ -167,7 +166,7 @@ const PlayBar = () => {
               {user &&
                 user.queue.length > 0 &&
                 user.queue[user.currentSong].artist.map((artist, idx) => (
-                  <S.MusicArtist key={idx}>
+                  <S.MusicArtist key={idx} $detailView={detailView}>
                     {`${artist.artistName}
                     ${
                       idx !== user.queue[user.currentSong].artist.length - 1
@@ -179,7 +178,7 @@ const PlayBar = () => {
             </S.MusicArtistWrap>
           </S.MusicInfo>
         </S.InfoWrap>
-        <S.PlayControlWrap>
+        <S.PlayControlWrap $detailView={detailView}>
           <S.ButtonsWrap>
             <S.ControlButton
               src="/assets/previous.svg"
@@ -203,7 +202,7 @@ const PlayBar = () => {
             <p>{formatTime(duration)}</p>
           </S.TimeWrap>
         </S.PlayControlWrap>
-        <S.OtherControlWrap>
+        <S.OtherControlWrap $detailView={detailView}>
           <S.StatusIcon
             onClick={() => setIsLoop(!isLoop)}
             src={isLoop ? "/assets/loopOn.svg" : "/assets/loopOff.svg"}
@@ -232,16 +231,8 @@ const PlayBar = () => {
             />
           </S.VolumeWrap>
           <S.StatusIcon
-            onClick={
-              location.pathname === "/queue"
-                ? () => navigate(-1)
-                : () => navigate("/queue")
-            }
-            src={
-              location.pathname === "/queue"
-                ? "/assets/queueOn.svg"
-                : "/assets/queueOff.svg"
-            }
+            onClick={() => setDetailView((prev) => !prev)}
+            src={detailView ? "/assets/queueOn.svg" : "/assets/queueOff.svg"}
           />
         </S.OtherControlWrap>
       </S.Playbar>

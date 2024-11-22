@@ -23,7 +23,7 @@ export const SearchWrap = styled.div`
 
 export const Search = styled.div`
   width: 100%;
-  max-width: 52rem;
+  max-width: 64rem;
   height: 5rem;
   background: white;
   border: 0.1rem solid #f1f1f1;

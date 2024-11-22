@@ -67,7 +67,9 @@ const MusicItem = ({
                 user.queue.length > 0 &&
                 user.queue[user.currentSong].trackId === data.trackId
               )
-                ? clickable ? handleClickMusic : () => {}
+                ? clickable
+                  ? handleClickMusic
+                  : () => {}
                 : () => {}
             }
             src={
@@ -83,20 +85,22 @@ const MusicItem = ({
       <S.MusicInfo>
         <S.MusicTitle>{data.title}</S.MusicTitle>
         <S.MusicArtistWrap>
-          {data.artists.map((artist, idx) => (
+          {data.artists.slice(0, 3).map((artist, idx) => (
             <S.MusicArtist key={idx}>
               {artist.artistName}
-              {idx !== data.artists.length - 1 && " &\u00A0"}
+              {idx !== data.artists.slice(0, 3).length - 1 && " &\u00A0"}
             </S.MusicArtist>
           ))}
+          {
+            data.artists.length > 3 && (
+              <S.MusicArtist>
+                외 {data.artists.length - 3}명
+              </S.MusicArtist>
+            ) 
+          }
         </S.MusicArtistWrap>
       </S.MusicInfo>
-      {!hidePlus && (
-        <S.PlayButton
-          src="/assets/plus.svg"
-          onClick={openModal}
-        />
-      )}
+      {!hidePlus && <S.PlayButton src="/assets/plus.svg" onClick={openModal} />}
     </S.Container>
   );
 };

@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { POINT } from "../../constants/colors";
+import { TABLET } from "../../constants/mediaQuery";
 
 export const Container = styled.div`
   width: 32rem;
@@ -13,6 +14,10 @@ export const Container = styled.div`
   padding: 1.2rem;
   flex-direction: column;
   background-color: white;
+  transition: all 0.5s;
+  @media (max-width: ${TABLET}) {
+    left : -32rem;
+  }
 `;
 
 export const Logo = styled.img`

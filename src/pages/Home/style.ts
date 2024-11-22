@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+import { HALFMOBILE, MOBILE } from "../../constants/mediaQuery";
 
 export const Container = styled.div`
   width: 100%;
@@ -16,11 +17,14 @@ export const SearchWrap = styled.div`
   justify-content: center;
   padding: 0 2rem;
   margin-top: 4rem;
+  @media (max-width: ${MOBILE}) {
+    padding: 0 1rem;
+  }
 `;
 
 export const Search = styled(Link)`
   width: 100%;
-  max-width: 52rem;
+  max-width: 64rem;
   height: 5rem;
   border: 0.1rem solid #f1f1f1;
   border-radius: 1rem;
@@ -30,6 +34,7 @@ export const Search = styled(Link)`
   justify-content: space-between;
   text-decoration: none;
   background-color: white;
+  
 `;
 
 export const SearchIcon = styled.img`
@@ -46,6 +51,9 @@ export const SearchPlaceholder = styled.p`
 
 export const MusicCell = styled.div`
   width: 50%;
+  @media (max-width: ${HALFMOBILE}) {
+    width: 100%;
+  }
 `;
 
 export const ContentWrap = styled.div`
@@ -55,6 +63,12 @@ export const ContentWrap = styled.div`
   grid-template-rows: repeat(60, 1rem);
   gap: 1rem;
   padding: 2rem;
+  transition: all 0.5s;
+  @media (max-width: ${MOBILE}) {
+    padding: 1rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
 `;
 
 export const SectionTitle = styled(Link)`
@@ -91,6 +105,15 @@ export const Section = styled.div<{
   border-radius: 2rem;
   gap: 0.8rem;
   background-color: white;
+
+  @media (max-width: ${MOBILE}) {
+    grid-column: auto / auto;
+    grid-row: auto / auto;
+    width: 100%;
+    padding: 1rem;
+    box-shadow: none;
+    border: none;
+  }
 `;
 
 export const SectionContent = styled.div`
