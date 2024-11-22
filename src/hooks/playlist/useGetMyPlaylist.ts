@@ -21,6 +21,7 @@ const useGetMyPlaylist = () => {
         setPlaylist(data);
       }
     } catch {
+      navigate("/intro");
       notification.open({
         message: "플레이리스트 가져오기 실패",
         description: "네트워크 에러",

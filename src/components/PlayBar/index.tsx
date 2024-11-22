@@ -10,6 +10,7 @@ import { useVolumeStore } from "../../store/player/useVolumeStore";
 import { useLoopStateStore } from "../../store/player/useLoopStateStore";
 import useUpdateShuffle from "../../hooks/play/useUpdateShuffle";
 import StoredMusicItem from "../StoredMusicItem";
+import useFormatTime from "../../hooks/utils/useFormatTime";
 
 const PlayBar = () => {
   const user = useUserStore((state) => state.user);
@@ -30,14 +31,7 @@ const PlayBar = () => {
   const [videoIdIdx, setVideoIdIdx] = useState(0);
   const [detailView, setDetailView] = useState(false);
   const [queueView, setQueueView] = useState(false);
-
-  const handlePlay = () => {
-    setIsPlaying(!isPlaying);
-  };
-
-  const handleLoad = () => {
-    setIsReady(true);
-  };
+  const formatTime = useFormatTime();
 
   const handleNext = async () => {
     if (!clickable) {
@@ -79,21 +73,6 @@ const PlayBar = () => {
     setTimeout(() => setClickable(true), 1000);
   };
 
-  const formatTime = (seconds: number) => {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = seconds % 60;
-
-    if (hours > 0) {
-      return `${hours}:${minutes < 10 ? "0" : ""}${minutes}:${
-        remainingSeconds < 10 ? "0" : ""
-      }${remainingSeconds.toFixed(0)}`;
-    } else {
-      return `${minutes}:${
-        remainingSeconds < 10 ? "0" : ""
-      }${remainingSeconds.toFixed(0)}`;
-    }
-  };
 
   const handleSpace = useCallback(
     (e: KeyboardEvent) => {
@@ -204,7 +183,7 @@ const PlayBar = () => {
                 />
                 <S.ControlButton
                   src={isPlaying ? "/assets/pause.svg" : "/assets/play.svg"}
-                  onClick={handlePlay}
+                  onClick={()=>setIsPlaying(!isPlaying)}
                 />
                 <S.ControlButton src="/assets/next.svg" onClick={handleNext} />
               </S.ButtonsWrap>
@@ -260,7 +239,7 @@ const PlayBar = () => {
         <S.MobileButtonWrap $detailView={detailView}>
           <S.MobileButton
             src={isPlaying ? "/assets/pause.svg" : "/assets/play.svg"}
-            onClick={handlePlay}
+            onClick={()=>setIsPlaying(!isPlaying)}
           />
           <S.MobileButton
             onClick={() => setDetailView((prev) => !prev)}
@@ -284,7 +263,7 @@ const PlayBar = () => {
         onPause={() => setIsPlaying(false)}
         onPlay={() => setIsPlaying(true)}
         onEnded={handleNext}
-        onReady={handleLoad}
+        onReady={()=>setIsReady(true)}
         onBufferEnd={() => setIsReady(true)}
         onBuffer={() => setIsReady(false)}
         onError={(e) => {
