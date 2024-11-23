@@ -11,8 +11,8 @@ import PlaylistItem from "../../components/PlaylistItem";
 import { VibeResponse } from "../../types/music/vibeResponse";
 
 const Home = () => {
-  const { getRank, rankData } = useGetRank();
-  const { getNewSong, newSongData } = useGetNewSong();
+  const { rankData } = useGetRank();
+  const { newSongData } = useGetNewSong();
   const [rankTopVideoId, setRankTopVideoId] = useState("");
   const [newTopVideoId, setNewTopVideoId] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
@@ -21,7 +21,7 @@ const Home = () => {
   const [shuffledRankData, setShuffledRankData] = useState<VibeResponse[]>([]);
 
   useEffect(() => {
-    if (rankData.length > 0) {
+    if (rankData && rankData.length > 0) {
       const shuffled = [...rankData]
         .sort(() => Math.random() - 0.5)
         .slice(0, 6);
@@ -30,7 +30,7 @@ const Home = () => {
   }, [rankData]);
 
   const getRankTopVideo = async () => {
-    if (rankData.length > 0) {
+    if (rankData && rankData.length > 0) {
       const youtubeResult = await getYoutubeMusic(
         `${rankData[0].title} - ${rankData[0].artists[0].artistName}`
       );
@@ -41,7 +41,7 @@ const Home = () => {
   };
 
   const getNewTopVideo = async () => {
-    if (newSongData.length > 0) {
+    if (newSongData && newSongData.length > 0) {
       const youtubeResult = await getYoutubeMusic(
         `${newSongData[0].title} - ${newSongData[0].artists[0].artistName}`
       );
@@ -52,16 +52,10 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getRank();
-    getNewSong();
-    getMyPlaylist();
-  }, []);
-
-  useEffect(() => {
-    if (rankData.length > 0 && rankTopVideoId === "") {
+    if (rankData && rankData.length > 0 && rankTopVideoId === "") {
       getRankTopVideo();
     }
-    if (newSongData.length > 0 && newTopVideoId === "") {
+    if (newSongData && newSongData.length > 0 && newTopVideoId === "") {
       getNewTopVideo();
     }
   }, [rankData, newSongData]);
@@ -97,7 +91,7 @@ const Home = () => {
             <S.GoToSection src="/assets/forward.svg" />
           </S.SectionTitle>
           <S.SectionContent>
-            {newSongData.slice(0, 6).map((data) => (
+            {newSongData?.slice(0, 6).map((data) => (
               <S.MusicCell key={data.trackId}>
                 <MusicItem data={data} />
               </S.MusicCell>
@@ -110,7 +104,7 @@ const Home = () => {
             <S.GoToSection src="/assets/forward.svg" />
           </S.SectionTitle>
           <S.RankContent>
-            {rankData.slice(0, 5).map((data, idx) => (
+            {rankData?.slice(0, 5).map((data, idx) => (
               <MusicItem
                 data={data}
                 key={data.trackId}
@@ -142,7 +136,7 @@ const Home = () => {
             <S.GoToSection src="/assets/makePlaylist.svg" />
           </S.SectionTitle>
           <S.LibraryContent>
-            {playlist.map((data) => (
+            {playlist?.map((data) => (
               <PlaylistItem data={data} key={data.id} />
             ))}
           </S.LibraryContent>

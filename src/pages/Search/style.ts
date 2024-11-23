@@ -133,7 +133,7 @@ export const Recommend = styled.div`
 `
 
 export const RecommendTitle = styled.p`
-  font-size: 2rem;
+  font-size: 2.4rem;
   color: gray;
 `
 
@@ -156,4 +156,13 @@ export const InfoIcon = styled.img`
   object-fit: contain;
   object-position: center;
   cursor: pointer;
+`
+
+export const RecommendSongTitle = styled.p`
+  font-size: 1.6rem;
+  color: #ccc;
+  cursor: pointer;
+  &:hover{
+    text-decoration: underline;
+  }
 `

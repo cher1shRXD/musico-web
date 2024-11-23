@@ -1,30 +1,48 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSearchMusic from "../../hooks/music/useSearchMusic";
 import MusicItem from "../../components/MusicItem";
 import * as S from "./style";
 import { notification } from "antd";
+import useGetRank from "../../hooks/music/useGetRank";
+import { VibeResponse } from "../../types/music/vibeResponse";
 
 const Search = () => {
   const [query, setQuery] = useState("");
   const [requestedQuery, setRequestedQuery] = useState("");
   const { searchResult, searchMusic } = useSearchMusic();
   const [isRequested, setIsRequested] = useState(false);
+  const { rankData } = useGetRank();
+  const [shuffledRankData, setShuffledRankData] = useState<VibeResponse[]>([]);
+
+  useEffect(() => {
+    if (rankData && rankData.length > 0) {
+      const shuffled = [...rankData]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 10);
+      setShuffledRankData(shuffled);
+    }
+  }, [rankData]);
 
   const handleQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
-  const searchRequest = () => {
+  const searchRequest = (e?: string) => {
     if (query.trim().length === 0) {
       notification.open({
         message: "검색어를 최소 한 글자 이상 입력해주세요.",
       });
       return;
     }
-    searchMusic(query);
-    setRequestedQuery(query);
+    searchMusic(e || query);
+    setRequestedQuery(e || query);
     setIsRequested(true);
   };
+
+  const searchRecommend = (e: string) => {
+    searchRequest(e);
+    setQuery(e);
+  }
 
   return (
     <S.Container>
@@ -42,7 +60,7 @@ const Search = () => {
               }
             }}
           />
-          <S.SearchIcon src="/assets/searchIcon.svg" onClick={searchRequest} />
+          <S.SearchIcon src="/assets/searchIcon.svg" onClick={()=>searchRequest()} />
         </S.Search>
       </S.SearchWrap>
       {!isRequested ? (
@@ -73,6 +91,11 @@ const Search = () => {
             <S.RecommendWrap>
               <S.Recommend>
                 <S.RecommendTitle>이런 곡은 어때요?</S.RecommendTitle>
+                {
+                  shuffledRankData.map((data)=>(
+                    <S.RecommendSongTitle key={data.trackId} onClick={()=>searchRecommend(data.title)}>{data.title}</S.RecommendSongTitle>
+                  ))
+                }
               </S.Recommend>
             </S.RecommendWrap>
           </S.ContentWrap>

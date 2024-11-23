@@ -1,25 +1,22 @@
-import { useState } from "react";
 import musicoAxios from "../../libs/axios/musicoAxios";
 import { Playlist } from "../../types/playlist/playlist";
 import { notification } from "antd";
 import { getCookie } from "../../libs/react-cookie/cookie";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 const useGetMyPlaylist = () => {
-  const [playlist, setPlaylist] = useState<Playlist[]>([]);
-  const accessToken = getCookie('ACCESS_TOKEN');
+  const accessToken = getCookie("ACCESS_TOKEN");
   const navigate = useNavigate();
 
   const getMyPlaylist = async () => {
-    if(!accessToken) {
+    if (!accessToken) {
       navigate("/intro");
       return;
     }
     try {
-      const { data } = await musicoAxios.get("/playlist");
-      if (data) {
-        setPlaylist(data);
-      }
+      const { data } = await musicoAxios.get<Playlist[]>("/playlist");
+      return data;
     } catch {
       navigate("/intro");
       notification.open({
@@ -29,9 +26,14 @@ const useGetMyPlaylist = () => {
     }
   };
 
+  const { data, refetch } = useQuery({
+    queryKey: ["getMyPlaylist"],
+    queryFn: getMyPlaylist,
+  });
+
   return {
-    playlist,
-    getMyPlaylist
+    playlist: data,
+    getMyPlaylist: refetch
   }
 };
 

@@ -32,7 +32,7 @@ export const Container = styled.div`
   top: 0;
   right: 0;
   display: none;
-  z-index: 99999;
+  z-index: 99;
   @media (max-width: ${TABLET}) {
     display: flex;
   }

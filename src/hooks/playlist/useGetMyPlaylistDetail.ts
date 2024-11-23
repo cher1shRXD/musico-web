@@ -1,16 +1,15 @@
-import { useState } from "react";
 import musicoAxios from "../../libs/axios/musicoAxios";
 import { Playlist } from "../../types/playlist/playlist";
 import { notification } from "antd";
+import { useQuery } from "@tanstack/react-query";
 
-const useGetMyPlaylistDetail = () => {
-  const [playlistDetail, setPlaylistDetail] = useState<Playlist>();
-  const getMyPlaylistDetail = async (playlistId: string) => {
+const useGetMyPlaylistDetail = (playlistId: string) => {
+  const getMyPlaylistDetail = async () => {
     try {
-      const { data } = await musicoAxios.get(`/playlist/my?playlistId=${playlistId}`);
-      if (data) {
-        setPlaylistDetail(data);
-      }
+      const { data } = await musicoAxios.get<Playlist>(
+        `/playlist/my?playlistId=${playlistId}`
+      );
+      return data;
     } catch {
       notification.open({
         message: "플레이리스트 가져오기 실패",
@@ -19,9 +18,15 @@ const useGetMyPlaylistDetail = () => {
     }
   };
 
+  const { data, refetch } = useQuery({
+    queryKey: ["getMyPlaylistDetail", playlistId],
+    queryFn: getMyPlaylistDetail,
+    enabled: !!playlistId
+  });
+
   return {
-    playlistDetail,
-    getMyPlaylistDetail
+    playlistDetail: data,
+    getMyPlaylistDetail: refetch
   }
 };
 

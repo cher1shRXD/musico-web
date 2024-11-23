@@ -1,20 +1,15 @@
-import { useState } from "react";
 import { VibeResponse } from "../../types/music/vibeResponse";
 import axios from "axios";
 import { notification } from "antd";
+import { useQuery } from "@tanstack/react-query";
 
 const useGetRank = () => {
-  const [rankData, setRankData] = useState<VibeResponse[]>([]);
-
   const getRank = async () => {
     try {
-      const { data } = await axios.get(
+      const { data } = await axios.get<VibeResponse[]>(
         `${import.meta.env.VITE_EXPRESS_SERVER}/songs/chart`
       );
-
-      if (data) {
-        setRankData(data);
-      }
+      return data;
     } catch {
       notification.open({
         message: "랭킹 가져오기 실패",
@@ -23,8 +18,13 @@ const useGetRank = () => {
     }
   };
 
+  const { data } = useQuery({
+    queryKey: ['getRank'],
+    queryFn: getRank
+  })
+
   return {
-    rankData,
+    rankData: data,
     getRank,
   };
 };

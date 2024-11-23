@@ -6,12 +6,12 @@ import MusicItem from "../../components/MusicItem";
 import useGetNewSong from "../../hooks/music/useGetNewSong";
 
 const Newest = () => {
-  const { getNewSong, newSongData } = useGetNewSong();
+  const { newSongData } = useGetNewSong();
   const getYoutubeMusic = useGetYoutube();
   const [topVideoId, setTopVideoId] = useState("");
 
   const getTopVideo = async () => {
-    if (newSongData.length > 0) {
+    if (newSongData && newSongData.length > 0) {
       const youtubeResult = await getYoutubeMusic(
         `${newSongData[0].title} - ${newSongData[0].artists[0].artistName}`
       );
@@ -22,10 +22,6 @@ const Newest = () => {
   };
 
   useEffect(() => {
-    getNewSong();
-  }, []);
-
-  useEffect(() => {
     getTopVideo();
   }, [newSongData]);
 
@@ -33,18 +29,18 @@ const Newest = () => {
     <S.Container>
       <S.Banner>
         <S.BannerText>
-          당신에게 다가온 새로운 {newSongData.length}곡
+          당신에게 다가온 새로운 {newSongData?.length}곡
         </S.BannerText>
       </S.Banner>
       <S.ContentWrap>
         <S.ItemWrap>
-          {newSongData.map((data) => (
+          {newSongData?.map((data) => (
             <MusicItem data={data} key={data.trackId} />
           ))}
         </S.ItemWrap>
         <S.TopVideo>
           <S.TopText>
-            Focus on "{newSongData.length > 0 && newSongData[0].title}"
+            Focus on "{newSongData && newSongData.length > 0 && newSongData[0].title}"
           </S.TopText>
           <ReactPlayer
             url={`https://www.youtube.com/watch?v=${topVideoId}`}

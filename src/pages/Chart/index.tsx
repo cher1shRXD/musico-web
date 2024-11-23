@@ -6,12 +6,12 @@ import ReactPlayer from "react-player";
 import MusicItem from "../../components/MusicItem";
 
 const Chart = () => {
-  const { getRank, rankData } = useGetRank();
+  const { rankData } = useGetRank();
   const getYoutubeMusic  = useGetYoutube();
   const [topVideoId, setTopVideoId] = useState("");
 
   const getTopVideo = async () => {
-    if(rankData.length > 0) {
+    if(rankData && rankData.length > 0) {
       const youtubeResult = await getYoutubeMusic(
         `${rankData[0].title} - ${rankData[0].artists[0].artistName}`
       );
@@ -20,10 +20,6 @@ const Chart = () => {
       }
     }
   }
-
-  useEffect(() => {
-    getRank();
-  }, []);
 
   useEffect(()=>{
     getTopVideo();
@@ -37,7 +33,7 @@ const Chart = () => {
       </S.Banner>
       <S.ContentWrap>
         <S.RankWrap>
-          {rankData.map((data, idx) => (
+          {rankData?.map((data, idx) => (
             <MusicItem
               data={data}
               type="rank"
@@ -48,7 +44,7 @@ const Chart = () => {
         </S.RankWrap>
         <S.TopVideo>
           <S.TopText>
-          Ranking #1 "{rankData.length > 0 && rankData[0].title}"
+          Ranking #1 "{rankData && rankData.length > 0 && rankData[0].title}"
           </S.TopText>
           <ReactPlayer
             url={`https://www.youtube.com/watch?v=${topVideoId}`}

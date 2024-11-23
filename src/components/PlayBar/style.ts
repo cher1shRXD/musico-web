@@ -33,7 +33,7 @@ const Drop = keyframes`
 `
 
 export const Container = styled.div`
-  z-index: 99999;
+  z-index: 999;
 `;
 
 export const Playbar = styled.div<{
