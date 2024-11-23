@@ -88,13 +88,13 @@ const MusicItem = ({
           {data.artists.slice(0, 3).map((artist, idx) => (
             <S.MusicArtist key={idx}>
               {artist.artistName}
-              {idx !== data.artists.slice(0, 3).length - 1 && " &\u00A0"}
+              {idx !== data.artists.slice(0, 2).length - 1 && " &\u00A0"}
             </S.MusicArtist>
           ))}
           {
-            data.artists.length > 3 && (
+            data.artists.length > 2 && (
               <S.MusicArtist>
-                외 {data.artists.length - 3}명
+                외 {data.artists.length - 2}명
               </S.MusicArtist>
             ) 
           }
