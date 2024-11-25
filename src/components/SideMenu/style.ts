@@ -27,7 +27,7 @@ export const Logo = styled.img`
   margin: 2rem 0;
 `;
 
-export const MenuItem = styled(Link)<{ isfocused: string }>`
+export const MenuItem = styled(Link)<{ $isfocused: boolean }>`
   width: 100%;
   height: 5rem;
   display: flex;
@@ -36,9 +36,9 @@ export const MenuItem = styled(Link)<{ isfocused: string }>`
   text-decoration: none;
   color: black;
   padding: 1rem;
-  color: ${(props) => (props.isfocused === "true" ? "white" : "black")};
+  color: ${(props) => (props.$isfocused ? "white" : "black")};
   background: ${(props) =>
-    props.isfocused === "true"
+    props.$isfocused
       ? `linear-gradient(79deg, ${POINT.secondary} 0%, ${POINT.thirdary} 100%)`
       : "transparent"};
   border-radius: 1rem;

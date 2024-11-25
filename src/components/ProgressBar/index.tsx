@@ -66,9 +66,9 @@ const ProgressBar = ({ progress, onProgressChange }: ProgressBarProps) => {
       className="progress-bar-container"
       onClick={handleProgressBarClick}
     >
-      <S.ProgressBar progress={clampProgress(progress)} />
+      <S.ProgressBar $progress={clampProgress(progress)} />
       <S.ProgressPointer
-        progress={clampProgress(progress)}
+        $progress={clampProgress(progress)}
         onMouseDown={handlePointerMouseDown}
       />
     </S.ProgressBarContainer>

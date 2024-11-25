@@ -22,7 +22,7 @@ const SideMenu = () => {
   return (
     <S.Container>
       <S.Logo src="/assets/musico_reversed.svg" onClick={()=>navigate('/')} />
-      <S.MenuItem to="/" isfocused={`${location.pathname === "/"}`}>
+      <S.MenuItem to="/" $isfocused={location.pathname === "/"}>
         <S.MeunIcon
           src={
             location.pathname === "/"
@@ -32,7 +32,7 @@ const SideMenu = () => {
         />
         <S.MenuText>홈</S.MenuText>
       </S.MenuItem>
-      <S.MenuItem to="/search" isfocused={`${location.pathname === "/search"}`}>
+      <S.MenuItem to="/search" $isfocused={location.pathname === "/search"}>
         <S.MeunIcon
           src={
             location.pathname === "/search"
@@ -44,7 +44,7 @@ const SideMenu = () => {
       </S.MenuItem>
       <S.MenuItem
         to="/newest"
-        isfocused={`${location.pathname === "/newest"}`}
+        $isfocused={location.pathname === "/newest"}
       >
         <S.MeunIcon
           src={
@@ -55,7 +55,7 @@ const SideMenu = () => {
         />
         <S.MenuText>최신음악</S.MenuText>
       </S.MenuItem>
-      <S.MenuItem to="/chart" isfocused={`${location.pathname === "/chart"}`}>
+      <S.MenuItem to="/chart" $isfocused={location.pathname === "/chart"}>
         <S.MeunIcon
           src={
             location.pathname === "/chart"

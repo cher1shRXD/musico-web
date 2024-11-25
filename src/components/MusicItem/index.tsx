@@ -55,13 +55,13 @@ const MusicItem = ({
     <S.Container>
       {type && type === "rank" && (
         <S.RankNumber
-          isTop={rank ? rank <= 5 : undefined}
-          isUnderHalf={rank ? rank >= 50 : undefined}
+          $isTop={rank ? rank <= 5 : undefined}
+          $isUnderHalf={rank ? rank >= 50 : undefined}
         >
           {rank}
         </S.RankNumber>
       )}
-      <S.Cover src={data.albumArt}>
+      <S.Cover $src={data.albumArt}>
         <S.CoverOverlay className="cover-overlay">
           <S.PlayButton
             onClick={

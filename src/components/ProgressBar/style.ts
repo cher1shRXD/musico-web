@@ -11,15 +11,15 @@ export const ProgressBarContainer = styled.div`
   overflow: visible;
 `;
 
-export const ProgressBar = styled.div<{ progress: number }>`
+export const ProgressBar = styled.div<{ $progress: number }>`
   height: 100%;
   background: linear-gradient(79deg, ${POINT.primary} 0%, ${POINT.secondary} 0%, ${POINT.thirdary} 100%);
-  width: ${({ progress }) => `${progress * 100}%`};
+  width: ${({ $progress }) => `${$progress * 100}%`};
   overflow: visible;
   border-radius: 1rem;
 `;
 
-export const ProgressPointer = styled.div<{ progress: number }>`
+export const ProgressPointer = styled.div<{ $progress: number }>`
   width: 1rem;
   height: 1rem;
   background-color: #fff;
@@ -27,7 +27,7 @@ export const ProgressPointer = styled.div<{ progress: number }>`
   position: absolute;
   border: 0.1rem solid ${POINT.primary};
   top: 50%;
-  left: ${({ progress }) => `${progress * 100}%`};
+  left: ${({ $progress }) => `${$progress * 100}%`};
   transform: translate(-50%, -50%);
   cursor: pointer;
 `;

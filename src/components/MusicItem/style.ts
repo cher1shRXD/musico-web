@@ -20,11 +20,11 @@ export const Container = styled.div`
   }
 `;
 
-export const Cover = styled.div<{ src: string }>`
+export const Cover = styled.div<{ $src: string }>`
   width: 8rem;
   height: 8rem;
   border-radius: 0.5rem;
-  background: url(${(props) => props.src}) center no-repeat;
+  background: url(${(props) => props.$src}) center no-repeat;
   background-size: contain;
   @media (max-width: ${MOBILE}) {
     height: 4rem;
@@ -82,8 +82,8 @@ export const MusicArtist = styled.p`
 `;
 
 export const RankNumber = styled.div<{
-  isTop?: boolean;
-  isUnderHalf?: boolean;
+  $isTop?: boolean;
+  $isUnderHalf?: boolean;
 }>`
   width: 4.4rem;
   display: flex;
@@ -92,9 +92,9 @@ export const RankNumber = styled.div<{
   font-size: 2.4rem;
   font-weight: 700;
   color: ${(props) =>
-    props.isTop
+    props.$isTop
       ? POINT.primary
-      : (props) => (!props.isUnderHalf ? POINT.secondary : "black")};
+      : (props) => (!props.$isUnderHalf ? POINT.secondary : "black")};
   @media (max-width: ${MOBILE}) {
     width: 2rem;
     height: 2rem;

@@ -19,11 +19,11 @@ export const Container = styled.div`
   }
 `;
 
-export const Cover = styled.div<{ src: string }>`
+export const Cover = styled.div<{ $src: string }>`
   width: 8rem;
   height: 8rem;
   border-radius: 0.5rem;
-  background: url(${(props) => props.src}) center no-repeat;
+  background: url(${(props) => props.$src}) center no-repeat;
   background-size: contain;
   @media (max-width: ${MOBILE}) {
     height: 4rem;
@@ -107,11 +107,11 @@ export const QueueContainer = styled.div`
   }
 `;
 
-export const QueueCover = styled.div<{ src: string }>`
+export const QueueCover = styled.div<{ $src: string }>`
   width: 6rem;
   height: 6rem;
   border-radius: 0.5rem;
-  background: url(${(props) => props.src}) center no-repeat;
+  background: url(${(props) => props.$src}) center no-repeat;
   background-size: contain;
 `;
 

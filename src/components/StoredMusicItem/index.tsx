@@ -43,7 +43,7 @@ const StoredMusicItem = ({
   if(type === 'queue') {
     return (
       <S.QueueContainer>
-        <S.QueueCover src={data.coverUrl}>
+        <S.QueueCover $src={data.coverUrl}>
           <S.CoverOverlay className="cover-overlay">
             <S.Button
               onClick={
@@ -83,7 +83,7 @@ const StoredMusicItem = ({
 
   return (
     <S.Container>
-      <S.Cover src={data.coverUrl}>
+      <S.Cover $src={data.coverUrl}>
         <S.CoverOverlay className="cover-overlay">
           <S.Button
             onClick={

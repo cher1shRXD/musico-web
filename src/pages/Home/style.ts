@@ -92,15 +92,15 @@ export const GoToSection = styled.img`
 `;
 
 export const Section = styled.div<{
-  rowstart: string;
-  rowend: string;
-  colstart: string;
-  colend: string;
+  $rowstart: string;
+  $rowend: string;
+  $colstart: string;
+  $colend: string;
 }>`
   display: flex;
   flex-direction: column;
-  grid-column: ${(props) => props.colstart} / ${(props) => props.colend};
-  grid-row: ${(props) => props.rowstart} / ${(props) => props.rowend};
+  grid-column: ${(props) => props.$colstart} / ${(props) => props.$colend};
+  grid-row: ${(props) => props.$rowstart} / ${(props) => props.$rowend};
   box-shadow: 0.1rem 0.1rem 1rem 0.1rem #f1f1f1;
   border: 0.1rem solid #f1f1f1;
   padding: 2rem;

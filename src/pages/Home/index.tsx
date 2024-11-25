@@ -75,7 +75,7 @@ const Home = () => {
         </S.Search>
       </S.SearchWrap>
       <S.ContentWrap>
-        <S.Section colstart="1" colend="31" rowstart="1" rowend="20">
+        <S.Section $colstart="1" $colend="31" $rowstart="1" $rowend="20">
           <S.SectionTitle to="/">Today's recommendations</S.SectionTitle>
           <S.SectionContent>
             {shuffledRankData.map((data) => (
@@ -85,7 +85,7 @@ const Home = () => {
             ))}
           </S.SectionContent>
         </S.Section>
-        <S.Section colstart="1" colend="31" rowstart="21" rowend="40">
+        <S.Section $colstart="1" $colend="31" $rowstart="21" $rowend="40">
           <S.SectionTitle to="/newest">
             New songs
             <S.GoToSection src="/assets/forward.svg" />
@@ -98,7 +98,7 @@ const Home = () => {
             ))}
           </S.SectionContent>
         </S.Section>
-        <S.Section colstart="32" colend="49" rowstart="1" rowend="30">
+        <S.Section $colstart="32" $colend="49" $rowstart="1" $rowend="30">
           <S.SectionTitle to="/chart">
             Chart
             <S.GoToSection src="/assets/forward.svg" />
@@ -115,7 +115,7 @@ const Home = () => {
             ))}
           </S.RankContent>
         </S.Section>
-        <S.Section colstart="1" colend="31" rowstart="41" rowend="60">
+        <S.Section $colstart="1" $colend="31" $rowstart="41" $rowend="60">
           <S.SectionTitle to="/">Videos</S.SectionTitle>
           <S.SectionContent>
             <ReactPlayer
@@ -130,7 +130,7 @@ const Home = () => {
             />
           </S.SectionContent>
         </S.Section>
-        <S.Section colstart="32" colend="49" rowstart="31" rowend="60">
+        <S.Section $colstart="32" $colend="49" $rowstart="31" $rowend="60">
           <S.SectionTitle to="/" onClick={() => setModalOpen(true)}>
             Library
             <S.GoToSection src="/assets/makePlaylist.svg" />
