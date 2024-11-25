@@ -21,7 +21,7 @@ const SideMenu = () => {
 
   return (
     <S.Container>
-      <S.Logo src="/assets/musico_reversed.svg" />
+      <S.Logo src="/assets/musico_reversed.svg" onClick={()=>navigate('/')} />
       <S.MenuItem to="/" isfocused={`${location.pathname === "/"}`}>
         <S.MeunIcon
           src={
