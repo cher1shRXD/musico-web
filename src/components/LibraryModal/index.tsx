@@ -6,6 +6,7 @@ import useGetYoutube from "../../hooks/music/useGetYoutube";
 import React, { useEffect, useState } from "react";
 import useGetMyPlaylist from "../../hooks/playlist/useGetMyPlaylist";
 import useAddToPlaylist from "../../hooks/playlist/useAddToPlaylist";
+import { useQueueUpdateStore } from "../../store/update/useQueueUpdateStore";
 
 const LibraryModal = ({
   modalOpen,
@@ -20,13 +21,10 @@ const LibraryModal = ({
   const getYoutubeMusic = useGetYoutube();
   const [isQueueChecked, setIsQueueChecked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { playlist, getMyPlaylist } = useGetMyPlaylist();
+  const { playlist } = useGetMyPlaylist();
   const addToPlaylist = useAddToPlaylist();
   const [selectedPlaylist, setSelectedPlaylist] = useState<string[]>([]);
-
-  useEffect(() => {
-    getMyPlaylist();
-  }, []);
+  const setIsUpdated = useQueueUpdateStore((state) => state.setIsUpdated);
 
   const handleSubmit = async () => {
     if (loading) {
@@ -56,6 +54,7 @@ const LibraryModal = ({
       }
     } finally {
       setLoading(false);
+      setIsUpdated(true);
       setTimeout(() => setModalOpen(false), 100);
     }
   };
@@ -98,7 +97,7 @@ const LibraryModal = ({
       </S.ItemContainer>
       <S.Hr />
       <S.ItemWrap>
-        {playlist.map((data) => (
+        {playlist?.map((data) => (
           <S.ItemContainer key={data.id}>
             <S.ItemSelect
               type="checkbox"

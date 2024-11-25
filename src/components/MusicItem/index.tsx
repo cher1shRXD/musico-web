@@ -6,6 +6,7 @@ import { usePlayerStateStore } from "../../store/player/usePlayerStateStore";
 import { useUserStore } from "../../store/user/useUserStore";
 import { VibeResponse } from "../../types/music/vibeResponse";
 import * as S from "./style";
+import { useQueueUpdateStore } from "../../store/update/useQueueUpdateStore";
 
 const MusicItem = ({
   data,
@@ -25,6 +26,7 @@ const MusicItem = ({
   const setMusicData = useModalStateStore(state=>state.setMusicData);
   const setModalOpen = useModalStateStore(state=>state.setModalOpen);
   const [clickable, setClickable] = useState(true);
+  const setIsUpdated = useQueueUpdateStore(state=>state.setIsUpdated);
 
   const handleClickMusic = async () => {
     setClickable(false);
@@ -40,6 +42,7 @@ const MusicItem = ({
       coverUrl: data.albumArt,
     });
     setIsPlaying(true);
+    setIsUpdated(true);
     setClickable(true);
   };
 
