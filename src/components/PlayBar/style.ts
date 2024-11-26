@@ -243,9 +243,8 @@ export const QueueHeader = styled.div<{ $detailView: boolean }>`
   display: ${(props) => (props.$detailView ? "flex" : "none")};
 `;
 
-export const DropDown = styled.img<{ $queueView: boolean }>`
+export const DropDown = styled.img`
   width: 2rem;
   height: 2rem;
   transition: all 0.5s;
-  transform: ${(props) => (props.$queueView ? "rotate(180deg)" : "rotate(0)")};
 `;

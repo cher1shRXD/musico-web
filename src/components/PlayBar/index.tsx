@@ -139,8 +139,7 @@ const PlayBar = () => {
       <S.Playbar $detailView={detailView} $queueView={queueView}>
         <S.QueueHeader $detailView={detailView}>
           <S.DropDown
-            src="/assets/down.svg"
-            $queueView={queueView}
+            src={queueView ? "/assets/queueOn.svg" : "/assets/queueOff.svg"}
             onClick={() => setQueueView((prev) => !prev)}
           />
         </S.QueueHeader>
@@ -241,7 +240,9 @@ const PlayBar = () => {
               <S.StatusIcon
                 onClick={() => setDetailView((prev) => !prev)}
                 src={
-                  detailView ? "/assets/queueOn.svg" : "/assets/queueOff.svg"
+                  detailView
+                    ? "/assets/fullPlayerOn.svg"
+                    : "/assets/fullPlayerOff.svg"
                 }
               />
             </S.OtherControlWrap>
@@ -254,7 +255,11 @@ const PlayBar = () => {
           />
           <S.MobileButton
             onClick={() => setDetailView((prev) => !prev)}
-            src={detailView ? "/assets/queueOn.svg" : "/assets/queueOff.svg"}
+            src={
+              detailView
+                ? "/assets/fullPlayerOn.svg"
+                : "/assets/fullPlayerOff.svg"
+            }
           />
         </S.MobileButtonWrap>
       </S.Playbar>
