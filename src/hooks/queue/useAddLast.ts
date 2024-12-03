@@ -9,7 +9,14 @@ const useAddLast = () => {
       if(data){
         notification.open({message: '재생목록에 추가됨', description: '곡이 재생목록에 추가되었습니다.'});
       }
-    } catch {
+    } catch(err: any){
+      if (err && err.status === 409) {
+        notification.open({
+          message: "재생목록에 추가 실패",
+          description: "재생목록에 곡이 이미 있습니다.",
+        });
+        return;
+      }
       notification.open({
         message: "재생목록에 추가실패",
         description: "네트워크 에러",
