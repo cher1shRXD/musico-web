@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { VibeResponse } from "../../types/music/vibeResponse";
 import axios from "axios";
 import { notification } from "antd";
