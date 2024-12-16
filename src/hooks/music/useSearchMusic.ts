@@ -4,6 +4,7 @@ import axios from "axios";
 import { notification } from "antd";
 
 const useSearchMusic = () => {
+  
   const [searchResult, setSearchMusic] = useState<VibeResponse[]>([]);
 
   const searchMusic = async (query: string) => {
