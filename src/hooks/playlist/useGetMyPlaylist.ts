@@ -12,6 +12,7 @@ const useGetMyPlaylist = () => {
   const getMyPlaylist = async () => {
     if (!accessToken) {
       navigate("/intro");
+      
       return;
     }
     try {
