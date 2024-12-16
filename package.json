@@ -16,7 +16,6 @@
     "antd": "^5.21.6",
     "axios": "^1.7.7",
     "emotion": "^11.0.0",
-    "fast-average-color": "^9.4.0",
     "react": "^18.3.1",
     "react-cookie": "^7.2.2",
     "react-dom": "^18.3.1",
