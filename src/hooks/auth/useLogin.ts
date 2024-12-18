@@ -52,7 +52,7 @@ const useLogin = () => {
         });
 
         notification.open({
-          message: "로그인 성공!",
+          message: "로그인 성공!!",
           description: "환영합니다!",
         });
 
