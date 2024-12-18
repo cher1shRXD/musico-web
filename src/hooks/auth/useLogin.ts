@@ -39,7 +39,7 @@ const useLogin = () => {
         if (autoLogin) {
           setCookie("REFRESH_TOKEN", res.data.refreshToken, {
             path: "/",
-            maxAge: 2600000,
+            maxAge: 2650000,
           });
         } else {
           setCookie("REFRESH_TOKEN", res.data.refreshToken, {
@@ -48,7 +48,7 @@ const useLogin = () => {
         }
         setCookie("AUTO_LOGIN", `${autoLogin}`, {
           path: "/",
-          maxAge: 2600000,
+          maxAge: 2650000,
         });
 
         notification.open({
